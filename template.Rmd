@@ -34,7 +34,7 @@ hello - olivia
 ## Section Four
 
 ```{r student4}
-"KACIE"
+"KACIE" "HI"
 
 ```
 
