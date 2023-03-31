@@ -11,21 +11,21 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Section One
 
 ```{r student1}
-
+# hi
 ```
 
 
 ## Section Two
 
 ```{r student2}
-
+hey
 ```
 
 ## Section Three
 
 ```{r student3}
-
-hello
+ 
+hello - olivia
 
 ```
 
@@ -35,5 +35,11 @@ hello
 
 ```{r student4}
 "KACIE"
+
+```
+
+## Section Five
+```{r student5}
+#hello
 
 ```
