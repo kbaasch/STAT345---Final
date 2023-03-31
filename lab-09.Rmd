@@ -15,6 +15,3 @@ Parts we are intending to work on:
 
 
 https://github.com/kbaasch/STAT345---Final 
-
-4. Discuss with your project team the aspects of the project described in the provided project file. How and when will you communicate? Which parts are you intending to work on? 
-5. Submit a short Word document that includes your initial decisions regarding task assignments. Include a link to the team project repository (GitHub) in this document. (Task assignments can change -- you won't be locked into today's decisions regarding tasks)
