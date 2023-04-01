@@ -8,6 +8,129 @@ date: "2023-03-31"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+## Monopoly Movement Rules!
+- Before starting the game, it is important to take note of the different types of "equipment" in Monopoly.
+
+### Equipment
+#### The Board
+- The Board consists of...
+  - 40 tiles, each of which have unique actions associated with them based on their type.
+  - 16 "CHANCE CARDS"
+  - 16 "COMMUNITY CHEST CARDS"
+  - 2 six-sided die
+
+#### Types of Tiles
+- "PROPERTY" Tiles
+  - There are 8 different sets of properties
+  - Each set of properties has...
+      - its own color
+      - 2 or 3 properties
+  - These tiles can bought
+  - Each of these tiles have a specialized cost/profit associated with them
+  - **These tiles can generate a profit**
+  
+- "RAILROAD" Tiles
+  - There are 4 different railroads evenly spaced across the Board
+  - These tiles can be bought
+  - Each of these tiles have a specialized cost/profit associated with them
+  - **These tiles can generate a profit**
+  
+- "UTILITY" Tiles
+  - There are two utility tiles
+  - These tiles can be bought
+  - Each of these tiles have a specialized cost/profit associated with them
+  - **These tiles can generate a profit**
+  
+- "CHANCE" Tiles
+  - There are 3 chance tiles
+  - If one of these tiles is landed on, a "CHANCE CARD" is drawn
+    - each of these cards has a specialized action associated with them
+    
+- "COMMUNITY CHEST" Tiles
+  - There are 3 community chest tiles
+  - If one of these tiles is landed on, a "COMMUNITY CHEST CHEST" is drawn
+    - each of these cards has a specialized action associated with them
+    
+- "TAX" Tiles
+  - There are 2 tax tiles
+  - Each of these tiles has a cost associated with them
+  
+- "GO"
+  - This is the first tile
+  - Every time this tile is landed on or passed the player collects "$200"
+  
+- "IN JAIL"
+
+- "GO TO JAIL"
+  - When landed on, the player is moved to "IN JAIL"
+  
+- "FREE PARKING"
+
+### Moving around the Board and Generating Profits
+
+- The first step for beginning the game, even before getting to move the first game piece, is to determine which player will move first.
+  - To do this, each player will roll both dice and find the sum of the rolls. The player with the largest sum will start the game. Then the following turn will be the next player.
+    - i.e. if Player 2 starts, Player 3 will go next, then Player 4, then Player 4, then back to Player 2, and so on...
+    
+- All players will start on the "GO" tile.
+
+- To determine how many spaces to move, on their turn each player will roll both dice and find the sum of the rolls. They will then move forward that number of tiles.
+  - In the special case of rolling "doubles" (the roll of each die are equal),
+      - the player will find the sum of rolls and move forward this number of tiles
+      - then, the player will roll again and repeat the previous step.
+        - If the player rolls "doubles" again, repeat the previous two steps.
+        - If the player rolls "doubles" three times in a row, they immediately move to the "IN JAIL" tile.
+
+- After moving to their next location, the player will have different actions to complete based on the tile type.
+
+  - A player lands on a "PROPERTY" tile...
+    - If the player is the first person to land on the "PROPERTY" tile they can buy the "PROPERTY"
+    - Then, every time another player lands on this "PROPERTY", the player has to pay a fee and **the "PROPERTY" generates a profit**
+        - This profit is based on the rent of the "PROPERTY"
+    
+  - A player lands on a "RAILROAD" tile...
+    - If the player is the first person to land on the "RAILROAD" tile they can buy the "RAILROAD"
+    - Then, every time another player lands on this "RAILROAD", the player has to pay a fee and **the "RAILROAD" generates a profit**
+      - This profit is based on the number of "RAILROAD" tiles owned 
+   
+  - A player lands on a "UTILITY" tile...
+      - If the player is the first person to land on the "UTILITY" tile they can buy the "UTILITY"
+    - Then, every time another player lands on this "UTILITY", the player has to pay a fee and **the "UTILITY" generates a unique profit**
+      - This profit is based on the sum of the dice rolled
+      
+  - A player lands on a "CHANCE" or "COMMUNITY CHEST" tile...
+    - The player draws either a "CHANCE" or "COMMUNITY CHEST" card based on the type tile they landed on
+      - Then, the player completes the action on the card
+    - **These tiles cannot be bought and cannot generate a profit**
+    
+  - A player lands on a "TAX" tile...
+    - The player must pay a fee unique to the tile
+    - **These tiles cannot be bought and cannot generate a profit**
+
+  - A player lands on or passes "GO"...
+    - The player collects "$200"
+    - **This tile cannot be bought and cannot generate a profit**
+    
+  - A player lands on "IN JAIL"...
+    - There is no action to be completed
+    - **This tile cannot be bought and cannot generate a profit**
+    
+  - A player lands on "GO TO JAIL"...
+    - The player is immediately moved to "IN JAIL"
+    - The player is unable to move forward for the next three rolls
+    - **This tile cannot be bought and cannot generate a profit**
+    
+  - A player lands on "FREE PARKING"...
+    - Depending on the version of the game being played, the player will either,
+      - collect all money put into "FREE PARKING"
+      - complete no type of action
+    - **This tile cannot be bought and cannot generate a profit**
+        
+- After all players have rolled and moved, the next round begins and the process previously state is repeated.
+
+- The game ends when three of the four players run out of money.
+
 ## Section One
 
 ```{r student1}
