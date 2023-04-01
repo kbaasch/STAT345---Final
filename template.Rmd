@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
   - 40 tiles, each of which have unique actions associated with them based on their type.
   - 16 "CHANCE CARDS"
   - 16 "COMMUNITY CHEST CARDS"
-  - 2 six-sided die
+  - 2 six-sided dice
 
 #### Types of Tiles
 - "PROPERTY" Tiles
