@@ -164,5 +164,6 @@ hello - olivia
 ## Section Five
 ```{r student5}
 #hello
-
+dice_roll <- sum(sample(1:6, 2, replace = TRUE))
+dice_roll
 ```
