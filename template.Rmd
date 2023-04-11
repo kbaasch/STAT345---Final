@@ -151,7 +151,7 @@ hey
 # Website for data: https://stat-jet-asu.github.io/Datasets/InstructorDescriptions/monopoly.html
 
 monopolyBoard <- read.csv("MonopolyBoard.csv", header = T)
-#head(monopolyBoard)
+#head(monopolyBoard) 
 
 ```
 
