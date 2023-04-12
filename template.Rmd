@@ -134,7 +134,53 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Section One
 
 ```{r student1}
-# hi
+# Using dice rolls to determine where a player will land on the board
+#input: "location", where the player is on the board
+#output: the amount of spaces the player will move until they are on their new location
+
+#note that this is only accounting for standard dice rolls, no special rules yet...
+
+lets_move = function(location) {
+  dice_roll_1 <- sample(1:6, 1, replace = TRUE)
+  dice_roll_2 <- sample(1:6, 1, replace = TRUE)
+  
+  roll_total <- sum(dice_roll_1, dice_roll_2)
+  roll_double <- dice_roll_1 == dice_roll_2
+  
+  location = location + roll_total
+  
+  #print(dice_roll_1) #tester
+  #print(dice_roll_2) #tester
+  print(roll_total) #tester
+  
+  return(location)
+}
+
+lets_move(20) #tester
+
+
+
+#A function to move players around the board and to play Monopoly!
+#input: "turns" the amount of turns we should take
+#output: a player's new location on the board
+
+lets_play = function(turns) {
+  location = 1
+  for (i in 1:turns) {
+    location = lets_move(location)
+    
+    if(location <= 40) {
+      location = location
+    } else {
+      location = location - 40
+    }
+  }
+  return(location)
+}
+
+lets_play(3) #tester  #in this example if you add up the first three outputs the fourth output should be that sum + 1 to show the movement from location 1 ("GO")
+
+lets_play(10) #tester #in this example if you look at a reference monopoly board and "walk" your way around the board with each move being the number in each output, you'll land on the space on the board corresponding to the final output (when counting "GO" as 1 and/or 40)
 ```
 
 
