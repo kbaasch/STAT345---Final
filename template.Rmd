@@ -178,13 +178,6 @@ lets_play = function(turns) {
   location = 1
   for (i in 1:turns) {
     location = lets_move(location)
-    
-    if(location <= 40) {
-      location = location
-      
-    } else {
-      location = location - 40
-    }
   }
   print("You've landed on...")
   return(location)
