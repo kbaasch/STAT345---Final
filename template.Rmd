@@ -176,6 +176,7 @@ lets_move(40)
 
 lets_play = function(turns) {
   location = 1
+  print("Starting Location: GO!")
   for (i in 1:turns) {
     location = lets_move(location)
   }
@@ -188,7 +189,9 @@ lets_play = function(turns) {
 #"lets_move" and "lets_play" have both been edited to print out phrases for each roll and move to make it easier to determine how the player is moving. 
 #"You're moving forward..." gives the player's roll
 #"You're on space..." is the players position after 1 turn/"lets_move"
+  # Later try to switch this print statement to the name of the spot that the player is on 
 #"You've landed on..." gives the final location after running "lets_play" for "x" turns.
+  # Later try to switch this print statement to the name of the spot that the player is on 
 
 lets_play(3)
 lets_play(10)
