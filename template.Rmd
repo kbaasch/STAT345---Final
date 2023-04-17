@@ -180,7 +180,7 @@ lets_play = function(turns) {
 
 lets_play(3) #tester  #in this example if you add up the first three outputs the fourth output should be that sum + 1 to show the movement from location 1 ("GO")
 
-lets_play(10) #tester #in this example if you look at a reference monopoly board and "walk" your way around the board with each move being the number in each output, you'll land on the space on the board corresponding to the final output (when counting "GO" as 1 and/or 40)
+lets_play(10) #tester #in this example if you look at a reference monopoly board and "walk" your way around the board with each move being the number in each output, you'll land on the space on the board corresponding to the final output (when counting "GO" as 1 and/or 40) 
 ```
 
 
