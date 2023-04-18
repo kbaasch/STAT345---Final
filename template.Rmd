@@ -238,11 +238,11 @@ lets_play = function(turns, players) {
   colors <- c("red", "blue", "green")
   
   for (k in 2:players) {
-  lines(density(location_data[,k]), col = colors[k-1]) # adds a line for each player after the first
+  lines(density(location_data[,k]), col = colors[k-1]) # adds a density line for each player after the first
   }
   
   # creates density plot for total frequency landing on each space (all players spaces included)
-  all_spaces <- c(location_data[,1], location_data[,2], location_data[,3])
+  all_spaces <- as.vector(as.matrix(location_data))
   plot(density(all_spaces), xlim = c(0,40), col = "black")
   
 }
