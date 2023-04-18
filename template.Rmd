@@ -210,12 +210,12 @@ hey
 # Olivia
 # Website for data: https://stat-jet-asu.github.io/Datasets/InstructorDescriptions/monopoly.html
 
-monopolyBoard <- read.csv("MonopolyBoard.csv", header = T)
+monopolyBoard <- read.csv("MonopolyBoard2.csv", header = T)
 head(monopolyBoard)
 
-monopolyBoard$spaces[2:40] <- monopolyBoard$spaces[2:40] +1
+#monopolyBoard$spaces[2:40] <- monopolyBoard$spaces[2:40] +1
 
-write.csv(monopolyBoard, "C:\\Users\\oliviabojesen\\Downloads\\MonopolyBoard2.csv")
+#write.csv(monopolyBoard, "C:\\Users\\oliviabojesen\\Downloads\\MonopolyBoard2.csv")
 
 
 ```
