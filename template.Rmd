@@ -215,7 +215,7 @@ head(monopolyBoard)
 
 #monopolyBoard$spaces[2:40] <- monopolyBoard$spaces[2:40] +1
 
-#write.csv(monopolyBoard, "C:\\Users\\oliviabojesen\\Downloads\\MonopolyBoard2.csv") 
+#write.csv(monopolyBoard, "C:\\Users\\oliviabojesen\\Downloads\\MonopolyBoard2.csv")
 
 
 ```
