@@ -18,14 +18,14 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Section Two
 
 ```{r student2}
-hey
+#hey
 ```
 
 ## Section Three
 
 ```{r student3}
  
-hello - olivia
+#hello - olivia
 
 ```
 
@@ -34,7 +34,8 @@ hello - olivia
 ## Section Four
 
 ```{r student4}
-"KACIE" "HI"
+#"KACIE" 
+#"HI"
 
 ```
 
