@@ -161,11 +161,15 @@ lets_move = function(location) {
     location = location - 40
   }
   
+  space = monopolyBoard$name[monopolyBoard$spaces == location]
+  
   print("You're moving forward...")
   print(roll_total)
   
   print("You're on space...")
   print(location)
+  
+  #print(space) #This prints out the name of the space that they land on. 
 }
 
 #testers
@@ -212,8 +216,8 @@ lets_play(10)
 #input: "location"; a number 1-40 where the player is on the board
 #outut: the number of spaces the player will move on the board, with the special case of rolling three "doubles" and landing in jail
 double_down = function(location) {
-  dice_roll_1 <- sample(1:2, 1, replace = TRUE)
-  dice_roll_2 <- sample(1:2, 1, replace = TRUE)
+  dice_roll_1 <- sample(1:6, 1, replace = TRUE)
+  dice_roll_2 <- sample(1:6, 1, replace = TRUE)
   
   roll_total <- sum(dice_roll_1, dice_roll_2)
   roll_double <- dice_roll_1 == dice_roll_2
@@ -223,8 +227,8 @@ double_down = function(location) {
     
   if (roll_double) {
     
-    dice_roll_3 <- sample(1:2, 1, replace = TRUE)
-    dice_roll_4 <- sample(1:2, 1, replace = TRUE)
+    dice_roll_3 <- sample(1:6, 1, replace = TRUE)
+    dice_roll_4 <- sample(1:6, 1, replace = TRUE)
     
     roll_total_2 <- sum(dice_roll_3, dice_roll_4)
     roll_double_2 <- dice_roll_3 == dice_roll_4
@@ -234,8 +238,8 @@ double_down = function(location) {
 
     
     if (roll_double_2) {
-      dice_roll_5 <- sample(1:2, 1, replace = TRUE)
-      dice_roll_6 <- sample(1:2, 1, replace = TRUE)
+      dice_roll_5 <- sample(1:6, 1, replace = TRUE)
+      dice_roll_6 <- sample(1:6, 1, replace = TRUE)
       
       roll_total_3 <- sum(dice_roll_5, dice_roll_6)
       roll_double_3 <- dice_roll_5 == dice_roll_6
