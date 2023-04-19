@@ -215,8 +215,50 @@ hey
 ## Section Three
 
 ```{r student3}
- 
-hello - olivia
+# Olivia
+# Website for data: https://stat-jet-asu.github.io/Datasets/InstructorDescriptions/monopoly.html
+
+monopolyBoard <- read.csv("MonopolyBoard.csv", header = T)
+head(monopolyBoard)
+
+# Kayleigh's lets_play function from above incorporating players and density plots
+# uses lets_move function from above
+# input: turns, # of turns to iterate through; players, number of players (2-4)
+# output: density plot with a line for each player's frequency of spaces landed on 
+# & density plot for the combined frequency of spaces landed on for all players
+
+lets_play = function(turns, players) {
+  location = 1
+  location_data <- as.data.frame(matrix(nrow = turns, ncol = players))
+  
+  for (i in 1:turns) {
+    
+    for (j in 1:players) {
+    
+    location = lets_move(location)
+    location_data[i,j] <- location
+    }
+  }
+  
+  # creates density plot of frequency of landing on each space for each player
+  plot(density(location_data[,1]), xlim = c(0,40), col = "black")
+  
+  colors <- c("red", "blue", "green")
+  
+  for (k in 2:players) {
+  lines(density(location_data[,k]), col = colors[k-1]) # adds a density line for each player after the first
+  }
+  
+  # creates density plot for total frequency landing on each space (all players spaces included)
+  all_spaces <- as.vector(as.matrix(location_data))
+  plot(density(all_spaces), xlim = c(0,40), col = "black")
+  
+}
+
+lets_play(100, 4)
+
+# also outputs all locations landed on which idk how to get rid of
+
 
 ```
 
