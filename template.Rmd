@@ -134,6 +134,12 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Section One
 
 ```{r student1}
+#Kayleigh
+##LET'S GET MOVING
+
+monopolyBoard <- read.csv("MonopolyBoard.csv", header = T)
+monopolyBoard
+
 # Using dice rolls to determine where a player will land on the board
 #input: "location"; a number 1-40; where the player is on the board
 #output: the amount of spaces the player will move until they are on their new location
@@ -171,7 +177,7 @@ lets_move(40)
 
 
 #A function to move players around the board and to play Monopoly!
-#input: "turns" the amount of turns we should take
+#input: "turns"; the amount of turns we should take
 #output: a player's new location on the board
 
 lets_play = function(turns) {
@@ -195,6 +201,88 @@ lets_play = function(turns) {
 
 lets_play(3)
 lets_play(10)
+```
+
+```{r}
+#Kayleigh 
+##DOUBLE DOWN
+##WORK IN PROGRESS
+
+#A function using dice rolls to determine how many spaces a player will move with the additional rules for "doubles" in Monopoly
+#input: "location"; a number 1-40 where the player is on the board
+#outut: the number of spaces the player will move on the board, with the special case of rolling three "doubles" and landing in jail
+double_down = function(location) {
+  dice_roll_1 <- sample(1:2, 1, replace = TRUE)
+  dice_roll_2 <- sample(1:2, 1, replace = TRUE)
+  
+  roll_total <- sum(dice_roll_1, dice_roll_2)
+  roll_double <- dice_roll_1 == dice_roll_2
+  
+  print("roll was")
+  print(roll_total)
+    
+  if (roll_double) {
+    
+    dice_roll_3 <- sample(1:2, 1, replace = TRUE)
+    dice_roll_4 <- sample(1:2, 1, replace = TRUE)
+    
+    roll_total_2 <- sum(dice_roll_3, dice_roll_4)
+    roll_double_2 <- dice_roll_3 == dice_roll_4
+    
+    print("roll double was")
+    print(roll_total_2)
+
+    
+    if (roll_double_2) {
+      dice_roll_5 <- sample(1:2, 1, replace = TRUE)
+      dice_roll_6 <- sample(1:2, 1, replace = TRUE)
+      
+      roll_total_3 <- sum(dice_roll_5, dice_roll_6)
+      roll_double_3 <- dice_roll_5 == dice_roll_6
+      
+      print("roll double was")
+      print(roll_total_3)
+      
+      if (roll_double_3) {
+        location = 11 #Jail
+        print("doubles, doubles, doubles")
+        print("You're going to JAIL!")
+        
+      } else {
+        location = location + roll_total + roll_total_2 + roll_total_3
+        print("doubles, doubles, not doubles")
+        print("You're moving forward...")
+        print(roll_total + roll_total_2 + roll_total_3)
+      }
+    } else {
+      location = location + roll_total + roll_total_2
+      print("doubles, not doubles")
+      print("You're moving forward...")
+      print(roll_total+roll_total_2)
+    }
+  } else {
+    location = location + roll_total
+    print("no doubles")
+    print("You're moving forward...")
+    print(roll_total)
+  }
+
+    
+  if (location <= 40) {
+    location = location
+  } else {
+    location = location - 40
+  }
+
+  
+  print("You're on space...")
+  print(location)
+}
+
+double_down(1)
+#text out in the function is kinda funky right but it's just to make sure its working right
+#In final version switch all dice rolls to sample(1:6,...)
+
 ```
 
 
