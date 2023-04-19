@@ -1,0 +1,466 @@
+---
+title: "Super Awesome Project Template"
+output: word_document
+date: "2023-03-31"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Monopoly Movement Rules!
+- Before starting the game, it is important to take note of the different types of "equipment" in Monopoly.
+
+### Equipment
+#### The Board
+- The Board consists of...
+  - 40 tiles, each of which have unique actions associated with them based on their type.
+  - 16 "CHANCE CARDS"
+  - 16 "COMMUNITY CHEST CARDS"
+  - 2 six-sided dice
+
+#### Types of Tiles
+- "PROPERTY" Tiles
+  - There are 8 different sets of properties
+  - Each set of properties has...
+      - its own color
+      - 2 or 3 properties
+  - These tiles can bought
+  - Each of these tiles have a specialized cost/profit associated with them
+  - **These tiles can generate a profit**
+  
+- "RAILROAD" Tiles
+  - There are 4 different railroads evenly spaced across the Board
+  - These tiles can be bought
+  - Each of these tiles have a specialized cost/profit associated with them
+  - **These tiles can generate a profit**
+  
+- "UTILITY" Tiles
+  - There are two utility tiles
+  - These tiles can be bought
+  - Each of these tiles have a specialized cost/profit associated with them
+  - **These tiles can generate a profit**
+  
+- "CHANCE" Tiles
+  - There are 3 chance tiles
+  - If one of these tiles is landed on, a "CHANCE CARD" is drawn
+    - each of these cards has a specialized action associated with them
+    
+- "COMMUNITY CHEST" Tiles
+  - There are 3 community chest tiles
+  - If one of these tiles is landed on, a "COMMUNITY CHEST CHEST" is drawn
+    - each of these cards has a specialized action associated with them
+    
+- "TAX" Tiles
+  - There are 2 tax tiles
+  - Each of these tiles has a cost associated with them
+  
+- "GO"
+  - This is the first tile
+  - Every time this tile is landed on or passed the player collects "$200"
+  
+- "IN JAIL"
+
+- "GO TO JAIL"
+  - When landed on, the player is moved to "IN JAIL"
+  
+- "FREE PARKING"
+
+### Moving around the Board and Generating Profits
+
+- The first step for beginning the game, even before getting to move the first game piece, is to determine which player will move first.
+  - To do this, each player will roll both dice and find the sum of the rolls. The player with the largest sum will start the game. Then the following turn will be the next player.
+    - i.e. if Player 2 starts, Player 3 will go next, then Player 4, then Player 4, then back to Player 2, and so on...
+    
+- All players will start on the "GO" tile.
+
+- To determine how many spaces to move, on their turn each player will roll both dice and find the sum of the rolls. They will then move forward that number of tiles.
+  - In the special case of rolling "doubles" (the roll of each die are equal),
+      - the player will find the sum of rolls and move forward this number of tiles
+      - then, the player will roll again and repeat the previous step.
+        - If the player rolls "doubles" again, repeat the previous two steps.
+        - If the player rolls "doubles" three times in a row, they immediately move to the "IN JAIL" tile.
+
+- After moving to their next location, the player will have different actions to complete based on the tile type.
+
+  - A player lands on a "PROPERTY" tile...
+    - If the player is the first person to land on the "PROPERTY" tile they can buy the "PROPERTY"
+    - Then, every time another player lands on this "PROPERTY", the player has to pay a fee and **the "PROPERTY" generates a profit**
+        - This profit is based on the rent of the "PROPERTY"
+    
+  - A player lands on a "RAILROAD" tile...
+    - If the player is the first person to land on the "RAILROAD" tile they can buy the "RAILROAD"
+    - Then, every time another player lands on this "RAILROAD", the player has to pay a fee and **the "RAILROAD" generates a profit**
+      - This profit is based on the number of "RAILROAD" tiles owned 
+   
+  - A player lands on a "UTILITY" tile...
+      - If the player is the first person to land on the "UTILITY" tile they can buy the "UTILITY"
+    - Then, every time another player lands on this "UTILITY", the player has to pay a fee and **the "UTILITY" generates a unique profit**
+      - This profit is based on the sum of the dice rolled
+      
+  - A player lands on a "CHANCE" or "COMMUNITY CHEST" tile...
+    - The player draws either a "CHANCE" or "COMMUNITY CHEST" card based on the type tile they landed on
+      - Then, the player completes the action on the card
+    - **These tiles cannot be bought and cannot generate a profit**
+    
+  - A player lands on a "TAX" tile...
+    - The player must pay a fee unique to the tile
+    - **These tiles cannot be bought and cannot generate a profit**
+
+  - A player lands on or passes "GO"...
+    - The player collects "$200"
+    - **This tile cannot be bought and cannot generate a profit**
+    
+  - A player lands on "IN JAIL"...
+    - There is no action to be completed
+    - **This tile cannot be bought and cannot generate a profit**
+    
+  - A player lands on "GO TO JAIL"...
+    - The player is immediately moved to "IN JAIL"
+    - The player is unable to move forward for the next three rolls
+    - **This tile cannot be bought and cannot generate a profit**
+    
+  - A player lands on "FREE PARKING"...
+    - Depending on the version of the game being played, the player will either,
+      - collect all money put into "FREE PARKING"
+      - complete no type of action
+    - **This tile cannot be bought and cannot generate a profit**
+        
+- After all players have rolled and moved, the next round begins and the process previously state is repeated.
+
+- The game ends when three of the four players run out of money.
+
+## Section One
+
+```{r student1}
+#Kayleigh
+##LET'S GET MOVING
+
+monopolyBoard <- read.csv("MonopolyBoard.csv", header = T)
+monopolyBoard
+
+# Using dice rolls to determine where a player will land on the board
+#input: "location"; a number 1-40; where the player is on the board
+#output: the amount of spaces the player will move until they are on their new location
+
+#note that this is only accounting for standard dice rolls, no special rules yet...
+
+lets_move = function(location) {
+  dice_roll_1 <- sample(1:6, 1, replace = TRUE)
+  dice_roll_2 <- sample(1:6, 1, replace = TRUE)
+  
+  roll_total <- sum(dice_roll_1, dice_roll_2)
+  roll_double <- dice_roll_1 == dice_roll_2
+  
+    location = location + roll_total
+    
+  if (location <= 40) {
+    location = location
+  } else {
+    location = location - 40
+  }
+  
+  print("You're moving forward...")
+  print(roll_total)
+  
+  print("You're on space...")
+  print(location)
+}
+
+#testers
+lets_move(1)
+lets_move(25)
+lets_move(38)
+lets_move(40)
+
+
+
+#A function to move players around the board and to play Monopoly!
+#input: "turns"; the amount of turns we should take
+#output: a player's new location on the board
+
+lets_play = function(turns) {
+  location = 1
+  print("Starting Location: GO!")
+  for (i in 1:turns) {
+    location = lets_move(location)
+  }
+  print("You've landed on...")
+  return(location)
+}
+
+
+#testers 
+#"lets_move" and "lets_play" have both been edited to print out phrases for each roll and move to make it easier to determine how the player is moving. 
+#"You're moving forward..." gives the player's roll
+#"You're on space..." is the players position after 1 turn/"lets_move"
+  # Later try to switch this print statement to the name of the spot that the player is on 
+#"You've landed on..." gives the final location after running "lets_play" for "x" turns.
+  # Later try to switch this print statement to the name of the spot that the player is on 
+
+lets_play(3)
+lets_play(10)
+```
+
+```{r}
+#Kayleigh 
+##DOUBLE DOWN
+##WORK IN PROGRESS
+
+#A function using dice rolls to determine how many spaces a player will move with the additional rules for "doubles" in Monopoly
+#input: "location"; a number 1-40 where the player is on the board
+#outut: the number of spaces the player will move on the board, with the special case of rolling three "doubles" and landing in jail
+double_down = function(location) {
+  dice_roll_1 <- sample(1:2, 1, replace = TRUE)
+  dice_roll_2 <- sample(1:2, 1, replace = TRUE)
+  
+  roll_total <- sum(dice_roll_1, dice_roll_2)
+  roll_double <- dice_roll_1 == dice_roll_2
+  
+  print("roll was")
+  print(roll_total)
+    
+  if (roll_double) {
+    
+    dice_roll_3 <- sample(1:2, 1, replace = TRUE)
+    dice_roll_4 <- sample(1:2, 1, replace = TRUE)
+    
+    roll_total_2 <- sum(dice_roll_3, dice_roll_4)
+    roll_double_2 <- dice_roll_3 == dice_roll_4
+    
+    print("roll double was")
+    print(roll_total_2)
+
+    
+    if (roll_double_2) {
+      dice_roll_5 <- sample(1:2, 1, replace = TRUE)
+      dice_roll_6 <- sample(1:2, 1, replace = TRUE)
+      
+      roll_total_3 <- sum(dice_roll_5, dice_roll_6)
+      roll_double_3 <- dice_roll_5 == dice_roll_6
+      
+      print("roll double was")
+      print(roll_total_3)
+      
+      if (roll_double_3) {
+        location = 11 #Jail
+        print("doubles, doubles, doubles")
+        print("You're going to JAIL!")
+        
+      } else {
+        location = location + roll_total + roll_total_2 + roll_total_3
+        print("doubles, doubles, not doubles")
+        print("You're moving forward...")
+        print(roll_total + roll_total_2 + roll_total_3)
+      }
+    } else {
+      location = location + roll_total + roll_total_2
+      print("doubles, not doubles")
+      print("You're moving forward...")
+      print(roll_total+roll_total_2)
+    }
+  } else {
+    location = location + roll_total
+    print("no doubles")
+    print("You're moving forward...")
+    print(roll_total)
+  }
+
+    
+  if (location <= 40) {
+    location = location
+  } else {
+    location = location - 40
+  }
+
+  
+  print("You're on space...")
+  print(location)
+}
+
+double_down(1)
+#text out in the function is kinda funky right but it's just to make sure its working right
+#In final version switch all dice rolls to sample(1:6,...)
+
+```
+
+
+## Section Two
+
+```{r student2}
+hey
+```
+
+## Section Three
+
+```{r student3}
+# Olivia
+# Website for data: https://stat-jet-asu.github.io/Datasets/InstructorDescriptions/monopoly.html
+
+monopolyBoard <- read.csv("MonopolyBoard.csv", header = T)
+head(monopolyBoard)
+
+# Kayleigh's lets_play function from above incorporating players and density plots
+# uses lets_move function from above
+# input: turns, # of turns to iterate through; players, number of players (2-4)
+# output: density plot with a line for each player's frequency of spaces landed on 
+# & density plot for the combined frequency of spaces landed on for all players
+
+lets_play = function(turns, players) {
+  location = 1
+  location_data <- as.data.frame(matrix(nrow = turns, ncol = players))
+  
+  for (i in 1:turns) {
+    
+    for (j in 1:players) {
+    
+    location = lets_move(location)
+    location_data[i,j] <- location
+    }
+  }
+  
+  # creates density plot of frequency of landing on each space for each player
+  plot(density(location_data[,1]), xlim = c(0,40), col = "black")
+  
+  colors <- c("red", "blue", "green")
+  
+  for (k in 2:players) {
+  lines(density(location_data[,k]), col = colors[k-1]) # adds a density line for each player after the first
+  }
+  
+  # creates density plot for total frequency landing on each space (all players spaces included)
+  all_spaces <- as.vector(as.matrix(location_data))
+  plot(density(all_spaces), xlim = c(0,40), col = "black")
+  
+}
+lets_play(100, 4)
+
+
+
+
+# 3 -- including jail and double rolls
+# still have to incorporate staying in jail when 3x double roll lands player in jail
+
+lets_move2 = function(location) {
+  dice_roll_1 <- sample(1:6, 1, replace = TRUE)
+  dice_roll_2 <- sample(1:6, 1, replace = TRUE)
+  
+  roll_total <- sum(dice_roll_1, dice_roll_2)
+  roll_double <- dice_roll_1 == dice_roll_2
+  
+    location = location + roll_total
+    
+  # first double roll -> roll again
+  if (roll_double == TRUE) {
+    dice_roll_1 <- sample(1:6, 1, replace = TRUE)
+    dice_roll_2 <- sample(1:6, 1, replace = TRUE)
+    
+    roll_total <- sum(dice_roll_1, dice_roll_2)
+    roll_double <- dice_roll_1 == dice_roll_2
+    
+    location = location + roll_total
+    
+    if (location <= 40) {
+      location = location
+    } else {
+      location = location - 40
+    }
+     
+      # second double roll -> roll again
+      if (roll_double == TRUE) {
+        dice_roll_1 <- sample(1:6, 1, replace = TRUE)
+        dice_roll_2 <- sample(1:6, 1, replace = TRUE)
+    
+        roll_total <- sum(dice_roll_1, dice_roll_2)
+        roll_double <- dice_roll_1 == dice_roll_2
+    
+        location = location + roll_total
+        
+        if (location <= 40) {
+          location = location
+        } else {
+          location = location - 40
+        }
+        
+        # third double roll -> go to jail
+          if (roll_double == TRUE) {
+            location = monopolyBoard$spaces[monopolyBoard$name == "Jail"]
+          }
+      }
+  }  
+    
+  if (location <= 40) {
+    location = location
+  } else {
+    location = location - 40
+  }
+  
+  #print(location)
+}
+
+
+
+lets_play = function(turns, players) {
+  
+  location_data <- as.data.frame(matrix(nrow = turns, ncol = players))
+  
+  for (j in 1:players) {
+    location = 1
+  
+    for (i in 1:turns) {
+      
+        location = lets_move2(location)
+        location_data[i,j] <- as.integer(location)
+      
+      if (31 %in% location_data[i-1,j]) { # if you land on 31 (go to jail), next location is in jail (space 11)
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      } else if (11 %in% location_data[i-1,j] & 31 %in% location_data[i-2,j]) {
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      } else if (11 %in% location_data[i-2,j] & 31 %in% location_data[i-3,j]) {
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      }
+      
+    }
+  }
+  print(location_data)
+  
+  # creates density plot of frequency of landing on each space for each player
+  plot(density(location_data[,1]), xlim = c(0,40), col = "black")
+  
+  colors <- c("red", "blue", "green")
+  
+  for (k in 2:players) {
+    lines(density(location_data[,k]), col = colors[k-1]) # adds a density line for each player after the first
+  }
+  
+  # creates density plot for total frequency landing on each space (all players spaces included)
+  all_spaces <- as.vector(as.matrix(location_data))
+  plot(density(all_spaces), xlim = c(0,40), col = "black")
+  
+}
+
+lets_play(100, 4)
+
+# how should we go about recording spaces landed on when double rolls occur?
+
+```
+
+
+
+## Section Four
+
+```{r student4}
+"KACIE" "HI"
+
+```
+
+## Section Five
+```{r student5}
+#hello
+dice_roll <- sum(sample(1:6, 2, replace = TRUE))
+dice_roll
+```
