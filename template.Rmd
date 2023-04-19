@@ -246,11 +246,118 @@ lets_play = function(turns, players) {
   plot(density(all_spaces), xlim = c(0,40), col = "black")
   
 }
+lets_play(100, 4)
+
+
+
+
+# 3 -- including jail and double rolls
+# still have to incorporate staying in jail when 3x double roll lands player in jail
+
+lets_move2 = function(location) {
+  dice_roll_1 <- sample(1:6, 1, replace = TRUE)
+  dice_roll_2 <- sample(1:6, 1, replace = TRUE)
+  
+  roll_total <- sum(dice_roll_1, dice_roll_2)
+  roll_double <- dice_roll_1 == dice_roll_2
+  
+    location = location + roll_total
+    
+  # first double roll -> roll again
+  if (roll_double == TRUE) {
+    dice_roll_1 <- sample(1:6, 1, replace = TRUE)
+    dice_roll_2 <- sample(1:6, 1, replace = TRUE)
+    
+    roll_total <- sum(dice_roll_1, dice_roll_2)
+    roll_double <- dice_roll_1 == dice_roll_2
+    
+    location = location + roll_total
+    
+    if (location <= 40) {
+      location = location
+    } else {
+      location = location - 40
+    }
+     
+      # second double roll -> roll again
+      if (roll_double == TRUE) {
+        dice_roll_1 <- sample(1:6, 1, replace = TRUE)
+        dice_roll_2 <- sample(1:6, 1, replace = TRUE)
+    
+        roll_total <- sum(dice_roll_1, dice_roll_2)
+        roll_double <- dice_roll_1 == dice_roll_2
+    
+        location = location + roll_total
+        
+        if (location <= 40) {
+          location = location
+        } else {
+          location = location - 40
+        }
+        
+        # third double roll -> go to jail
+          if (roll_double == TRUE) {
+            location = monopolyBoard$spaces[monopolyBoard$name == "Jail"]
+          }
+      }
+  }  
+    
+  if (location <= 40) {
+    location = location
+  } else {
+    location = location - 40
+  }
+  
+  #print(location)
+}
+
+
+
+lets_play = function(turns, players) {
+  
+  location_data <- as.data.frame(matrix(nrow = turns, ncol = players))
+  
+  for (j in 1:players) {
+    location = 1
+  
+    for (i in 1:turns) {
+      
+        location = lets_move2(location)
+        location_data[i,j] <- as.integer(location)
+      
+      if (31 %in% location_data[i-1,j]) { # if you land on 31 (go to jail), next location is in jail (space 11)
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      } else if (11 %in% location_data[i-1,j] & 31 %in% location_data[i-2,j]) {
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      } else if (11 %in% location_data[i-2,j] & 31 %in% location_data[i-3,j]) {
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      }
+      
+    }
+  }
+  print(location_data)
+  
+  # creates density plot of frequency of landing on each space for each player
+  plot(density(location_data[,1]), xlim = c(0,40), col = "black")
+  
+  colors <- c("red", "blue", "green")
+  
+  for (k in 2:players) {
+    lines(density(location_data[,k]), col = colors[k-1]) # adds a density line for each player after the first
+  }
+  
+  # creates density plot for total frequency landing on each space (all players spaces included)
+  all_spaces <- as.vector(as.matrix(location_data))
+  plot(density(all_spaces), xlim = c(0,40), col = "black")
+  
+}
 
 lets_play(100, 4)
 
-# also outputs all locations landed on which idk how to get rid of
-
+# how should we go about recording spaces landed on when double rolls occur?
 
 ```
 
