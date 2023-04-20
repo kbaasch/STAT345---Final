@@ -308,12 +308,12 @@ head(monopolyBoard)
 # & density plot for the combined frequency of spaces landed on for all players
 
 lets_play = function(turns, players) {
-  location = 1
   location_data <- as.data.frame(matrix(nrow = turns, ncol = players))
   
+for (j in 1:players) {
+  location = 1
+  
   for (i in 1:turns) {
-    
-    for (j in 1:players) {
     
     location = lets_move(location)
     location_data[i,j] <- location
@@ -336,9 +336,9 @@ lets_play = function(turns, players) {
 }
 lets_play(100, 4)
 
+```
 
-
-
+```{r}
 # 3 -- including jail and double rolls
 # still have to incorporate staying in jail when 3x double roll lands player in jail
 
@@ -353,13 +353,13 @@ lets_move2 = function(location) {
     
   # first double roll -> roll again
   if (roll_double == TRUE) {
-    dice_roll_1 <- sample(1:6, 1, replace = TRUE)
-    dice_roll_2 <- sample(1:6, 1, replace = TRUE)
+    dice_roll_3 <- sample(1:6, 1, replace = TRUE)
+    dice_roll_4 <- sample(1:6, 1, replace = TRUE)
     
-    roll_total <- sum(dice_roll_1, dice_roll_2)
-    roll_double <- dice_roll_1 == dice_roll_2
+    roll_total2 <- sum(dice_roll_3, dice_roll_4)
+    roll_double2 <- dice_roll_3 == dice_roll_4
     
-    location = location + roll_total
+    location = location + roll_total2
     
     if (location <= 40) {
       location = location
@@ -368,14 +368,14 @@ lets_move2 = function(location) {
     }
      
       # second double roll -> roll again
-      if (roll_double == TRUE) {
-        dice_roll_1 <- sample(1:6, 1, replace = TRUE)
-        dice_roll_2 <- sample(1:6, 1, replace = TRUE)
+      if (roll_double2 == TRUE) {
+        dice_roll_5 <- sample(1:6, 1, replace = TRUE)
+        dice_roll_6 <- sample(1:6, 1, replace = TRUE)
     
-        roll_total <- sum(dice_roll_1, dice_roll_2)
-        roll_double <- dice_roll_1 == dice_roll_2
+        roll_total3 <- sum(dice_roll_5, dice_roll_6)
+        roll_double3 <- dice_roll_5 == dice_roll_6
     
-        location = location + roll_total
+        location = location + roll_total3
         
         if (location <= 40) {
           location = location
@@ -384,7 +384,7 @@ lets_move2 = function(location) {
         }
         
         # third double roll -> go to jail
-          if (roll_double == TRUE) {
+          if (roll_double3 == TRUE) {
             location = monopolyBoard$spaces[monopolyBoard$name == "Jail"]
           }
       }
@@ -401,7 +401,7 @@ lets_move2 = function(location) {
 
 
 
-lets_play = function(turns, players) {
+lets_play2 = function(turns, players) {
   
   location_data <- as.data.frame(matrix(nrow = turns, ncol = players))
   
@@ -423,7 +423,6 @@ lets_play = function(turns, players) {
         location <- 11
         location_data[i,j] <- as.integer(location)
       }
-      
     }
   }
   print(location_data)
@@ -443,7 +442,7 @@ lets_play = function(turns, players) {
   
 }
 
-lets_play(100, 4)
+lets_play2(100, 4)
 
 # how should we go about recording spaces landed on when double rolls occur?
 
