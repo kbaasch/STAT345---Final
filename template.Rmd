@@ -208,7 +208,6 @@ lets_play(10)
 ```
 
 ```{r}
-#Kayleigh 
 ##DOUBLE DOWN
 ##WORK IN PROGRESS
 
@@ -286,6 +285,37 @@ double_down = function(location) {
 double_down(1)
 #text out in the function is kinda funky right but it's just to make sure its working right
 #In final version switch all dice rolls to sample(1:6,...)
+
+```
+
+
+```{r}
+##CHANCE AND COMMUNITY CHEST CARDS
+Card_Numbers <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+
+Chance_Cards <- c("Advance to Boardwalk", "Advance to Go (Collect $200)", "Advance to Illinois Avenue. If you pass Go, collect $200", "Advance to St. Charles Place. If you pass Go, collect $200", "Advance to the nearest Railroad. If unowned, you may buy it from the Bank. If owned, pay owner twice the rental to which they are otherwise entitled", "Advance to the nearest Railroad. If unowned, you may buy it from the Bank. If owned, pay owner twice the rental to which they are otherwise entitled", "Advance token to nearest Utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total ten times amount thrown", "Bank pays you dividend of $50", "Get Out of Jail Free", "Go Back 3 Spaces", "Go to Jail. Go directly to Jail, do not pass Go, do not collect $200", "Make general repairs on all your property. For each house pay $25. For each hotel pay $100", "Speeding fine $15", "Take a trip to Reading Railroad. If you pass Go, collect $200", "You have been elected Chairman of the Board. Pay each player $50", "Your building loan matures. Collect $150")
+
+Chance <- data.frame(Chance_Cards, Card_Numbers)
+Chance
+##Chance cards to move a player to a new space:
+  #1 -> Advance to Boardwalk (space 40)
+  #2 -> Advance to Go (space 1)
+  #3 -> Advance to Illinois Avenue (space 25)
+  #4 -> Advance to St. Charles Place (space 12)
+  #5 -> Advance to nearest Railroad (space(s) 6, 16, 26, 36)
+  #6 -> Advance to nearest Railraod (space(s) 6, 16, 26, 36)
+  #7 -> Advance to nearest Utility (space(s) 13, 29)
+  #11 -> Go to Jail (space 11)
+  #14 -> Take a trip to Reading Railroad (space 6)
+
+Community_Chest_Cards <- c("Advance to Go (Collect $200)", "Bank error in your favor. Collect $200", "Doctor’s fee. Pay $50", "From sale of stock you get $50", "Get Out of Jail Free", "Go to Jail. Go directly to jail, do not pass Go, do not collect $200", "Holiday fund matures. Receive $100", "Income tax refund. Collect $20", "It is your birthday. Collect $10 from every player", "Life insurance matures. Collect $100", "Pay hospital fees of $100", "Pay school fees of $50", "Receive $25 consultancy fee", "You are assessed for street repair. $40 per house. $115 per hotel", "You have won second prize in a beauty contest. Collect $10", "You inherit $100")
+
+Community_Chest <- data.frame(Community_Chest_Cards, Card_Numbers)
+Community_Chest
+
+##Community Chest Cards that move a player to a new space:
+  #1 -> Advance to GO (space 1)
+  #5 -> Go to Jail (space 11)
 
 ```
 
