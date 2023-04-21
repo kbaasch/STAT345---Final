@@ -9,6 +9,12 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
+```{r}
+#libraries
+library(dplyr)
+library(ggplot2)
+```
+
 ## Monopoly Movement Rules!
 - Before starting the game, it is important to take note of the different types of "equipment" in Monopoly.
 
@@ -545,7 +551,7 @@ lets_play2 = function(turns, players) {
   plot(density(all_spaces), xlim = c(0,40), col = "black")
   
 }
-
+ 
 lets_play2(1000, 3)
 
 # how should we go about recording spaces landed on when double rolls occur?
@@ -711,9 +717,17 @@ lets_play3 = function(turns, players) {
 ## Section Four
 
 ```{r student4}
-"KACIE" "HI"
 
-65
+monopolyBoard1 <- read.csv("MonopolyBoard.csv", header = T)
+head(monopolyBoard1)
+
+kaciesboard <- monopolyBoard1 %>% select(., "name", "type", "color", "spaces")
+kaciestibble <- as_tibble(kaciesboard)
+kaciestibble
+
+freq <- kaciestibble %>% ggplot(., mapping=aes(x="names" )) +geom_freqpoly()
+
+freq
  
 ```
 
