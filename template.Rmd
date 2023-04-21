@@ -213,6 +213,7 @@ lets_play(10)
 
 ```{r}
 ##DOUBLE DOWN
+
 ##WORK IN PROGRESS
 
 #A function using dice rolls to determine how many spaces a player will move with the additional rules for "doubles" in Monopoly
