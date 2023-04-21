@@ -455,6 +455,8 @@ lets_play(100, 4)
 
 ```{r student4}
 "KACIE" "HI"
+
+6
  
 ```
 
