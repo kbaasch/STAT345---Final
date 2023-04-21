@@ -551,6 +551,7 @@ lets_play2(1000, 3)
 # how should we go about recording spaces landed on when double rolls occur?
 
 Chance
+Community_Chest
 ```
 
 ```{r}
@@ -570,6 +571,18 @@ Drawing_Chance = function(location) {
 Drawing_Chance(8)
 Drawing_Chance(23)
 Drawing_Chance(37)
+
+Drawing_Community_Chest = function(location) {
+  location = 3 || 18 || 34
+  draw_card_chest <- sample(1:16, 1, replace = TRUE)
+  print(draw_card_chest)
+  player_card_chest <- Community_Chest$Community_Chest_Cards[draw_card_chest]
+  player_card_chest
+}
+
+Drawing_Community_Chest(3)
+Drawing_Community_Chest(18)
+Drawing_Community_Chest(34)
 
 lets_move3 = function(location) {
   dice_roll_1 <- sample(1:6, 1, replace = TRUE)
