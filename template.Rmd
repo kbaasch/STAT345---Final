@@ -384,6 +384,8 @@ who_goes_first(4) # test function
 monopolyBoard <- read.csv("MonopolyBoard.csv", header = T)
 head(monopolyBoard)
 
+# This section is for question number 2
+
 # Kayleigh's lets_play function from above incorporating players and density plots
 # uses lets_move function from above
 # input: turns, # of turns to iterate through; players, number of players (2-4)
@@ -422,7 +424,7 @@ lets_play(100, 4)
 ```
 
 ```{r}
-# 3 -- including jail and double rolls
+# Question number 3 -- including jail and double rolls
 
 lets_move2 = function(location) {
   dice_roll_1 <- sample(1:6, 1, replace = TRUE)
@@ -495,6 +497,9 @@ lets_move2 = function(location) {
 
 
 lets_play2 = function(turns, players) {
+  
+  # assign piece names to dataframe columns
+  # use heidis function to assign highest player to piece 1 and go thru rest of players
   
   location_data <- as.data.frame(matrix(nrow = turns, ncol = players)) # dataframe will keep data for locations of players for each turn
   double3data <- as.data.frame(matrix(nrow = turns, ncol = players)) # dataframe will say "true" if player double rolled 3x (which lands them in jail) and "false" if they didn't double roll 3x
@@ -599,6 +604,11 @@ lets_move3 = function(location) {
   
     location = location + roll_total
     double3 = "false"
+    
+  if(location = 8 || 23 || 27) {
+    Drawing_Chance(location)
+    
+  }
     
   # first double roll -> roll again
   if (roll_double == TRUE) {
