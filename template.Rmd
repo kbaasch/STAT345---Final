@@ -705,6 +705,7 @@ lets_play3 = function(turns, players) {
 
 ```{r student4}
 
+#use lets_move2 for freq plot
 monopolyBoard1 <- read.csv("MonopolyBoard.csv", header = T)
 head(monopolyBoard1)
 
@@ -712,7 +713,7 @@ kaciesboard <- monopolyBoard1 %>% select(., "name", "type", "color", "spaces")
 kaciestibble <- as_tibble(kaciesboard)
 kaciestibble
 
-freq <- kaciestibble %>% ggplot(., mapping=aes(x="names" )) +geom_freqpoly()
+freq <- kaciestibble %>% ggplot(., mapping=aes(x="names", y="shapes")) +geom_point()
 
 freq
  
