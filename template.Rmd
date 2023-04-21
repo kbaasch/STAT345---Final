@@ -545,7 +545,7 @@ lets_play2 = function(turns, players) {
   plot(density(all_spaces), xlim = c(0,40), col = "black")
   
 }
-
+ 
 lets_play2(1000, 3)
 
 # how should we go about recording spaces landed on when double rolls occur?
