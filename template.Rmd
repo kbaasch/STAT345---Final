@@ -600,6 +600,11 @@ lets_move3 = function(location) {
     location = location + roll_total
     double3 = "false"
     
+  if(location = 8 || 23 || 27) {
+    Drawing_Chance(location)
+    
+  }
+    
   # first double roll -> roll again
   if (roll_double == TRUE) {
     dice_roll_3 <- sample(1:6, 1, replace = TRUE)

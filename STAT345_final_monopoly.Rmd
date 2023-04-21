@@ -30,4 +30,74 @@ Advice for getting started:
 
 
 
+##WORK IN PROGRESS
 
+double_down = function(location) {
+  dice_roll_1 <- sample(1:2, 1, replace = TRUE)
+  dice_roll_2 <- sample(1:2, 1, replace = TRUE)
+  
+  roll_total <- sum(dice_roll_1, dice_roll_2)
+  roll_double <- dice_roll_1 == dice_roll_2
+  
+  print("roll was")
+  print(roll_total)
+    
+  if (roll_double) {
+    
+    dice_roll_3 <- sample(1:2, 1, replace = TRUE)
+    dice_roll_4 <- sample(1:2, 1, replace = TRUE)
+    
+    roll_total_2 <- sum(dice_roll_3, dice_roll_4)
+    roll_double_2 <- dice_roll_3 == dice_roll_4
+    
+    print("roll double was")
+    print(roll_total_2)
+
+    
+    if (roll_double_2) {
+      dice_roll_5 <- sample(1:2, 1, replace = TRUE)
+      dice_roll_6 <- sample(1:2, 1, replace = TRUE)
+      
+      roll_total_3 <- sum(dice_roll_5, dice_roll_6)
+      roll_double_3 <- dice_roll_5 == dice_roll_6
+      
+      print("roll double was")
+      print(roll_total_3)
+      
+      if (roll_double_3) {
+        location = 11 #Jail
+        print("doubles, doubles, doubles")
+        print("You're going to JAIL!")
+        
+      } else {
+        location = location + roll_total + roll_total_2 + roll_total_3
+        print("doubles, doubles, not doubles")
+        print("You're moving forward...")
+        print(roll_total + roll_total_2 + roll_total_3)
+      }
+    } else {
+      location = location + roll_total + roll_total_2
+      print("doubles, not doubles")
+      print("You're moving forward...")
+      print(roll_total+roll_total_2)
+    }
+  } else {
+    location = location + roll_total
+    print("no doubles")
+    print("You're moving forward...")
+    print(roll_total)
+  }
+
+    
+  if (location <= 40) {
+    location = location
+  } else {
+    location = location - 40
+  }
+
+  
+  print("You're on space...")
+  print(location)
+}
+
+double_down(1)
