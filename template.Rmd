@@ -134,6 +134,12 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Section One
 
 ```{r student1}
+#Kayleigh
+##LET'S GET MOVING
+
+monopolyBoard <- read.csv("MonopolyBoard.csv", header = T)
+monopolyBoard
+
 # Using dice rolls to determine where a player will land on the board
 #input: "location"; a number 1-40; where the player is on the board
 #output: the amount of spaces the player will move until they are on their new location
@@ -155,11 +161,15 @@ lets_move = function(location) {
     location = location - 40
   }
   
+  space = monopolyBoard$name[monopolyBoard$spaces == location]
+  
   print("You're moving forward...")
   print(roll_total)
   
   print("You're on space...")
   print(location)
+  
+  #print(space) #This prints out the name of the space that they land on. 
 }
 
 #testers
@@ -171,7 +181,7 @@ lets_move(40)
 
 
 #A function to move players around the board and to play Monopoly!
-#input: "turns" the amount of turns we should take
+#input: "turns"; the amount of turns we should take
 #output: a player's new location on the board
 
 lets_play = function(turns) {
@@ -201,6 +211,118 @@ lets_play(10)
 >>>>>>> 024b5d1d2f7c6823d0c000046cd3311465e94c41
 ```
 
+```{r}
+##DOUBLE DOWN
+##WORK IN PROGRESS
+
+#A function using dice rolls to determine how many spaces a player will move with the additional rules for "doubles" in Monopoly
+#input: "location"; a number 1-40 where the player is on the board
+#outut: the number of spaces the player will move on the board, with the special case of rolling three "doubles" and landing in jail
+double_down = function(location) {
+  dice_roll_1 <- sample(1:6, 1, replace = TRUE)
+  dice_roll_2 <- sample(1:6, 1, replace = TRUE)
+  
+  roll_total <- sum(dice_roll_1, dice_roll_2)
+  roll_double <- dice_roll_1 == dice_roll_2
+  
+  print("roll was")
+  print(roll_total)
+    
+  if (roll_double) {
+    
+    dice_roll_3 <- sample(1:6, 1, replace = TRUE)
+    dice_roll_4 <- sample(1:6, 1, replace = TRUE)
+    
+    roll_total_2 <- sum(dice_roll_3, dice_roll_4)
+    roll_double_2 <- dice_roll_3 == dice_roll_4
+    
+    print("roll double was")
+    print(roll_total_2)
+
+    
+    if (roll_double_2) {
+      dice_roll_5 <- sample(1:6, 1, replace = TRUE)
+      dice_roll_6 <- sample(1:6, 1, replace = TRUE)
+      
+      roll_total_3 <- sum(dice_roll_5, dice_roll_6)
+      roll_double_3 <- dice_roll_5 == dice_roll_6
+      
+      print("roll double was")
+      print(roll_total_3)
+      
+      if (roll_double_3) {
+        location = 11 #Jail
+        print("doubles, doubles, doubles")
+        print("You're going to JAIL!")
+        
+      } else {
+        location = location + roll_total + roll_total_2 + roll_total_3
+        print("doubles, doubles, not doubles")
+        print("You're moving forward...")
+        print(roll_total + roll_total_2 + roll_total_3)
+      }
+    } else {
+      location = location + roll_total + roll_total_2
+      print("doubles, not doubles")
+      print("You're moving forward...")
+      print(roll_total+roll_total_2)
+    }
+  } else {
+    location = location + roll_total
+    print("no doubles")
+    print("You're moving forward...")
+    print(roll_total)
+  }
+
+    
+  if (location <= 40) {
+    location = location
+  } else {
+    location = location - 40
+  }
+
+  
+  print("You're on space...")
+  print(location)
+}
+
+double_down(1)
+#text out in the function is kinda funky right but it's just to make sure its working right
+#In final version switch all dice rolls to sample(1:6,...)
+
+```
+
+
+```{r}
+##CHANCE AND COMMUNITY CHEST CARDS
+Card_Numbers <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+
+Chance_Cards <- c("Advance to Boardwalk", "Advance to Go (Collect $200)", "Advance to Illinois Avenue. If you pass Go, collect $200", "Advance to St. Charles Place. If you pass Go, collect $200", "Advance to the nearest Railroad. If unowned, you may buy it from the Bank. If owned, pay owner twice the rental to which they are otherwise entitled", "Advance to the nearest Railroad. If unowned, you may buy it from the Bank. If owned, pay owner twice the rental to which they are otherwise entitled", "Advance token to nearest Utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total ten times amount thrown", "Bank pays you dividend of $50", "Get Out of Jail Free", "Go Back 3 Spaces", "Go to Jail. Go directly to Jail, do not pass Go, do not collect $200", "Make general repairs on all your property. For each house pay $25. For each hotel pay $100", "Speeding fine $15", "Take a trip to Reading Railroad. If you pass Go, collect $200", "You have been elected Chairman of the Board. Pay each player $50", "Your building loan matures. Collect $150")
+
+Chance <- data.frame(Chance_Cards, Card_Numbers)
+Chance
+##Chance cards to move a player to a new space:
+  #1 -> Advance to Boardwalk (space 40)
+  #2 -> Advance to Go (space 1)
+  #3 -> Advance to Illinois Avenue (space 25)
+  #4 -> Advance to St. Charles Place (space 12)
+  #5 -> Advance to nearest Railroad (space(s) 6, 16, 26, 36)
+  #6 -> Advance to nearest Railraod (space(s) 6, 16, 26, 36)
+  #7 -> Advance to nearest Utility (space(s) 13, 29)
+  #11 -> Go to Jail (space 11)
+  #14 -> Take a trip to Reading Railroad (space 6)
+
+Community_Chest_Cards <- c("Advance to Go (Collect $200)", "Bank error in your favor. Collect $200", "Doctor’s fee. Pay $50", "From sale of stock you get $50", "Get Out of Jail Free", "Go to Jail. Go directly to jail, do not pass Go, do not collect $200", "Holiday fund matures. Receive $100", "Income tax refund. Collect $20", "It is your birthday. Collect $10 from every player", "Life insurance matures. Collect $100", "Pay hospital fees of $100", "Pay school fees of $50", "Receive $25 consultancy fee", "You are assessed for street repair. $40 per house. $115 per hotel", "You have won second prize in a beauty contest. Collect $10", "You inherit $100")
+
+Community_Chest <- data.frame(Community_Chest_Cards, Card_Numbers)
+Community_Chest
+
+##Community Chest Cards that move a player to a new space:
+  #1 -> Advance to GO (space 1)
+  #5 -> Go to Jail (space 11)
+
+```
+
 
 ## Section Two
 
@@ -211,8 +333,180 @@ hey
 ## Section Three
 
 ```{r student3}
- 
-hello - olivia
+# Olivia
+# Website for data: https://stat-jet-asu.github.io/Datasets/InstructorDescriptions/monopoly.html
+
+monopolyBoard <- read.csv("MonopolyBoard.csv", header = T)
+head(monopolyBoard)
+
+# Kayleigh's lets_play function from above incorporating players and density plots
+# uses lets_move function from above
+# input: turns, # of turns to iterate through; players, number of players (2-4)
+# output: density plot with a line for each player's frequency of spaces landed on 
+# & density plot for the combined frequency of spaces landed on for all players
+
+lets_play = function(turns, players) {
+  location_data <- as.data.frame(matrix(nrow = turns, ncol = players))
+  
+for (j in 1:players) {
+  location = 1
+  
+  for (i in 1:turns) {
+    
+    location = lets_move(location)
+    location_data[i,j] <- location
+    }
+  }
+  
+  # creates density plot of frequency of landing on each space for each player
+  plot(density(location_data[,1]), xlim = c(0,40), col = "black")
+  
+  colors <- c("red", "blue", "green")
+  
+  for (k in 2:players) {
+  lines(density(location_data[,k]), col = colors[k-1]) # adds a density line for each player after the first
+  }
+  
+  # creates density plot for total frequency landing on each space (all players spaces included)
+  all_spaces <- as.vector(as.matrix(location_data))
+  plot(density(all_spaces), xlim = c(0,40), col = "black")
+  
+}
+lets_play(100, 4)
+
+```
+
+```{r}
+# 3 -- including jail and double rolls
+# still have to incorporate staying in jail when 3x double roll lands player in jail
+
+lets_move2 = function(location) {
+  dice_roll_1 <- sample(1:6, 1, replace = TRUE)
+  dice_roll_2 <- sample(1:6, 1, replace = TRUE)
+  
+  roll_total <- sum(dice_roll_1, dice_roll_2)
+  roll_double <- dice_roll_1 == dice_roll_2
+  
+    location = location + roll_total
+    double3 = "false"
+    
+  # first double roll -> roll again
+  if (roll_double == TRUE) {
+    dice_roll_3 <- sample(1:6, 1, replace = TRUE)
+    dice_roll_4 <- sample(1:6, 1, replace = TRUE)
+    
+    roll_total2 <- sum(dice_roll_3, dice_roll_4)
+    roll_double2 <- dice_roll_3 == dice_roll_4
+    
+    location = location + roll_total2
+    double3 = "false"
+    
+    if (location <= 40) {
+      location = location
+    } else {
+      location = location - 40
+    }
+     
+      # second double roll -> roll again
+      if (roll_double2 == TRUE) {
+        dice_roll_5 <- sample(1:6, 1, replace = TRUE)
+        dice_roll_6 <- sample(1:6, 1, replace = TRUE)
+    
+        roll_total3 <- sum(dice_roll_5, dice_roll_6)
+        roll_double3 <- dice_roll_5 == dice_roll_6
+    
+        location = location + roll_total3
+        double3 = "false"
+        
+        if (location <= 40) {
+          location = location
+        } else {
+          location = location - 40
+        }
+        
+        # third double roll -> go to jail
+          if (roll_double3 == TRUE) {
+            location = monopolyBoard$spaces[monopolyBoard$name == "Jail"]
+            double3 = "true"
+          }
+      }
+  }  
+    
+  if (location <= 40) {
+    location = location
+  } else {
+    location = location - 40
+  }
+  
+  listdata <- (list(location, double3))
+  return(listdata)
+  
+}
+
+
+
+
+lets_play2 = function(turns, players) {
+  
+  location_data <- as.data.frame(matrix(nrow = turns, ncol = players))
+  double3data <- length(turns)
+  
+  for (j in 1:players) {
+    location = 1
+    double3 = 0
+  
+    for (i in 1:turns) {
+      
+        location = lets_move2(location)[[1]]
+        location_data[i,j] <- as.integer(location)
+        double3data[i] <- lets_move2(double3)[[2]]
+        
+      # deals with landing in jail from "go to jail" space and staying there for next 3 turns
+      if (31 %in% location_data[i-1,j]) { # if you land on 31 (go to jail), next location is in jail (space 11)
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      } else if (11 %in% location_data[i-1,j] & 31 %in% location_data[i-2,j]) {
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      } else if (11 %in% location_data[i-2,j] & 31 %in% location_data[i-3,j]) {
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      }
+        
+      # landing in jail from 3x double roll and staying there for next 3 turns
+      if (11 %in% location_data[i,j] & "true" %in% double3data[i-1]) { # "true" means player double rolled 3x -> jail
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      } else if (11 %in% location_data[i-1,j] & "true" %in% double3data[i-2]) { # 
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      } else if (11 %in% location_data[i-2,j] & "true" %in% double3data[i-3]) {
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      }
+        
+    }
+  }
+  #print(location_data)
+  
+  # creates density plot of frequency of landing on each space for each player
+  plot(density(location_data[,1]), xlim = c(0,40), col = "black")
+  
+  colors <- c("red", "blue", "green")
+  
+  for (k in 2:players) {
+    lines(density(location_data[,k]), col = colors[k-1]) # adds a density line for each player after the first
+  }
+  
+  # creates density plot for total frequency landing on each space (all players spaces included)
+  all_spaces <- as.vector(as.matrix(location_data))
+  plot(density(all_spaces), xlim = c(0,40), col = "black")
+  
+}
+
+lets_play2(1000, 4)
+
+# how should we go about recording spaces landed on when double rolls occur?
 
 ```
 
