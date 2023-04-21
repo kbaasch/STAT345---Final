@@ -135,7 +135,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r student1}
 # Using dice rolls to determine where a player will land on the board
-#input: "location", where the player is on the board
+#input: "location"; a number 1-40; where the player is on the board
 #output: the amount of spaces the player will move until they are on their new location
 
 #note that this is only accounting for standard dice rolls, no special rules yet...
@@ -147,16 +147,26 @@ lets_move = function(location) {
   roll_total <- sum(dice_roll_1, dice_roll_2)
   roll_double <- dice_roll_1 == dice_roll_2
   
-  location = location + roll_total
+    location = location + roll_total
+    
+  if (location <= 40) {
+    location = location
+  } else {
+    location = location - 40
+  }
   
-  #print(dice_roll_1) #tester
-  #print(dice_roll_2) #tester
-  print(roll_total) #tester
+  print("You're moving forward...")
+  print(roll_total)
   
-  return(location)
+  print("You're on space...")
+  print(location)
 }
 
-lets_move(20) #tester
+#testers
+lets_move(1)
+lets_move(25)
+lets_move(38)
+lets_move(40)
 
 
 
@@ -166,21 +176,29 @@ lets_move(20) #tester
 
 lets_play = function(turns) {
   location = 1
+  print("Starting Location: GO!")
   for (i in 1:turns) {
     location = lets_move(location)
-    
-    if(location <= 40) {
-      location = location
-    } else {
-      location = location - 40
-    }
   }
+  print("You've landed on...")
   return(location)
 }
 
-lets_play(3) #tester  #in this example if you add up the first three outputs the fourth output should be that sum + 1 to show the movement from location 1 ("GO")
 
+<<<<<<< HEAD
 lets_play(10) #tester #in this example if you look at a reference monopoly board and "walk" your way around the board with each move being the number in each output, you'll land on the space on the board corresponding to the final output (when counting "GO" as 1 and/or 40) 
+=======
+#testers 
+#"lets_move" and "lets_play" have both been edited to print out phrases for each roll and move to make it easier to determine how the player is moving. 
+#"You're moving forward..." gives the player's roll
+#"You're on space..." is the players position after 1 turn/"lets_move"
+  # Later try to switch this print statement to the name of the spot that the player is on 
+#"You've landed on..." gives the final location after running "lets_play" for "x" turns.
+  # Later try to switch this print statement to the name of the spot that the player is on 
+
+lets_play(3)
+lets_play(10)
+>>>>>>> 024b5d1d2f7c6823d0c000046cd3311465e94c41
 ```
 
 
