@@ -213,6 +213,7 @@ lets_play(10)
 
 ```{r}
 ##DOUBLE DOWN
+
 ##WORK IN PROGRESS
 
 #A function using dice rolls to determine how many spaces a player will move with the additional rules for "doubles" in Monopoly
@@ -327,7 +328,45 @@ Community_Chest
 ## Section Two
 
 ```{r student2}
-hey
+# heidi
+
+#the function "who_goes_first" simulates the initial roll before the game begins in order to determine which player goes first
+# input is a number of how many players are going to be playing
+# output is the value of each players roll and the player that will start the game based on who had the highest roll
+who_goes_first <- function(num_players){
+  initial_rolls <- c()
+  for (i in 1:num_players) {
+    player_i_roll <- sum(sample(1:6, 2, replace=TRUE))
+    initial_rolls <- c(initial_rolls, player_i_roll) # vector of every player's roll
+    print(paste("Player", i, "rolled", player_i_roll))
+  }
+  cat("\n")
+  if(sum(initial_rolls == max(initial_rolls)) >= 2){
+    while (sum(initial_rolls == max(initial_rolls)) >= 2) { # if players tied for highest number
+      tied_players <- which(initial_rolls==max(initial_rolls)) # identify which players tied
+      print("It's a tie! Roll again")
+      cat("\n")
+      tie_breaker_rolls <- c()
+      for (i in tied_players) { # tied players roll again
+       player_i_roll2 <- sum(sample(1:6, 2, replace=TRUE))
+       tie_breaker_rolls <- c(tie_breaker_rolls, player_i_roll2)
+       print(paste("Player", i, "rolled", player_i_roll2))
+      }
+      initial_rolls <- tie_breaker_rolls
+      highest_roll <- max(tie_breaker_rolls)
+      highest_player2 <- tied_players[which(tie_breaker_rolls == highest_roll)]
+    }
+    cat("\n")
+    print(paste("Player", highest_player2, "goes first!"))
+  }
+  else {
+    highest_player <- which.max(initial_rolls) # who rolled the highest number
+    print(paste("Player", highest_player, "goes first!"))
+  }
+}
+
+who_goes_first(4) # test function
+
 ```
 
 ## Section Three
