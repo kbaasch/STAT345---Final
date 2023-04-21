@@ -195,6 +195,9 @@ lets_play = function(turns) {
 }
 
 
+
+lets_play(10) #tester #in this example if you look at a reference monopoly board and "walk" your way around the board with each move being the number in each output, you'll land on the space on the board corresponding to the final output (when counting "GO" as 1 and/or 40) 
+
 #testers 
 #"lets_move" and "lets_play" have both been edited to print out phrases for each roll and move to make it easier to determine how the player is moving. 
 #"You're moving forward..." gives the player's roll
@@ -205,6 +208,7 @@ lets_play = function(turns) {
 
 lets_play(3)
 lets_play(10)
+
 ```
 
 ```{r}
@@ -512,6 +516,8 @@ lets_play2(1000, 3)
 ```{r student4}
 "KACIE" "HI"
 
+65
+ 
 ```
 
 ## Section Five
