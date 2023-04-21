@@ -9,6 +9,12 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
+```{r}
+#libraries
+library(dplyr)
+library(ggplot2)
+```
+
 ## Monopoly Movement Rules!
 - Before starting the game, it is important to take note of the different types of "equipment" in Monopoly.
 
@@ -514,9 +520,17 @@ lets_play2(1000, 3)
 ## Section Four
 
 ```{r student4}
-"KACIE" "HI"
 
-65
+monopolyBoard1 <- read.csv("MonopolyBoard.csv", header = T)
+head(monopolyBoard1)
+
+kaciesboard <- monopolyBoard1 %>% select(., "name", "type", "color", "spaces")
+kaciestibble <- as_tibble(kaciesboard)
+kaciestibble
+
+freq <- kaciestibble %>% ggplot(., mapping=aes(x="names" )) +geom_freqpoly()
+
+freq
  
 ```
 
