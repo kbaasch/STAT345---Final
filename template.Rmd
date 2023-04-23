@@ -651,6 +651,7 @@ Drawing_Chance = function(location) {
     }
   
     location = location
+    return(location)
 }
 
 Drawing_Chance(8)
@@ -676,6 +677,7 @@ Drawing_Community_Chest = function(location) {
   }
   
   location = location 
+  return(location)
 }
 
 Drawing_Community_Chest(3)
@@ -705,13 +707,13 @@ lets_move3 = function(location) {
   print(location)
   
   if(location == 8 || location == 23 || location == 27) {
-    Drawing_Chance(location)
+    location = Drawing_Chance(location)
     print("your location is...")
     print(location)
   }
   
   if(location == 3 || location == 18 || location == 34) {
-    Drawing_Community_Chest(location)
+    location = Drawing_Community_Chest(location)
     print("your location is...")
     print(location)
   }
@@ -736,13 +738,11 @@ lets_move3 = function(location) {
     
     
     if(location == 8 || location == 23 || location == 27) {
-    Drawing_Chance(location)
-      location = location 
+    location = Drawing_Chance(location)
     }
   
   if(location == 3 || location == 18 || location == 34) {
-    Drawing_Community_Chest(location)
-    location = location 
+    location = Drawing_Community_Chest(location)
     }
      
       # second double roll -> roll again
@@ -764,13 +764,12 @@ lets_move3 = function(location) {
         }
         
         if(location == 8 || location == 23 || location == 27) {
-          Drawing_Chance(location)
-          location = location 
+          location = Drawing_Chance(location)
         }
   
         if(location == 3 || location == 18 || location == 34) {
-           Drawing_Community_Chest(location)
-          location = location 
+          location = Drawing_Community_Chest(location)
+         
         }
         
         # third double roll -> go to jail
