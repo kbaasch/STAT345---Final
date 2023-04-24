@@ -495,6 +495,9 @@ lets_move2 = function(location) {
 
 
 
+# lets_play2 is currently set up to have each player go thru all their turns and then move onto the next player
+# probably need to fix this for question 5
+
 
 lets_play2 = function(turns, players) {
   
@@ -540,7 +543,7 @@ lets_play2 = function(turns, players) {
         
     }
   }
-  #print(location_data)
+  print(location_data)
   
   # creates density plot of frequency of landing on each space for each player
   plot(density(location_data[,1]), xlim = c(0,40), col = "black")
@@ -557,7 +560,7 @@ lets_play2 = function(turns, players) {
   
 }
  
-lets_play2(1000, 3)
+lets_play2(10, 3)
 
 # how should we go about recording spaces landed on when double rolls occur?
 
