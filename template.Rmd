@@ -598,20 +598,20 @@ Drawing_Chance = function(location) {
       }
     
       if(draw_card == 5){
-        if(location >= 1 && location <= 10){
+        if(location >= 37 && location <= 5){
               location = 6
             } else {
-              if (location > 10 && location <= 20){
+              if (location >= 6 && location <= 15){
                 location = 16
               } else {
-                if(location > 20 && location <= 30){
+                if(location >= 16 && location <= 25){
                   location = 26
                 } else {
                   location = 36
                 }
               }
             }
-      }
+    }
   
     if(draw_card == 6){
         if(location >= 37 && location <= 5){
@@ -629,29 +629,20 @@ Drawing_Chance = function(location) {
             }
     }
   
-  if(draw_card == 7){
-        if(location >= 37 && location <= 5){
-              location = 6
+    if(draw_card == 7){
+        if(location >= 29 && location <= 12){
+              location = 13
             } else {
-              if (location >= 6 && location <= 15){
-                location = 16
-              } else {
-                if(location >= 16 && location <= 25){
-                  location = 26
-                } else {
-                  location = 36
-                }
-              }
-            }
+              location = 29
     }
-    
+  }
   
     if(draw_card == 11) {
       location = 11
     }
   
     if(draw_card == 14) {
-      location = 14
+      location = 6
     }
   
     if(draw_card == 10) {
