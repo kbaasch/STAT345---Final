@@ -555,6 +555,9 @@ lets_move2 = function(location) {
 # lets_play2 is currently set up to have each player go thru all their turns and then move onto the next player
 # probably need to fix this for question 5
 
+```
+
+```{r}
 
 lets_play2 = function(turns, players) {
   
@@ -565,13 +568,15 @@ lets_play2 = function(turns, players) {
     # puts players in order
     colnames(location_data) <- who_goes_first2(players)[[2]]
   
-  for (j in 1:players) { # rotates through each player
     location = 1 # each player starts at location 1
+    location_data[1,] <- location
     double3 = 0 # initializing "double3" which will be later assigned a "true" or "false" based on if player double rolled 3x
   
-    for (i in 1:turns) { # iterates through number of turns
+    for (i in 2:turns) { # iterates through number of turns
       
-        location = lets_move2(location)[[1]] # takes location from lets_move2 function and assigns it to location
+        for (j in 1:players) { # rotates through each player
+          
+        location = lets_move2(location_data[i-1,j])[[1]] # takes location from lets_move2 function and assigns it to location
         location_data[i,j] <- as.integer(location) # puts location value into the dataframe of locations for each player
         double3data[i,j] <- lets_move2(double3)[[2]] # takes "true" or "false" value from double3 and adds it to double3data dataframe
         
