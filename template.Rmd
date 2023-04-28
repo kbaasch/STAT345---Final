@@ -425,10 +425,7 @@ lets_play(100, 4)
 
 
 ```{r}
-<<<<<<< HEAD
 
-=======
->>>>>>> ef07b2d676f34fc35128dfd718ba7f2206e66ef8
 who_goes_first2 <- function(num_players){
   initial_rolls <- c()
   for (i in 1:num_players) {
@@ -479,21 +476,13 @@ who_goes_first2 <- function(num_players){
   return(playerlist)
 }
 
-<<<<<<< HEAD
 who_goes_first2(4)
-=======
-#who_goes_first2(4)
->>>>>>> ef07b2d676f34fc35128dfd718ba7f2206e66ef8
 
 ```
 
 
 ```{r}
 # Question number 3 -- including jail and double rolls
-<<<<<<< HEAD
-
-=======
->>>>>>> ef07b2d676f34fc35128dfd718ba7f2206e66ef8
 
 lets_move2 = function(location) {
   dice_roll_1 <- sample(1:6, 1, replace = TRUE)
@@ -565,12 +554,6 @@ lets_move2 = function(location) {
 
 ```
 
-```{r}
-
-# lets_play2 is currently set up to have each player go thru all their turns and then move onto the next player
-# probably need to fix this for question 5
-
-```
 
 ```{r}
 
@@ -638,12 +621,8 @@ lets_play2 = function(turns, players) {
   
 }
  
-<<<<<<< HEAD
 lets_play2(10, 4)
 
-=======
-lets_play2(10, 3)
->>>>>>> ef07b2d676f34fc35128dfd718ba7f2206e66ef8
 
 # how should we go about recording spaces landed on when double rolls occur?
 
