@@ -504,9 +504,7 @@ lets_move3 = function(location) {
   
     location = location + roll_total
     double3 = "false"
-  
-  print("your roll total is...")
-  print(roll_total)
+
 
   if (location <= 40) {
       location = location
@@ -514,19 +512,13 @@ lets_move3 = function(location) {
       location = location - 40
   }
    
-  print("your location is...")
-  print(location)
   
   if(location == 8 || location == 23 || location == 27) {
     location = Drawing_Chance(location)
-    print("your location is...")
-    print(location)
   }
   
   if(location == 3 || location == 18 || location == 34) {
     location = Drawing_Community_Chest(location)
-    print("your location is...")
-    print(location)
   }
     
   # first double roll -> roll again
@@ -539,7 +531,6 @@ lets_move3 = function(location) {
     
     location = location + roll_total2
     double3 = "false"
-    print("1 double")
     
     if (location <= 40) {
       location = location
@@ -566,7 +557,6 @@ lets_move3 = function(location) {
     
         location = location + roll_total3
         double3 = "false"
-        print("2 doubles")
         
         if (location <= 40) {
           location = location
@@ -587,15 +577,13 @@ lets_move3 = function(location) {
           if (roll_double3 == TRUE) {
             location = monopolyBoard$spaces[monopolyBoard$name == "Jail"]
             double3 = "true"
-            print("three doubles")
+
           }
       }
   }  
    
   location = location 
-  
-  print("your location is...")
-  print(location)
+
   listdata <- (list(location, double3))
   return(listdata)
   
