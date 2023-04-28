@@ -475,7 +475,7 @@ who_goes_first2 <- function(num_players){
   return(playerlist)
 }
 
-#who_goes_first2(4)
+who_goes_first2(4)
 
 ```
 
@@ -551,10 +551,6 @@ lets_move2 = function(location) {
 }
 
 
-
-# lets_play2 is currently set up to have each player go thru all their turns and then move onto the next player
-# probably need to fix this for question 5
-
 ```
 
 ```{r}
@@ -623,7 +619,7 @@ lets_play2 = function(turns, players) {
   
 }
  
-lets_play2(10, 3)
+lets_play2(10, 4)
 
 # how should we go about recording spaces landed on when double rolls occur?
 
