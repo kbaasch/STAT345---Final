@@ -1073,6 +1073,7 @@ The_Players
 
 The_Players_Owned <- data.frame(Players, Owned_Spaces)
 The_Players_Owned <- The_Players_Owned %>% pivot_wider(names_from = Players, values_from = Owned_Spaces)
+
 The_Players_Owned[[1]]
 The_Players_Owned[[2]]
 The_Players_Owned[[3]]
