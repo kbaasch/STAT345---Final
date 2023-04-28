@@ -939,3 +939,27 @@ Community_Chest_Money <- function(money){
 Chance
 Community_Chest
 ```
+
+
+_Play a Game_
+- players funds
+  - adding to players funds
+  - subtracting from players funds
+  - player losing once funds = 0
+
+- buying properties
+- paying rent when landing on an owned property
+
+```{r}
+Players <- c("Player 1", "Player 2", "Player 3", "Player 4")
+Player_Bank <- c("1250", "1250", "1250", "1250")
+
+The_Players <- data.frame(Player, Player_Bank)
+The_Players
+
+monopolyBoard
+
+Property <- c("Mediterranean", "Baltic", "Reading Railroad", "Oriental", "Vermot", "Connecticut", "St. Charles", "Electriv Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Tennessee", "New York", "Kentucky", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Pacific", "N. Carolina", "Pennsylvania", "Short Line Railroad", "Park Place", "Boardwalk")
+Property_Status <- c("Unowned")
+```
+
