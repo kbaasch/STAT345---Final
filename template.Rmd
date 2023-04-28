@@ -933,5 +933,96 @@ freq
 ```{r student5}
 #hello
 dice_roll <- sum(sample(1:6, 2, replace = TRUE))
-dice_roll
+
+#Need to figure out how to exchange money between players
+Chance_Money <- function(money){
+  money = money
+  draw_card <- sample(1:16, 1, replace = TRUE)
+  player_card <- Chance$Chance_Cards[draw_card]
+  print(player_card)
+  
+  if(draw_card == 2){
+    money = money + 200
+  }
+  
+  if(draw_card == 8){
+    money = money + 50
+  }
+  
+  if(draw_card == 12){
+    if(properties == 5){
+      money = money - 125
+    }
+    if(properties == 6){
+      money = money - 150
+    }
+  }
+  
+  if(draw_card == 13){
+    money = money - 15
+  }
+  
+  if(draw_card == 16){
+    money = money + 150
+  }
+}
+
+#Need to figure out how to exchange money between players
+Community_Chest_Money <- function(money){
+  money = money
+  draw_card <- sample(1:16, 1, replace = TRUE)
+  player_card <- Community_Chest$Community_Chest_Cards[draw_card]
+  print(player_card)
+  
+  if(draw_card == 1){
+    money = money + 200
+  }
+  
+  if(draw_card == 2){
+    money = money + 200
+  }
+  
+  if(draw_card == 3){
+    money = money - 50
+  }
+  
+  if(draw_card == 4){
+    money = money + 50
+  }
+  
+  if(draw_card == 7){
+    money = money + 100
+  }
+  
+  if(draw_card == 8){
+    money = money + 20
+  }
+  
+  if(draw_card == 10){
+    money = money + 100
+  }
+  
+  if(draw_card == 11){
+    money = money - 100
+  }
+  
+  if(draw_card == 12){
+    money = money - 50
+  }
+  
+  if(draw_card == 13){
+    money = money + 25
+  }
+  
+  if(draw_card == 15){
+    money = money + 10
+  }
+  
+  if(draw_card == 16){
+    money = money + 100
+  }
+}
+
+Chance
+Community_Chest
 ```
