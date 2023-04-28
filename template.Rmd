@@ -640,7 +640,10 @@ Drawing_Chance = function(location) {
   draw_card <- sample(1:16, 1, replace = TRUE)
   player_card <- Chance$Chance_Cards[draw_card]
   print(player_card)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 16e669dcbcb75355c5a6be7dbb66d5160ec8d15d
   
       if(draw_card == 1) {
         location = 1
@@ -714,10 +717,6 @@ Drawing_Chance = function(location) {
     return(location)
 }
 
-Drawing_Chance(8)
-Drawing_Chance(23)
-Drawing_Chance(37)
-
 Drawing_Community_Chest = function(location) {
   location = location
   draw_card_chest <- sample(1:16, 1, replace = TRUE)
@@ -740,9 +739,6 @@ Drawing_Community_Chest = function(location) {
   return(location)
 }
 
-Drawing_Community_Chest(3)
-Drawing_Community_Chest(18)
-Drawing_Community_Chest(34)
 
 lets_move3 = function(location) {
   dice_roll_1 <- sample(1:6, 1, replace = TRUE)
@@ -753,15 +749,19 @@ lets_move3 = function(location) {
   
     location = location + roll_total
     double3 = "false"
+<<<<<<< HEAD
   
   print("your roll total is...")
   print(roll_total)
+=======
+>>>>>>> 16e669dcbcb75355c5a6be7dbb66d5160ec8d15d
 
   if (location <= 40) {
       location = location
   } else {
       location = location - 40
   }
+<<<<<<< HEAD
    
   print("your location is...")
   print(location)
@@ -770,12 +770,23 @@ lets_move3 = function(location) {
     location = Drawing_Chance(location)
     print("your location is...")
     print(location)
+=======
+
+  
+  if(location == 8 || location == 23 || location == 27) {
+    location = Drawing_Chance(location)
+
+>>>>>>> 16e669dcbcb75355c5a6be7dbb66d5160ec8d15d
   }
   
   if(location == 3 || location == 18 || location == 34) {
     location = Drawing_Community_Chest(location)
+<<<<<<< HEAD
     print("your location is...")
     print(location)
+=======
+
+>>>>>>> 16e669dcbcb75355c5a6be7dbb66d5160ec8d15d
   }
     
   # first double roll -> roll again
@@ -842,15 +853,22 @@ lets_move3 = function(location) {
   }  
    
   location = location 
+<<<<<<< HEAD
   
   print("your location is...")
   print(location)
+=======
+>>>>>>> 16e669dcbcb75355c5a6be7dbb66d5160ec8d15d
   listdata <- (list(location, double3))
   return(listdata)
   
 }
 
 lets_move3(1)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 16e669dcbcb75355c5a6be7dbb66d5160ec8d15d
 
 lets_play3 = function(turns, players) {
   
@@ -863,9 +881,9 @@ lets_play3 = function(turns, players) {
   
     for (i in 1:turns) {
       
-        location = lets_move2(location)[[1]]
+        location = lets_move3(location)[[1]]
         location_data[i,j] <- as.integer(location)
-        double3data[i,j] <- lets_move2(double3)[[2]]
+        double3data[i,j] <- lets_move3(double3)[[2]]
         
       # deals with landing in jail from "go to jail" space and staying there for next 3 turns
       if (31 %in% location_data[i-1,j]) { # if you land on 31 (go to jail), next location is in jail (space 11)
@@ -909,6 +927,8 @@ lets_play3 = function(turns, players) {
   plot(density(all_spaces), xlim = c(0,40), col = "black")
   
 }
+
+lets_play3(1000,3)
 ```
 
 
@@ -933,5 +953,123 @@ freq
 ```{r student5}
 #hello
 dice_roll <- sum(sample(1:6, 2, replace = TRUE))
-dice_roll
+
+#Need to figure out how to exchange money between players
+Chance_Money <- function(money){
+  money = money
+  draw_card <- sample(1:16, 1, replace = TRUE)
+  player_card <- Chance$Chance_Cards[draw_card]
+  print(player_card)
+  
+  if(draw_card == 2){
+    money = money + 200
+  }
+  
+  if(draw_card == 8){
+    money = money + 50
+  }
+  
+  if(draw_card == 12){
+    if(properties == 5){
+      money = money - 125
+    }
+    if(properties == 6){
+      money = money - 150
+    }
+  }
+  
+  if(draw_card == 13){
+    money = money - 15
+  }
+  
+  if(draw_card == 16){
+    money = money + 150
+  }
+}
+
+#Need to figure out how to exchange money between players
+Community_Chest_Money <- function(money){
+  money = money
+  draw_card <- sample(1:16, 1, replace = TRUE)
+  player_card <- Community_Chest$Community_Chest_Cards[draw_card]
+  print(player_card)
+  
+  if(draw_card == 1){
+    money = money + 200
+  }
+  
+  if(draw_card == 2){
+    money = money + 200
+  }
+  
+  if(draw_card == 3){
+    money = money - 50
+  }
+  
+  if(draw_card == 4){
+    money = money + 50
+  }
+  
+  if(draw_card == 7){
+    money = money + 100
+  }
+  
+  if(draw_card == 8){
+    money = money + 20
+  }
+  
+  if(draw_card == 10){
+    money = money + 100
+  }
+  
+  if(draw_card == 11){
+    money = money - 100
+  }
+  
+  if(draw_card == 12){
+    money = money - 50
+  }
+  
+  if(draw_card == 13){
+    money = money + 25
+  }
+  
+  if(draw_card == 15){
+    money = money + 10
+  }
+  
+  if(draw_card == 16){
+    money = money + 100
+  }
+}
+
+Chance
+Community_Chest
 ```
+
+
+_Play a Game_
+- players funds
+  - adding to players funds
+  - subtracting from players funds
+  - player losing once funds = 0
+
+- buying properties
+- paying rent when landing on an owned property
+
+```{r}
+Players <- c("Player 1", "Player 2", "Player 3", "Player 4")
+Player_Bank <- c("1250", "1250", "1250", "1250")
+
+The_Players <- data.frame(Players, Player_Bank)
+The_Players
+
+monopolyBoard
+
+Property <- c("Mediterranean", "Baltic", "Reading Railroad", "Oriental", "Vermot", "Connecticut", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Tennessee", "New York", "Kentucky", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Pacific", "N. Carolina", "Pennsylvania", "Short Line Railroad", "Park Place", "Boardwalk")
+Property_Status <- c("Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned")
+
+The_Properties <- data.frame(Property, Property_Status)
+The_Properties
+```
+
