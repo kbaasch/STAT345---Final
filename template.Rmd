@@ -1073,8 +1073,9 @@ The_Players
 
 The_Players_Owned <- data.frame(Players, Owned_Spaces)
 The_Players_Owned <- The_Players_Owned %>% pivot_wider(names_from = Players, values_from = Owned_Spaces)
-The_Players_Owned
-
+The_Players_Owned[[1]]
+The_Players_Owned[[2]]
+The_Players_Owned[[3]]
 
 
 lets_play3 = function(turns, players) {
@@ -1085,7 +1086,7 @@ lets_play3 = function(turns, players) {
   for (j in 1:players) {
     location = 1
     double3 = 0
-  
+    
     
     for (i in 1:turns) {
       
