@@ -384,6 +384,8 @@ who_goes_first(4) # test function
 monopolyBoard <- read.csv("MonopolyBoard.csv", header = T)
 head(monopolyBoard)
 
+# This section is for question number 2
+
 # Kayleigh's lets_play function from above incorporating players and density plots
 # uses lets_move function from above
 # input: turns, # of turns to iterate through; players, number of players (2-4)
@@ -421,8 +423,65 @@ lets_play(100, 4)
 
 ```
 
+
 ```{r}
-# 3 -- including jail and double rolls
+who_goes_first2 <- function(num_players){
+  initial_rolls <- c()
+  for (i in 1:num_players) {
+    player_i_roll <- sum(sample(1:6, 2, replace=TRUE))
+    initial_rolls <- c(initial_rolls, player_i_roll) # vector of every player's roll
+#    print(paste("Player", i, "rolled", player_i_roll))
+  }
+  cat("\n")
+  if(sum(initial_rolls == max(initial_rolls)) >= 2){
+    while (sum(initial_rolls == max(initial_rolls)) >= 2) { # if players tied for highest number
+      tied_players <- which(initial_rolls==max(initial_rolls)) # identify which players tied
+#      print("It's a tie! Roll again")
+#      cat("\n")
+      tie_breaker_rolls <- c()
+      for (i in tied_players) { # tied players roll again
+       player_i_roll2 <- sum(sample(1:6, 2, replace=TRUE))
+       tie_breaker_rolls <- c(tie_breaker_rolls, player_i_roll2)
+#       print(paste("Player", i, "rolled", player_i_roll2))
+      }
+      initial_rolls <- tie_breaker_rolls
+      highest_roll <- max(tie_breaker_rolls)
+      highest_player2 <- tied_players[which(tie_breaker_rolls == highest_roll)]
+    }
+#    cat("\n")
+#    print(paste("Player", highest_player2, "goes first!"))
+  }
+  else {
+    highest_player <- which.max(initial_rolls) # who rolled the highest number
+#    print(paste("Player", highest_player, "goes first!"))
+#    return(highest_player)
+  
+    
+  # creating player order
+  player_order <- length(num_players)
+  player_order[1] <- as.integer(highest_player)
+
+ for (j in 2:num_players) {
+    
+  player_order[j] <- as.integer(player_order[j-1] + 1)
+  if (player_order[j] > num_players) {
+    player_order[j] <- 1
+  }
+ }
+  print(player_order)
+  }
+  
+  playerlist <- (list(highest_player, player_order))
+  return(playerlist)
+}
+
+#who_goes_first2(4)
+
+```
+
+
+```{r}
+# Question number 3 -- including jail and double rolls
 
 lets_move2 = function(location) {
   dice_roll_1 <- sample(1:6, 1, replace = TRUE)
@@ -493,19 +552,31 @@ lets_move2 = function(location) {
 
 
 
+# lets_play2 is currently set up to have each player go thru all their turns and then move onto the next player
+# probably need to fix this for question 5
+
+```
+
+```{r}
 
 lets_play2 = function(turns, players) {
+  
   
   location_data <- as.data.frame(matrix(nrow = turns, ncol = players)) # dataframe will keep data for locations of players for each turn
   double3data <- as.data.frame(matrix(nrow = turns, ncol = players)) # dataframe will say "true" if player double rolled 3x (which lands them in jail) and "false" if they didn't double roll 3x
   
-  for (j in 1:players) { # rotates through each player
+    # puts players in order
+    colnames(location_data) <- who_goes_first2(players)[[2]]
+  
     location = 1 # each player starts at location 1
+    location_data[1,] <- location
     double3 = 0 # initializing "double3" which will be later assigned a "true" or "false" based on if player double rolled 3x
   
-    for (i in 1:turns) { # iterates through number of turns
+    for (i in 2:turns) { # iterates through number of turns
       
-        location = lets_move2(location)[[1]] # takes location from lets_move2 function and assigns it to location
+        for (j in 1:players) { # rotates through each player
+          
+        location = lets_move2(location_data[i-1,j])[[1]] # takes location from lets_move2 function and assigns it to location
         location_data[i,j] <- as.integer(location) # puts location value into the dataframe of locations for each player
         double3data[i,j] <- lets_move2(double3)[[2]] # takes "true" or "false" value from double3 and adds it to double3data dataframe
         
@@ -535,7 +606,7 @@ lets_play2 = function(turns, players) {
         
     }
   }
-  #print(location_data)
+  print(location_data)
   
   # creates density plot of frequency of landing on each space for each player
   plot(density(location_data[,1]), xlim = c(0,40), col = "black")
@@ -552,12 +623,10 @@ lets_play2 = function(turns, players) {
   
 }
  
-lets_play2(1000, 3)
+lets_play2(10, 3)
 
 # how should we go about recording spaces landed on when double rolls occur?
 
-Chance
-Community_Chest
 ```
 
 ```{r}
@@ -567,11 +636,82 @@ Community_Chest
 Chance
 
 Drawing_Chance = function(location) {
-  location = 8 || 23 || 27
+  location = location
   draw_card <- sample(1:16, 1, replace = TRUE)
-  print(draw_card)
   player_card <- Chance$Chance_Cards[draw_card]
-  player_card
+  print(player_card)
+
+  
+      if(draw_card == 1) {
+        location = 1
+      }
+      
+      if(draw_card == 2) {
+        location = 1
+      }
+      
+      if(draw_card == 3) {
+        location = 25
+      }
+  
+      if(draw_card == 4){
+        location = 12
+      }
+    
+      if(draw_card == 5){
+        if(location >= 37 && location <= 5){
+              location = 6
+            } else {
+              if (location >= 6 && location <= 15){
+                location = 16
+              } else {
+                if(location >= 16 && location <= 25){
+                  location = 26
+                } else {
+                  location = 36
+                }
+              }
+            }
+    }
+  
+    if(draw_card == 6){
+        if(location >= 37 && location <= 5){
+              location = 6
+            } else {
+              if (location >= 6 && location <= 15){
+                location = 16
+              } else {
+                if(location >= 16 && location <= 25){
+                  location = 26
+                } else {
+                  location = 36
+                }
+              }
+            }
+    }
+  
+    if(draw_card == 7){
+        if(location >= 29 && location <= 12){
+              location = 13
+            } else {
+              location = 29
+    }
+  }
+  
+    if(draw_card == 11) {
+      location = 11
+    }
+  
+    if(draw_card == 14) {
+      location = 6
+    }
+  
+    if(draw_card == 10) {
+      location = location - 3
+    }
+  
+    location = location
+    return(location)
 }
 
 Drawing_Chance(8)
@@ -579,11 +719,25 @@ Drawing_Chance(23)
 Drawing_Chance(37)
 
 Drawing_Community_Chest = function(location) {
-  location = 3 || 18 || 34
+  location = location
   draw_card_chest <- sample(1:16, 1, replace = TRUE)
-  print(draw_card_chest)
   player_card_chest <- Community_Chest$Community_Chest_Cards[draw_card_chest]
-  player_card_chest
+  print(player_card_chest)
+  print(location)
+  
+  if (draw_card_chest == 1) {
+    location = 1
+  } else {
+    if (draw_card_chest == 6) {
+    location = 11
+    } else {
+      location = location
+    }
+  
+  }
+  
+  location = location 
+  return(location)
 }
 
 Drawing_Community_Chest(3)
@@ -599,6 +753,30 @@ lets_move3 = function(location) {
   
     location = location + roll_total
     double3 = "false"
+  
+  print("your roll total is...")
+  print(roll_total)
+
+  if (location <= 40) {
+      location = location
+  } else {
+      location = location - 40
+  }
+   
+  print("your location is...")
+  print(location)
+  
+  if(location == 8 || location == 23 || location == 27) {
+    location = Drawing_Chance(location)
+    print("your location is...")
+    print(location)
+  }
+  
+  if(location == 3 || location == 18 || location == 34) {
+    location = Drawing_Community_Chest(location)
+    print("your location is...")
+    print(location)
+  }
     
   # first double roll -> roll again
   if (roll_double == TRUE) {
@@ -610,11 +788,21 @@ lets_move3 = function(location) {
     
     location = location + roll_total2
     double3 = "false"
+    print("1 double")
     
     if (location <= 40) {
       location = location
     } else {
       location = location - 40
+    }
+    
+    
+    if(location == 8 || location == 23 || location == 27) {
+    location = Drawing_Chance(location)
+    }
+  
+  if(location == 3 || location == 18 || location == 34) {
+    location = Drawing_Community_Chest(location)
     }
      
       # second double roll -> roll again
@@ -627,6 +815,7 @@ lets_move3 = function(location) {
     
         location = location + roll_total3
         double3 = "false"
+        print("2 doubles")
         
         if (location <= 40) {
           location = location
@@ -634,25 +823,34 @@ lets_move3 = function(location) {
           location = location - 40
         }
         
+        if(location == 8 || location == 23 || location == 27) {
+          location = Drawing_Chance(location)
+        }
+  
+        if(location == 3 || location == 18 || location == 34) {
+          location = Drawing_Community_Chest(location)
+         
+        }
+        
         # third double roll -> go to jail
           if (roll_double3 == TRUE) {
             location = monopolyBoard$spaces[monopolyBoard$name == "Jail"]
             double3 = "true"
+            print("three doubles")
           }
       }
   }  
-    
-  if (location <= 40) {
-    location = location
-  } else {
-    location = location - 40
-  }
+   
+  location = location 
   
+  print("your location is...")
+  print(location)
   listdata <- (list(location, double3))
   return(listdata)
   
 }
 
+lets_move3(1)
 
 lets_play3 = function(turns, players) {
   
