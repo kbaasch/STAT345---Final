@@ -167,11 +167,9 @@ lets_move = function(location) {
   
   space = monopolyBoard$name[monopolyBoard$spaces == location]
   
-  print("You're moving forward...")
-  print(roll_total)
+  print(paste("You're moving forward...", roll_total))
   
-  print("You're on space...")
-  print(location)
+  print(paste("You're on space...", location))
   
   #print(space) #This prints out the name of the space that they land on. 
 }
@@ -322,16 +320,22 @@ lets_move2 = function(location) {
 
 lets_play2 = function(turns, players) {
   
+  
   location_data <- as.data.frame(matrix(nrow = turns, ncol = players)) # dataframe will keep data for locations of players for each turn
   double3data <- as.data.frame(matrix(nrow = turns, ncol = players)) # dataframe will say "true" if player double rolled 3x (which lands them in jail) and "false" if they didn't double roll 3x
   
-  for (j in 1:players) { # rotates through each player
+    # puts players in order
+    colnames(location_data) <- who_goes_first2(players)[[2]]
+  
     location = 1 # each player starts at location 1
+    location_data[1,] <- location
     double3 = 0 # initializing "double3" which will be later assigned a "true" or "false" based on if player double rolled 3x
   
-    for (i in 1:turns) { # iterates through number of turns
+    for (i in 2:turns) { # iterates through number of turns
       
-        location = lets_move2(location)[[1]] # takes location from lets_move2 function and assigns it to location
+        for (j in 1:players) { # rotates through each player
+          
+        location = lets_move2(location_data[i-1,j])[[1]] # takes location from lets_move2 function and assigns it to location
         location_data[i,j] <- as.integer(location) # puts location value into the dataframe of locations for each player
         double3data[i,j] <- lets_move2(double3)[[2]] # takes "true" or "false" value from double3 and adds it to double3data dataframe
         
@@ -361,7 +365,7 @@ lets_play2 = function(turns, players) {
         
     }
   }
-  #print(location_data)
+  print(location_data)
   
   # creates density plot of frequency of landing on each space for each player
   plot(density(location_data[,1]), xlim = c(0,40), col = "black")
@@ -504,9 +508,7 @@ lets_move3 = function(location) {
   
     location = location + roll_total
     double3 = "false"
-  
-  print("your roll total is...")
-  print(roll_total)
+
 
   if (location <= 40) {
       location = location
@@ -514,19 +516,13 @@ lets_move3 = function(location) {
       location = location - 40
   }
    
-  print("your location is...")
-  print(location)
   
   if(location == 8 || location == 23 || location == 27) {
     location = Drawing_Chance(location)
-    print("your location is...")
-    print(location)
   }
   
   if(location == 3 || location == 18 || location == 34) {
     location = Drawing_Community_Chest(location)
-    print("your location is...")
-    print(location)
   }
     
   # first double roll -> roll again
@@ -539,7 +535,6 @@ lets_move3 = function(location) {
     
     location = location + roll_total2
     double3 = "false"
-    print("1 double")
     
     if (location <= 40) {
       location = location
@@ -566,7 +561,6 @@ lets_move3 = function(location) {
     
         location = location + roll_total3
         double3 = "false"
-        print("2 doubles")
         
         if (location <= 40) {
           location = location
@@ -587,15 +581,13 @@ lets_move3 = function(location) {
           if (roll_double3 == TRUE) {
             location = monopolyBoard$spaces[monopolyBoard$name == "Jail"]
             double3 = "true"
-            print("three doubles")
+
           }
       }
   }  
    
   location = location 
-  
-  print("your location is...")
-  print(location)
+
   listdata <- (list(location, double3))
   return(listdata)
   
