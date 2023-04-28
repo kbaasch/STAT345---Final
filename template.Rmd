@@ -629,6 +629,16 @@ lets_play2(10, 3)
 
 ```
 
+
+```{r}
+
+# Figure out how to have players pay and recieve money from landing on chance and community chest spaces
+
+
+```
+
+
+
 ```{r}
 #4 - Kayleigh and Maddie 
 #Chance - spaces 8, 23, 37
