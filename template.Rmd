@@ -425,6 +425,7 @@ lets_play(100, 4)
 
 
 ```{r}
+
 who_goes_first2 <- function(num_players){
   initial_rolls <- c()
   for (i in 1:num_players) {
@@ -475,7 +476,7 @@ who_goes_first2 <- function(num_players){
   return(playerlist)
 }
 
-#who_goes_first2(4)
+who_goes_first2(4)
 
 ```
 
@@ -551,11 +552,8 @@ lets_move2 = function(location) {
 }
 
 
-
-# lets_play2 is currently set up to have each player go thru all their turns and then move onto the next player
-# probably need to fix this for question 5
-
 ```
+
 
 ```{r}
 
@@ -623,7 +621,8 @@ lets_play2 = function(turns, players) {
   
 }
  
-lets_play2(10, 3)
+lets_play2(10, 4)
+
 
 # how should we go about recording spaces landed on when double rolls occur?
 
@@ -953,6 +952,10 @@ freq
 ```{r student5}
 #hello
 dice_roll <- sum(sample(1:6, 2, replace = TRUE))
+<<<<<<< HEAD
+=======
+dice_roll
+>>>>>>> b71bf73135a1f47cbf6a7eb394c790ea50280a06
 
 #Need to figure out how to exchange money between players
 Chance_Money <- function(money){
@@ -1045,6 +1048,35 @@ Community_Chest_Money <- function(money){
 
 Chance
 Community_Chest
+<<<<<<< HEAD
+=======
+```
+
+_Play a Game_
+- players funds
+  - adding to players funds
+  - subtracting from players funds
+  - player losing once funds = 0
+
+- buying properties
+- paying rent when landing on an owned property
+
+```{r}
+Players <- c("Player 1", "Player 2", "Player 3", "Player 4")
+Player_Bank <- c("1250", "1250", "1250", "1250")
+
+The_Players <- data.frame(Players, Player_Bank)
+The_Players
+
+monopolyBoard
+
+Property <- c("Mediterranean", "Baltic", "Reading Railroad", "Oriental", "Vermot", "Connecticut", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Tennessee", "New York", "Kentucky", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Pacific", "N. Carolina", "Pennsylvania", "Short Line Railroad", "Park Place", "Boardwalk")
+Property_Status <- c("Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned")
+
+The_Properties <- data.frame(Property, Property_Status)
+The_Properties
+
+>>>>>>> b71bf73135a1f47cbf6a7eb394c790ea50280a06
 ```
 
 
