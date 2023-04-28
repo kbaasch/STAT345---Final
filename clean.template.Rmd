@@ -190,7 +190,7 @@ lets_play = function(turns) {
   location = 1
   print("Starting Location: GO!")
   for (i in 1:turns) {
-    location = lets_move(location)
+    location = as.integer(lets_move(location))
   }
   print("You've landed on...")
   return(location)
