@@ -132,9 +132,9 @@ library(ggplot2)
       - complete no type of action
     - **This tile cannot be bought and cannot generate a profit**
         
-- After all players have rolled and moved, the next round begins and the process previously state is repeated.
+- After all players have rolled and moved, the next round begins and the process previously stated is repeated.
 
-- The game ends when three of the four players run out of money.
+- The game ends when three of the four players run out of money and the player remaining wins.
 
 ## Let's Get Moving!
 ```{r}
