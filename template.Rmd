@@ -639,10 +639,7 @@ Drawing_Chance = function(location) {
   draw_card <- sample(1:16, 1, replace = TRUE)
   player_card <- Chance$Chance_Cards[draw_card]
   print(player_card)
-<<<<<<< HEAD
 
-=======
->>>>>>> 16e669dcbcb75355c5a6be7dbb66d5160ec8d15d
   
       if(draw_card == 1) {
         location = 1
@@ -748,19 +745,18 @@ lets_move3 = function(location) {
   
     location = location + roll_total
     double3 = "false"
-<<<<<<< HEAD
+
   
   print("your roll total is...")
   print(roll_total)
-=======
->>>>>>> 16e669dcbcb75355c5a6be7dbb66d5160ec8d15d
+
 
   if (location <= 40) {
       location = location
   } else {
       location = location - 40
   }
-<<<<<<< HEAD
+
    
   print("your location is...")
   print(location)
@@ -769,23 +765,21 @@ lets_move3 = function(location) {
     location = Drawing_Chance(location)
     print("your location is...")
     print(location)
-=======
+
 
   
   if(location == 8 || location == 23 || location == 27) {
     location = Drawing_Chance(location)
 
->>>>>>> 16e669dcbcb75355c5a6be7dbb66d5160ec8d15d
+
   }
   
   if(location == 3 || location == 18 || location == 34) {
     location = Drawing_Community_Chest(location)
-<<<<<<< HEAD
+
     print("your location is...")
     print(location)
-=======
 
->>>>>>> 16e669dcbcb75355c5a6be7dbb66d5160ec8d15d
   }
     
   # first double roll -> roll again
@@ -852,22 +846,18 @@ lets_move3 = function(location) {
   }  
    
   location = location 
-<<<<<<< HEAD
+
   
   print("your location is...")
   print(location)
-=======
->>>>>>> 16e669dcbcb75355c5a6be7dbb66d5160ec8d15d
+
   listdata <- (list(location, double3))
   return(listdata)
   
 }
 
 lets_move3(1)
-<<<<<<< HEAD
-=======
 
->>>>>>> 16e669dcbcb75355c5a6be7dbb66d5160ec8d15d
 
 lets_play3 = function(turns, players) {
   
@@ -956,10 +946,8 @@ freq
 ```{r student5}
 #hello
 dice_roll <- sum(sample(1:6, 2, replace = TRUE))
-<<<<<<< HEAD
-=======
 dice_roll
->>>>>>> b71bf73135a1f47cbf6a7eb394c790ea50280a06
+
 
 #Need to figure out how to exchange money between players
 Chance_Money <- function(money){
@@ -1052,8 +1040,7 @@ Community_Chest_Money <- function(money){
 
 Chance
 Community_Chest
-<<<<<<< HEAD
-=======
+
 ```
 
 _Play a Game_
@@ -1080,7 +1067,7 @@ Property_Status <- c("Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Uno
 The_Properties <- data.frame(Property, Property_Status)
 The_Properties
 
->>>>>>> b71bf73135a1f47cbf6a7eb394c790ea50280a06
+
 ```
 
 
