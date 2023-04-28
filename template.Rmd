@@ -959,7 +959,10 @@ The_Players
 
 monopolyBoard
 
-Property <- c("Mediterranean", "Baltic", "Reading Railroad", "Oriental", "Vermot", "Connecticut", "St. Charles", "Electriv Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Tennessee", "New York", "Kentucky", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Pacific", "N. Carolina", "Pennsylvania", "Short Line Railroad", "Park Place", "Boardwalk")
-Property_Status <- c("Unowned")
+Property <- c("Mediterranean", "Baltic", "Reading Railroad", "Oriental", "Vermot", "Connecticut", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Tennessee", "New York", "Kentucky", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Pacific", "N. Carolina", "Pennsylvania", "Short Line Railroad", "Park Place", "Boardwalk")
+Property_Status <- c("Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned")
+
+The_Properties <- data.frame(Property, Property_Status)
+The_Properties
 ```
 
