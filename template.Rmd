@@ -954,7 +954,7 @@ _Play a Game_
 Players <- c("Player 1", "Player 2", "Player 3", "Player 4")
 Player_Bank <- c("1250", "1250", "1250", "1250")
 
-The_Players <- data.frame(Player, Player_Bank)
+The_Players <- data.frame(Players, Player_Bank)
 The_Players
 
 monopolyBoard
