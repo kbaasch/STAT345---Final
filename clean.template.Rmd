@@ -190,7 +190,7 @@ lets_play = function(turns) {
   location = 1
   print("Starting Location: GO!")
   for (i in 1:turns) {
-    location = lets_move(location)
+    location = as.integer(lets_move(location))
   }
   print("You've landed on...")
   return(location)
@@ -315,7 +315,58 @@ lets_move2 = function(location) {
   
 }
 
+#the function "who_goes_first" simulates the initial roll before the game begins in order to determine which player goes first
+# input is a number of how many players are going to be playing
+# output is a list of players in order of who goes first
+who_goes_first2 <- function(num_players){
+  initial_rolls <- c()
+  for (i in 1:num_players) {
+    player_i_roll <- sum(sample(1:6, 2, replace=TRUE))
+    initial_rolls <- c(initial_rolls, player_i_roll) # vector of every player's roll
+#    print(paste("Player", i, "rolled", player_i_roll))
+  }
+  cat("\n")
+  if(sum(initial_rolls == max(initial_rolls)) >= 2){
+    while (sum(initial_rolls == max(initial_rolls)) >= 2) { # if players tied for highest number
+      tied_players <- which(initial_rolls==max(initial_rolls)) # identify which players tied
+#      print("It's a tie! Roll again")
+#      cat("\n")
+      tie_breaker_rolls <- c()
+      for (i in tied_players) { # tied players roll again
+       player_i_roll2 <- sum(sample(1:6, 2, replace=TRUE))
+       tie_breaker_rolls <- c(tie_breaker_rolls, player_i_roll2)
+#       print(paste("Player", i, "rolled", player_i_roll2))
+      }
+      initial_rolls <- tie_breaker_rolls
+      highest_roll <- max(tie_breaker_rolls)
+      highest_player2 <- tied_players[which(tie_breaker_rolls == highest_roll)]
+    }
+#    cat("\n")
+#    print(paste("Player", highest_player2, "goes first!"))
+  }
+  else {
+    highest_player <- which.max(initial_rolls) # who rolled the highest number
+#    print(paste("Player", highest_player, "goes first!"))
+#    return(highest_player)
+  
+    
+  # creating player order
+  player_order <- length(num_players)
+  player_order[1] <- as.integer(highest_player)
 
+ for (j in 2:num_players) {
+    
+  player_order[j] <- as.integer(player_order[j-1] + 1)
+  if (player_order[j] > num_players) {
+    player_order[j] <- 1
+  }
+ }
+  print(player_order)
+  }
+  
+  playerlist <- (list(highest_player, player_order))
+  return(playerlist)
+}
 
 
 lets_play2 = function(turns, players) {
@@ -600,13 +651,17 @@ lets_play3 = function(turns, players) {
   location_data <- as.data.frame(matrix(nrow = turns, ncol = players))
   double3data <- as.data.frame(matrix(nrow = turns, ncol = players))
   
-  for (j in 1:players) {
+    colnames(location_data) <- who_goes_first2(players)[[2]]
+  
     location = 1
+    location_data[1,] <- location
     double3 = 0
   
-    for (i in 1:turns) {
+    for (i in 2:turns) {
       
-        location = lets_move3(location)[[1]]
+        for (j in 1:players) {
+          
+        location = lets_move3(location_data[i-1,j])[[1]]
         location_data[i,j] <- as.integer(location)
         double3data[i,j] <- lets_move3(double3)[[2]]
         
