@@ -417,7 +417,6 @@ for (j in 1:players) {
   # creates density plot for total frequency landing on each space (all players spaces included)
   all_spaces <- as.vector(as.matrix(location_data))
   plot(density(all_spaces), xlim = c(0,40), col = "black")
-  
 }
 lets_play(100, 4)
 
@@ -548,7 +547,9 @@ lets_move2 = function(location) {
   # if you need to access double3, use lets_move2(double3)[[2]]
   return(listdata)
   
+  listdata %>% ggplot() + geom_histogram(mapping=aes(x="location", y="amounts"))
 }
+
 
 
 
