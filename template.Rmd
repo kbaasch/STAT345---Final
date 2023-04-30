@@ -547,10 +547,7 @@ lets_move2 = function(location) {
   # if you need to access double3, use lets_move2(double3)[[2]]
   return(listdata)
   
-  listdata %>% ggplot() + geom_histogram(mapping=aes(x="location", y="amounts"))
 }
-
-
 
 
 # lets_play2 is currently set up to have each player go thru all their turns and then move onto the next player
@@ -587,7 +584,7 @@ lets_play2 = function(turns, players) {
         location_data[i,j] <- as.integer(location) # new location is 11
       } else if (11 %in% location_data[i-1,j] & 31 %in% location_data[i-2,j]) { # if you were on space 11 last turn AND you were on space 31 2 turns ago, you stay in jail (space 11) for turn i
         location <- 11
-        location_data[i,j] <- as.integer(location)
+        location_data[i,j] <- as.integer(location)  
       } else if (11 %in% location_data[i-2,j] & 31 %in% location_data[i-3,j]) {
         location <- 11
         location_data[i,j] <- as.integer(location)
@@ -625,6 +622,8 @@ lets_play2 = function(turns, players) {
 }
  
 lets_play2(10, 3)
+
+location_data
 
 # how should we go about recording spaces landed on when double rolls occur?
 
@@ -908,6 +907,7 @@ lets_play3 = function(turns, players) {
   
   # creates density plot of frequency of landing on each space for each player
   plot(density(location_data[,1]), xlim = c(0,40), col = "black")
+  plot(location_data[,1], xlim= c(0,40), col="black", type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
   
   colors <- c("red", "blue", "green")
   
