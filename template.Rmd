@@ -1512,11 +1512,10 @@ lets_play4 = function(turns, players) {
       
         for (j in 1:players) {
           
-        location = lets_move3(location_data[i-1,j])[[1]]
+        location = lets_move4(location_data[i-1,j])[[1]]
         location_data[i,j] <- as.integer(location)
         double3data[i,j] <- lets_move4(double3)[[2]]
         print(j)
-        banks = 
         
       # deals with landing in jail from "go to jail" space and staying there for next 3 turns
       if (31 %in% location_data[i-1,j]) { # if you land on 31 (go to jail), next location is in jail (space 11)
@@ -1547,6 +1546,7 @@ lets_play4 = function(turns, players) {
     
   print(location_data)
   print(double3data)
+  print(The_Players)
     
   # creates density plot of frequency of landing on each space for each player
   plot(density(location_data[,1]), xlim = c(0,40), col = "black")
