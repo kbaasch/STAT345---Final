@@ -1294,18 +1294,22 @@ Property_Statuses <- data.frame(Property, Space, Owned_By_Player)
 Property_Statuses
 
 
-Updating_Player_Bank <- function(location) {
+Updating_Player_Bank <- function(location, j) {
   if(location == 2 || location == 4 || location == 6 || location == 7 || location == 9 || location == 10 || location == 12 || location == 13 || location == 14 || location == 15 || location == 16 || location == 17 || location == 19 || location == 20 || location == 22 || location == 24 || location == 25 || location == 26 || location == 27 || location == 28 || location == 29 || location == 30 || location == 32 || location == 33 || location == 35 || location == 36 || location == 38 || location == 40){
+    
     location = location
     spot <- which(Property_Statuses$Space == location)
     cost <- which(monopolyBoard$spaces == location)
     owned_by_player <- Property_Statuses$Owned_By_Player[spot]
+    
     The_Players$Player_Bank[owned_by_player] <- The_Players$Player_Bank[owned_by_player] + monopolyBoard$cost[cost]
-    The_Players$Player_Bank[owned_by_player]
+    
+    The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$cost[cost]
+    
     The_Players
   }
 }
 
-Updating_Player_Bank(12)
+Updating_Player_Bank(12, 3)
 ```
 
