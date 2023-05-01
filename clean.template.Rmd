@@ -734,12 +734,15 @@ Updating_Player_Bank <- function(location) {
     location = location
     spot <- which(Property_Statuses$Space == location)
     cost <- which(monopolyBoard$spaces == location)
-    player <- Property_Statuses$Owned_By_Player[spot]
-    The_Players$Player_Bank[player] <- The_Players$Player_Bank[player] + monopolyBoard$cost[cost]
-    The_Players$Player_Bank[player]
+    owned_by_player <- Property_Statuses$Owned_By_Player[spot]
+    The_Players$Player_Bank[owned_by_player] <- The_Players$Player_Bank[owned_by_player] + monopolyBoard$cost[cost]
+    The_Players$Player_Bank[owned_by_player]
   }
 }
 
+Updating_Player_Bank(12)
+
+The_Players
 ```
 
 
