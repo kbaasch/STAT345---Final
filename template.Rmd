@@ -703,7 +703,7 @@ Drawing_Chance = function(location) {
       if(draw_card == 4){
         location = 12
       }
- ###################   
+  
       if(draw_card == 5){
         if(location >= 37 && location <= 5){
               location = 6
