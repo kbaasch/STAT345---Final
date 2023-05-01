@@ -1111,45 +1111,7 @@ _Play a Game_
 - paying rent when landing on an owned property
 
 ```{r}
-Players <- c("Player 1", "Player 2", "Player 3", "Player 4")
-Player_Bank <- c("1250", "1250", "1250", "1250")
-
-The_Players <- data.frame(Players, Player_Bank)
-The_Players
-
-monopolyBoard
-
-Property <- c("Mediterranean", "Baltic", "Reading Railroad", "Oriental", "Vermot", "Connecticut", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Tennessee", "New York", "Kentucky", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Pacific", "N. Carolina", "Pennsylvania", "Short Line Railroad", "Park Place", "Boardwalk")
-Property_Status <- c("Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned")
-
-The_Properties <- data.frame(Property, Property_Status)
-The_Properties
-
-```
-
-```{r}
 library(tidyverse)
-assigning_properties <- function( ){
-  smpl <- sample(1:28, 28, replace = FALSE)
-  smpl
-  property_order <- data.frame(smpl)
-  property_order
-}
-
-Owned_Spaces <- sample(1:28, 28, replace = FALSE)
-Owned_Spaces
-Players <- c("Player 1", "Player 2", "Player 3", "Player 4")
-Player_Bank <- c("1250", "1250", "1250", "1250")
-
-The_Players <- data.frame(Players, Player_Bank)
-The_Players
-
-The_Players_Owned <- data.frame(Players, Owned_Spaces)
-The_Players_Owned <- The_Players_Owned %>% pivot_wider(names_from = Players, values_from = Owned_Spaces)
-
-The_Players_Owned[[1]]
-The_Players_Owned[[2]]
-The_Players_Owned[[3]]
 ```
 
 ```{r}
@@ -1172,9 +1134,9 @@ Updating_Player_Bank <- function(location, j) {
     cost <- which(monopolyBoard$spaces == location)
     owned_by_player <- Property_Statuses$Owned_By_Player[spot]
     
-    The_Players$Player_Bank[owned_by_player] <- The_Players$Player_Bank[owned_by_player] + monopolyBoard$cost[cost]
+    The_Players$Player_Bank[owned_by_player] <- The_Players$Player_Bank[owned_by_player] + monopolyBoard$rent_0[cost]
     
-    The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$cost[cost]
+    The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$rent_0[cost]
     
     The_Players
   }
