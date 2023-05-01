@@ -945,12 +945,14 @@ Chance_Money <- function(Player_Bank){
   player_card <- Chance$Chance_Cards[draw_card]
   print(player_card)
   
+  #Advance to Go (Collect $200)
   if(draw_card == 2){
     Player_Bank = Player_Bank + 200
   }
+  
   #Advance to Illinois Ave. If you pass Go collect $200
   if(draw_card == 3){
-    if(location > 25 && location <= 40){
+    if(location > 25){
       Player_Bank = Player_Bank + 200
     }else{
       Player_Bank = Player_Bank
@@ -958,25 +960,34 @@ Chance_Money <- function(Player_Bank){
   }
   
   #Advance to St. Charles Place. If you pass Go, collect $200
+  if(draw_card == 4){
+    if(location > 13 ){
+      Player_Bank = Player_Bank + 200
+    }else{
+      Player_Bank = Player_Bank
+    }
+  }
   
-  
+  #Bank pays you dividend of $50
   if(draw_card == 8){
     Player_Bank = Player_Bank + 50
   }
   
-  if(draw_card == 12){
-    if(properties == 5){
-      Player_Bank = Player_Bank - 125
-    }
-    if(properties == 6){
-      Player_Bank = Player_Bank - 150
-    }
-  }
-  
+  #Speeding fine $15
   if(draw_card == 13){
     Player_Bank = Player_Bank - 15
   }
   
+  #Take a trip to Reading Railroad. If you pass Go, collect $200
+  if(draw_card == 14){
+    if(location > 6){
+      Player_Bank = Player_Bank + 200
+    }else{
+      Player_Bank = Player_Bank
+    }
+  }
+  
+  #Your building loan matures. Collect $150
   if(draw_card == 16){
     Player_Bank = Player_Bank + 150
   }
