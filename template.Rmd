@@ -631,8 +631,44 @@ location_data
 
 
 ```{r}
-
+# olivia
 # Figure out how to have players pay and recieve money from landing on chance and community chest spaces
+
+     if(draw_card == 5){
+        if(location >= 37 && location <= 5){
+              location = 6
+              
+              if 
+              
+            } else {
+              if (location >= 6 && location <= 15){
+                location = 16
+              } else {
+                if(location >= 16 && location <= 25){
+                  location = 26
+                } else {
+                  location = 36
+                }
+              }
+            }
+    }
+  
+    if(draw_card == 6){
+        if(location >= 37 && location <= 5){
+              location = 6
+            } else {
+              if (location >= 6 && location <= 15){
+                location = 16
+              } else {
+                if(location >= 16 && location <= 25){
+                  location = 26
+                } else {
+                  location = 36
+                }
+              }
+            }
+    }
+
 
 
 ```
@@ -667,7 +703,7 @@ Drawing_Chance = function(location) {
       if(draw_card == 4){
         location = 12
       }
-    
+  
       if(draw_card == 5){
         if(location >= 37 && location <= 5){
               location = 6
@@ -946,12 +982,14 @@ Chance_Money <- function(Player_Bank){
   player_card <- Chance$Chance_Cards[draw_card]
   print(player_card)
   
+  #Advance to Go (Collect $200)
   if(draw_card == 2){
     Player_Bank = Player_Bank + 200
   }
+  
   #Advance to Illinois Ave. If you pass Go collect $200
   if(draw_card == 3){
-    if(location > 25 && location <= 40){
+    if(location > 25){
       Player_Bank = Player_Bank + 200
     }else{
       Player_Bank = Player_Bank
@@ -959,25 +997,34 @@ Chance_Money <- function(Player_Bank){
   }
   
   #Advance to St. Charles Place. If you pass Go, collect $200
+  if(draw_card == 4){
+    if(location > 13 ){
+      Player_Bank = Player_Bank + 200
+    }else{
+      Player_Bank = Player_Bank
+    }
+  }
   
-  
+  #Bank pays you dividend of $50
   if(draw_card == 8){
     Player_Bank = Player_Bank + 50
   }
   
-  if(draw_card == 12){
-    if(properties == 5){
-      Player_Bank = Player_Bank - 125
-    }
-    if(properties == 6){
-      Player_Bank = Player_Bank - 150
-    }
-  }
-  
+  #Speeding fine $15
   if(draw_card == 13){
     Player_Bank = Player_Bank - 15
   }
   
+  #Take a trip to Reading Railroad. If you pass Go, collect $200
+  if(draw_card == 14){
+    if(location > 6){
+      Player_Bank = Player_Bank + 200
+    }else{
+      Player_Bank = Player_Bank
+    }
+  }
+  
+  #Your building loan matures. Collect $150
   if(draw_card == 16){
     Player_Bank = Player_Bank + 150
   }
@@ -990,50 +1037,62 @@ Community_Chest_Money <- function(Player_Bank){
   player_card <- Community_Chest$Community_Chest_Cards[draw_card]
   print(player_card)
   
+  #Advance to Go (Collect $200)
   if(draw_card == 1){
     Player_Bank = Player_Bank + 200
   }
   
+  #Bank error in your favor. Collect $200
   if(draw_card == 2){
     Player_Bank = Player_Bank + 200
   }
   
+  #Doctor’s fee. Pay $50
   if(draw_card == 3){
     Player_Bank = Player_Bank - 50
   }
   
+  #From sale of stock you get $50
   if(draw_card == 4){
     Player_Bank = Player_Bank + 50
   }
   
+  #Holiday fund matures. Receive $100
   if(draw_card == 7){
     Player_Bank = Player_Bank + 100
   }
   
+  #Income tax refund. Collect $20
   if(draw_card == 8){
     Player_Bank = Player_Bank + 20
   }
   
+  #Life insurance matures. Collect $100
   if(draw_card == 10){
     Player_Bank = Player_Bank + 100
   }
   
+  #Pay hospital fees of $100
   if(draw_card == 11){
     Player_Bank = Player_Bank - 100
   }
   
+  #Pay school fees of $50
   if(draw_card == 12){
     Player_Bank = Player_Bank - 50
   }
   
+  #Receive $25 consultancy fee
   if(draw_card == 13){
     Player_Bank = Player_Bank + 25
   }
   
+  #You have won second prize in a beauty contest. Collect $10
   if(draw_card == 15){
     Player_Bank = Player_Bank + 10
   }
   
+  #You inherit $100
   if(draw_card == 16){
     Player_Bank = Player_Bank + 100
   }
@@ -1053,62 +1112,373 @@ _Play a Game_
 - paying rent when landing on an owned property
 
 ```{r}
-Players <- c("Player 1", "Player 2", "Player 3", "Player 4")
-Player_Bank <- c("1250", "1250", "1250", "1250")
-
-The_Players <- data.frame(Players, Player_Bank)
-The_Players
-
-monopolyBoard
-
-Property <- c("Mediterranean", "Baltic", "Reading Railroad", "Oriental", "Vermot", "Connecticut", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Tennessee", "New York", "Kentucky", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Pacific", "N. Carolina", "Pennsylvania", "Short Line Railroad", "Park Place", "Boardwalk")
-Property_Status <- c("Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned", "Unowned")
-
-The_Properties <- data.frame(Property, Property_Status)
-The_Properties
-
+library(tidyverse)
 ```
 
 ```{r}
-library(tidyverse)
-assigning_properties <- function( ){
-  smpl <- sample(1:28, 28, replace = FALSE)
-  smpl
-  property_order <- data.frame(smpl)
-  property_order
+Players <- c("Player 1", "Player 2", "Player 3", "Player 4")
+Player_Bank <- c(1250, 1250, 1250, 1250)
+The_Players <- data.frame(Players, Player_Bank)
+
+Property <- c("Mediterranean", "Baltic", "Reading Railroad", "Oriental", "Vermot", "Connecticut", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Tennessee", "New York", "Kentucky", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Pacific", "N. Carolina", "Pennsylvania", "Short Line Railroad", "Park Place", "Boardwalk")
+Owned_By_Player <- sample(1:4, 28, replace = TRUE)
+Space <- c(2, 4, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 19, 20, 22, 24, 25, 26, 27, 28, 29, 30, 32, 33, 35, 36, 38, 40)
+Property_Statuses <- data.frame(Property, Space, Owned_By_Player)
+Property_Statuses
+
+
+Updating_Player_Bank <- function(location, j) {
+  if(location == 2 || location == 4 || location == 6 || location == 7 || location == 9 || location == 10 || location == 12 || location == 13 || location == 14 || location == 15 || location == 16 || location == 17 || location == 19 || location == 20 || location == 22 || location == 24 || location == 25 || location == 26 || location == 27 || location == 28 || location == 29 || location == 30 || location == 32 || location == 33 || location == 35 || location == 36 || location == 38 || location == 40){
+    
+    location = location
+    spot <- which(Property_Statuses$Space == location)
+    cost <- which(monopolyBoard$spaces == location)
+    owned_by_player <- Property_Statuses$Owned_By_Player[spot]
+    
+    The_Players$Player_Bank[owned_by_player] <- The_Players$Player_Bank[owned_by_player] + monopolyBoard$rent_0[cost]
+    
+    The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$rent_0[cost]
+    
+    The_Players
+  }
 }
 
-Owned_Spaces <- sample(1:28, 28, replace = FALSE)
-Owned_Spaces
-Players <- c("Player 1", "Player 2", "Player 3", "Player 4")
-Player_Bank <- c("1250", "1250", "1250", "1250")
+Updating_Player_Bank(2, 3)
 
-The_Players <- data.frame(Players, Player_Bank)
-The_Players
-
-The_Players_Owned <- data.frame(Players, Owned_Spaces)
-The_Players_Owned <- The_Players_Owned %>% pivot_wider(names_from = Players, values_from = Owned_Spaces)
-
-The_Players_Owned[[1]]
-The_Players_Owned[[2]]
-The_Players_Owned[[3]]
+lets_move3 = function(location) {
+  dice_roll_1 <- sample(1:6, 1, replace = TRUE)
+  dice_roll_2 <- sample(1:6, 1, replace = TRUE)
+  
+  roll_total <- sum(dice_roll_1, dice_roll_2)
+  roll_double <- dice_roll_1 == dice_roll_2
+  
+    location = location + roll_total
+    double3 = "false"
 
 
-lets_play3 = function(turns, players) {
+  if (location <= 40) {
+      location = location
+  } else {
+      location = location - 40
+  }
+
+  if(location == 8 || location == 23 || location == 27) {
+    location = Drawing_Chance(location)
+
+  }
+  
+  if(location == 3 || location == 18 || location == 34) {
+    location = Drawing_Community_Chest(location)
+
+  }
+
+Updating_Player_Bank(location, j)
+
+  # first double roll -> roll again
+  if (roll_double == TRUE) {
+    dice_roll_3 <- sample(1:6, 1, replace = TRUE)
+    dice_roll_4 <- sample(1:6, 1, replace = TRUE)
+    
+    roll_total2 <- sum(dice_roll_3, dice_roll_4)
+    roll_double2 <- dice_roll_3 == dice_roll_4
+    
+    location = location + roll_total2
+    double3 = "false"
+
+    
+    if (location <= 40) {
+      location = location
+    } else {
+      location = location - 40
+    }
+    
+    
+    if(location == 8 || location == 23 || location == 27) {
+    location = Drawing_Chance(location)
+    }
+  
+  if(location == 3 || location == 18 || location == 34) {
+    location = Drawing_Community_Chest(location)
+    }
+    
+    Updating_Player_Bank(location, j)
+    
+      # second double roll -> roll again
+      if (roll_double2 == TRUE) {
+        dice_roll_5 <- sample(1:6, 1, replace = TRUE)
+        dice_roll_6 <- sample(1:6, 1, replace = TRUE)
+    
+        roll_total3 <- sum(dice_roll_5, dice_roll_6)
+        roll_double3 <- dice_roll_5 == dice_roll_6
+    
+        location = location + roll_total3
+        double3 = "false"
+        
+        if (location <= 40) {
+          location = location
+        } else {
+          location = location - 40
+        }
+        
+        if(location == 8 || location == 23 || location == 27) {
+          location = Drawing_Chance(location)
+        }
+  
+        if(location == 3 || location == 18 || location == 34) {
+          location = Drawing_Community_Chest(location)
+         
+        }
+        
+        Updating_Player_Bank(location, j)
+        
+        # third double roll -> go to jail
+          if (roll_double3 == TRUE) {
+            location = monopolyBoard$spaces[monopolyBoard$name == "Jail"]
+            double3 = "true"
+          }
+      }
+  }  
+   
+  location = location 
+}
+
+lets_move3(2)
+
+
+lets_play4 = function(turns, players) {
   
   location_data <- as.data.frame(matrix(nrow = turns, ncol = players))
   double3data <- as.data.frame(matrix(nrow = turns, ncol = players))
-  
+  players_banks <- as.data.frame(matrix(nrow = turns, ncol = players))
+
+print(Property_Statuses)
+
   for (j in 1:players) {
     location = 1
     double3 = 0
     
     
     for (i in 1:turns) {
-      
-        location = lets_move2(location)[[1]]
+        print("player")
+        print(j)
+        location = lets_move3(location)[[1]]
         location_data[i,j] <- as.integer(location)
         double3data[i,j] <- lets_move3(double3)[[2]]
+
+                
+      # deals with landing in jail from "go to jail" space and staying there for next 3 turns
+      if (31 %in% location_data[i-1,j]) { # if you land on 31 (go to jail), next location is in jail (space 11)
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      } else if (11 %in% location_data[i-1,j] & 31 %in% location_data[i-2,j]) {
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      } else if (11 %in% location_data[i-2,j] & 31 %in% location_data[i-3,j]) {
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      }
+        
+      # landing in jail from 3x double roll and staying there for next 3 turns
+      if (11 %in% location_data[i,j] & "true" %in% double3data[i-1,j]) { # "true" means player double rolled 3x -> jail
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      } else if (11 %in% location_data[i-1,j] & "true" %in% double3data[i-2,j]) { # 
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      } else if (11 %in% location_data[i-2,j] & "true" %in% double3data[i-3,j]) {
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      }
+      
+      
+    }
+  }
+  
+print(location_data)
+return(The_Players)
+
+}
+
+lets_play4(1,4)
+```
+
+
+```{r}
+monopolyBoard
+Players <- c("Player 1", "Player 2", "Player 3", "Player 4")
+Player_Bank <- c(1250, 1250, 1250, 1250)
+The_Players <- data.frame(Players, Player_Bank)
+
+Property <- c("Mediterranean", "Baltic", "Reading Railroad", "Oriental", "Vermot", "Connecticut", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Tennessee", "New York", "Kentucky", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Pacific", "N. Carolina", "Pennsylvania", "Short Line Railroad", "Park Place", "Boardwalk")
+Owned_By_Player <- sample(1:4, 28, replace = TRUE)
+Space <- c(2, 4, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 19, 20, 22, 24, 25, 26, 27, 28, 29, 30, 32, 33, 35, 36, 38, 40)
+Property_Statuses <- data.frame(Property, Space, Owned_By_Player)
+Property_Statuses
+
+
+Updating_Player_Bank <- function(location, j) {
+  if(location == 2 || location == 4 || location == 6 || location == 7 || location == 9 || location == 10 || location == 12 || location == 13 || location == 14 || location == 15 || location == 16 || location == 17 || location == 19 || location == 20 || location == 22 || location == 24 || location == 25 || location == 26 || location == 27 || location == 28 || location == 29 || location == 30 || location == 32 || location == 33 || location == 35 || location == 36 || location == 38 || location == 40){
+    location = location
+    spot <- which(Property_Statuses$Space == location)
+    cost <- which(monopolyBoard$spaces == location)
+    owned_by_player <- Property_Statuses$Owned_By_Player[spot]
+    The_Players$Player_Bank[owned_by_player] <- The_Players$Player_Bank[owned_by_player] + monopolyBoard$cost[cost]
+    The_Players$Player_Bank[owned_by_player]
+    The_Players
+    
+    The_Players$Player_Bank[owned_by_player] <- The_Players$Player_Bank[owned_by_player] + monopolyBoard$rent_0[cost]
+    
+    The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$rent_0[cost]
+    
+    return(The_Players)
+
+  }
+}
+
+Updating_Player_Bank(12, 3)
+```
+
+
+```{r}
+lets_move4 = function(location) {
+  dice_roll_1 <- sample(1:6, 1, replace = TRUE)
+  dice_roll_2 <- sample(1:6, 1, replace = TRUE)
+  
+  roll_total <- sum(dice_roll_1, dice_roll_2)
+  roll_double <- dice_roll_1 == dice_roll_2
+  
+    location = location + roll_total
+    double3 = "false"
+    
+    j=2
+
+  if (location <= 40) {
+      location = location
+      Updating_Player_Bank(location, j)
+  } else {
+      location = location - 40
+      Updating_Player_Bank(location, j)
+  }
+
+
+  if(location == 8 || location == 23 || location == 27) {
+    location = Drawing_Chance(location)
+    Updating_Player_Bank(location, j)
+
+  }
+  
+  if(location == 3 || location == 18 || location == 34) {
+    location = Drawing_Community_Chest(location)
+    Updating_Player_Bank(location, j)
+
+  }
+
+
+  # first double roll -> roll again
+  if (roll_double == TRUE) {
+    dice_roll_3 <- sample(1:6, 1, replace = TRUE)
+    dice_roll_4 <- sample(1:6, 1, replace = TRUE)
+    
+    roll_total2 <- sum(dice_roll_3, dice_roll_4)
+    roll_double2 <- dice_roll_3 == dice_roll_4
+    
+    location = location + roll_total2
+    double3 = "false"
+
+    
+    if (location <= 40) {
+      location = location
+      Updating_Player_Bank(location, j)
+      
+    } else {
+      location = location - 40
+      Updating_Player_Bank(location, j)
+    }
+    
+    
+    if(location == 8 || location == 23 || location == 27) {
+    location = Drawing_Chance(location)
+    Updating_Player_Bank(location, j)
+    }
+  
+  if(location == 3 || location == 18 || location == 34) {
+    location = Drawing_Community_Chest(location)
+    Updating_Player_Bank(location, j)
+    }
+
+    
+      # second double roll -> roll again
+      if (roll_double2 == TRUE) {
+        dice_roll_5 <- sample(1:6, 1, replace = TRUE)
+        dice_roll_6 <- sample(1:6, 1, replace = TRUE)
+    
+        roll_total3 <- sum(dice_roll_5, dice_roll_6)
+        roll_double3 <- dice_roll_5 == dice_roll_6
+    
+        location = location + roll_total3
+        double3 = "false"
+        
+        if (location <= 40) {
+          location = location
+          Updating_Player_Bank(location, j)
+        } else {
+          location = location - 40
+          Updating_Player_Bank(location, j)
+        }
+        
+        if(location == 8 || location == 23 || location == 27) {
+          location = Drawing_Chance(location)
+          Updating_Player_Bank(location, j)
+        }
+  
+        if(location == 3 || location == 18 || location == 34) {
+          location = Drawing_Community_Chest(location)
+          Updating_Player_Bank(location, j)
+         
+        }
+
+        
+        # third double roll -> go to jail
+          if (roll_double3 == TRUE) {
+            location = monopolyBoard$spaces[monopolyBoard$name == "Jail"]
+            double3 = "true"
+          }
+      }
+  }  
+   
+  location = location 
+  
+  listdata <- (list(location, double3))
+  return(listdata)
+  return(Updating_Player_Bank(location, j))
+  
+}
+
+lets_move4(12)
+```
+
+
+```{r}
+
+lets_play4 = function(turns, players) {
+  
+  location_data <- as.data.frame(matrix(nrow = turns, ncol = players))
+  double3data <- as.data.frame(matrix(nrow = turns, ncol = players))
+  
+    colnames(location_data) <- who_goes_first2(players)[[2]]
+  
+    location = 1
+    location_data[1,] <- location
+    double3 = 0
+  
+    for (i in 2:turns) {
+      
+        for (j in 1:players) {
+          
+        location = lets_move4(location_data[i-1,j])[[1]]
+        location_data[i,j] <- as.integer(location)
+        double3data[i,j] <- lets_move4(double3)[[2]]
+        print(j)
         
       # deals with landing in jail from "go to jail" space and staying there for next 3 turns
       if (31 %in% location_data[i-1,j]) { # if you land on 31 (go to jail), next location is in jail (space 11)
@@ -1135,11 +1505,15 @@ lets_play3 = function(turns, players) {
       }
         
     }
-  }
-  #print(location_data)
-  
+    }
+    
+  print(location_data)
+  print(double3data)
+  print(The_Players)
+    
   # creates density plot of frequency of landing on each space for each player
   plot(density(location_data[,1]), xlim = c(0,40), col = "black")
+  plot(location_data[,1], xlim= c(0,40), col="black", type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
   
   colors <- c("red", "blue", "green")
   
@@ -1150,30 +1524,10 @@ lets_play3 = function(turns, players) {
   # creates density plot for total frequency landing on each space (all players spaces included)
   all_spaces <- as.vector(as.matrix(location_data))
   plot(density(all_spaces), xlim = c(0,40), col = "black")
-  
+
 }
-```
 
-```{r}
-Players <- c("Player 1", "Player 2", "Player 3", "Player 4")
-Player_Bank <- c(1250, 1250, 1250, 1250)
-The_Players <- data.frame(Players, Player_Bank)
+lets_play4(10, 4)
 
-Property <- c("Mediterranean", "Baltic", "Reading Railroad", "Oriental", "Vermot", "Connecticut", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Tennessee", "New York", "Kentucky", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Pacific", "N. Carolina", "Pennsylvania", "Short Line Railroad", "Park Place", "Boardwalk")
-Owned_By_Player <- sample(1:4, 28, replace = TRUE)
-Space <- c(2, 4, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 19, 20, 22, 24, 25, 26, 27, 28, 29, 30, 32, 33, 35, 36, 38, 40)
-Property_Statuses <- data.frame(Property, Space, Owned_By_Player)
-
-
-Updating_Player_Bank <- function(location) {
-  if(location == 2 || location == 4 || location == 6 || location == 7 || location == 9 || location == 10 || location == 12 || location == 13 || location == 14 || location == 15 || location == 16 || location == 17 || location == 19 || location == 20 || location == 22 || location == 24 || location == 25 || location == 26 || location == 27 || location == 28 || location == 29 || location == 30 || location == 32 || location == 33 || location == 35 || location == 36 || location == 38 || location == 40){
-    location = location
-    spot <- which(Property_Statuses$Space == location)
-    cost <- which(monopolyBoard$spaces == location)
-    player <- Property_Statuses$Owned_By_Player[spot]
-    The_Players$Player_Bank[player] <- The_Players$Player_Bank[player] + monopolyBoard$cost[cost]
-    The_Players$Player_Bank[player]
-  }
-}
 ```
 
