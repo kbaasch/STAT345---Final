@@ -945,12 +945,14 @@ Chance_Money <- function(Player_Bank){
   player_card <- Chance$Chance_Cards[draw_card]
   print(player_card)
   
+  #Advance to Go (Collect $200)
   if(draw_card == 2){
     Player_Bank = Player_Bank + 200
   }
+  
   #Advance to Illinois Ave. If you pass Go collect $200
   if(draw_card == 3){
-    if(location > 25 && location <= 40){
+    if(location > 25){
       Player_Bank = Player_Bank + 200
     }else{
       Player_Bank = Player_Bank
@@ -958,25 +960,34 @@ Chance_Money <- function(Player_Bank){
   }
   
   #Advance to St. Charles Place. If you pass Go, collect $200
+  if(draw_card == 4){
+    if(location > 13 ){
+      Player_Bank = Player_Bank + 200
+    }else{
+      Player_Bank = Player_Bank
+    }
+  }
   
-  
+  #Bank pays you dividend of $50
   if(draw_card == 8){
     Player_Bank = Player_Bank + 50
   }
   
-  if(draw_card == 12){
-    if(properties == 5){
-      Player_Bank = Player_Bank - 125
-    }
-    if(properties == 6){
-      Player_Bank = Player_Bank - 150
-    }
-  }
-  
+  #Speeding fine $15
   if(draw_card == 13){
     Player_Bank = Player_Bank - 15
   }
   
+  #Take a trip to Reading Railroad. If you pass Go, collect $200
+  if(draw_card == 14){
+    if(location > 6){
+      Player_Bank = Player_Bank + 200
+    }else{
+      Player_Bank = Player_Bank
+    }
+  }
+  
+  #Your building loan matures. Collect $150
   if(draw_card == 16){
     Player_Bank = Player_Bank + 150
   }
@@ -989,50 +1000,62 @@ Community_Chest_Money <- function(Player_Bank){
   player_card <- Community_Chest$Community_Chest_Cards[draw_card]
   print(player_card)
   
+  #Advance to Go (Collect $200)
   if(draw_card == 1){
     Player_Bank = Player_Bank + 200
   }
   
+  #Bank error in your favor. Collect $200
   if(draw_card == 2){
     Player_Bank = Player_Bank + 200
   }
   
+  #Doctor’s fee. Pay $50
   if(draw_card == 3){
     Player_Bank = Player_Bank - 50
   }
   
+  #From sale of stock you get $50
   if(draw_card == 4){
     Player_Bank = Player_Bank + 50
   }
   
+  #Holiday fund matures. Receive $100
   if(draw_card == 7){
     Player_Bank = Player_Bank + 100
   }
   
+  #Income tax refund. Collect $20
   if(draw_card == 8){
     Player_Bank = Player_Bank + 20
   }
   
+  #Life insurance matures. Collect $100
   if(draw_card == 10){
     Player_Bank = Player_Bank + 100
   }
   
+  #Pay hospital fees of $100
   if(draw_card == 11){
     Player_Bank = Player_Bank - 100
   }
   
+  #Pay school fees of $50
   if(draw_card == 12){
     Player_Bank = Player_Bank - 50
   }
   
+  #Receive $25 consultancy fee
   if(draw_card == 13){
     Player_Bank = Player_Bank + 25
   }
   
+  #You have won second prize in a beauty contest. Collect $10
   if(draw_card == 15){
     Player_Bank = Player_Bank + 10
   }
   
+  #You inherit $100
   if(draw_card == 16){
     Player_Bank = Player_Bank + 100
   }
