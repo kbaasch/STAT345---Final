@@ -1329,10 +1329,199 @@ Updating_Player_Bank <- function(location, j) {
     
     The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$rent_0[cost]
     
-    The_Players
+    return(The_Players)
   }
 }
 
 Updating_Player_Bank(12, 3)
+```
+```{r}
+lets_move4 = function(location) {
+  dice_roll_1 <- sample(1:6, 1, replace = TRUE)
+  dice_roll_2 <- sample(1:6, 1, replace = TRUE)
+  
+  roll_total <- sum(dice_roll_1, dice_roll_2)
+  roll_double <- dice_roll_1 == dice_roll_2
+  
+    location = location + roll_total
+    double3 = "false"
+
+
+  if (location <= 40) {
+      location = location
+      Updating_Player_Bank(location, j)
+  } else {
+      location = location - 40
+      Updating_Player_Bank(location, j)
+  }
+
+
+  if(location == 8 || location == 23 || location == 27) {
+    location = Drawing_Chance(location)
+    Updating_Player_Bank(location, j)
+
+  }
+  
+  if(location == 3 || location == 18 || location == 34) {
+    location = Drawing_Community_Chest(location)
+    Updating_Player_Bank(location, j)
+
+  }
+
+
+  # first double roll -> roll again
+  if (roll_double == TRUE) {
+    dice_roll_3 <- sample(1:6, 1, replace = TRUE)
+    dice_roll_4 <- sample(1:6, 1, replace = TRUE)
+    
+    roll_total2 <- sum(dice_roll_3, dice_roll_4)
+    roll_double2 <- dice_roll_3 == dice_roll_4
+    
+    location = location + roll_total2
+    double3 = "false"
+
+    
+    if (location <= 40) {
+      location = location
+      Updating_Player_Bank(location, j)
+      
+    } else {
+      location = location - 40
+      Updating_Player_Bank(location, j)
+    }
+    
+    
+    if(location == 8 || location == 23 || location == 27) {
+    location = Drawing_Chance(location)
+    Updating_Player_Bank(location, j)
+    }
+  
+  if(location == 3 || location == 18 || location == 34) {
+    location = Drawing_Community_Chest(location)
+    Updating_Player_Bank(location, j)
+    }
+
+    
+      # second double roll -> roll again
+      if (roll_double2 == TRUE) {
+        dice_roll_5 <- sample(1:6, 1, replace = TRUE)
+        dice_roll_6 <- sample(1:6, 1, replace = TRUE)
+    
+        roll_total3 <- sum(dice_roll_5, dice_roll_6)
+        roll_double3 <- dice_roll_5 == dice_roll_6
+    
+        location = location + roll_total3
+        double3 = "false"
+        
+        if (location <= 40) {
+          location = location
+          Updating_Player_Bank(location, j)
+        } else {
+          location = location - 40
+          Updating_Player_Bank(location, j)
+        }
+        
+        if(location == 8 || location == 23 || location == 27) {
+          location = Drawing_Chance(location)
+          Updating_Player_Bank(location, j)
+        }
+  
+        if(location == 3 || location == 18 || location == 34) {
+          location = Drawing_Community_Chest(location)
+          Updating_Player_Bank(location, j)
+         
+        }
+
+        
+        # third double roll -> go to jail
+          if (roll_double3 == TRUE) {
+            location = monopolyBoard$spaces[monopolyBoard$name == "Jail"]
+            double3 = "true"
+          }
+      }
+  }  
+   
+  location = location 
+  
+  listdata <- (list(location, double3))
+  return(listdata)
+  return(Updating_Player_Bank(location, j))
+  
+}
+```
+
+
+```{r}
+
+lets_play4 = function(turns, players) {
+  
+  location_data <- as.data.frame(matrix(nrow = turns, ncol = players))
+  double3data <- as.data.frame(matrix(nrow = turns, ncol = players))
+  
+    colnames(location_data) <- who_goes_first2(players)[[2]]
+  
+    location = 1
+    location_data[1,] <- location
+    double3 = 0
+  
+    for (i in 2:turns) {
+      
+        for (j in 1:players) {
+          
+        location = lets_move3(location_data[i-1,j])[[1]]
+        location_data[i,j] <- as.integer(location)
+        double3data[i,j] <- lets_move4(double3)[[2]]
+        print(j)
+        banks = 
+        
+      # deals with landing in jail from "go to jail" space and staying there for next 3 turns
+      if (31 %in% location_data[i-1,j]) { # if you land on 31 (go to jail), next location is in jail (space 11)
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      } else if (11 %in% location_data[i-1,j] & 31 %in% location_data[i-2,j]) {
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      } else if (11 %in% location_data[i-2,j] & 31 %in% location_data[i-3,j]) {
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      }
+        
+      # landing in jail from 3x double roll and staying there for next 3 turns
+      if (11 %in% location_data[i,j] & "true" %in% double3data[i-1,j]) { # "true" means player double rolled 3x -> jail
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      } else if (11 %in% location_data[i-1,j] & "true" %in% double3data[i-2,j]) { # 
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      } else if (11 %in% location_data[i-2,j] & "true" %in% double3data[i-3,j]) {
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      }
+        
+    }
+    }
+    
+  print(location_data)
+  print(double3data)
+  print()
+    
+  # creates density plot of frequency of landing on each space for each player
+  plot(density(location_data[,1]), xlim = c(0,40), col = "black")
+  plot(location_data[,1], xlim= c(0,40), col="black", type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
+  
+  colors <- c("red", "blue", "green")
+  
+  for (k in 2:players) {
+    lines(density(location_data[,k]), col = colors[k-1]) # adds a density line for each player after the first
+  }
+  
+  # creates density plot for total frequency landing on each space (all players spaces included)
+  all_spaces <- as.vector(as.matrix(location_data))
+  plot(density(all_spaces), xlim = c(0,40), col = "black")
+
+}
+
+lets_play4(10, 4)
+
 ```
 
