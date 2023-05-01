@@ -939,91 +939,102 @@ dice_roll <- sum(sample(1:6, 2, replace = TRUE))
 dice_roll
 
 #Need to figure out how to exchange money between players
-Chance_Money <- function(money){
-  money = money
+Chance_Money <- function(Player_Bank){
+  Player_Bank = Player_Bank
   draw_card <- sample(1:16, 1, replace = TRUE)
   player_card <- Chance$Chance_Cards[draw_card]
   print(player_card)
   
   if(draw_card == 2){
-    money = money + 200
+    Player_Bank = Player_Bank + 200
+  }
+  #Advance to Illinois Ave. If you pass Go collect $200
+  if(draw_card == 3){
+    if(location > 25 && location <= 40){
+      Player_Bank = Player_Bank + 200
+    }else{
+      Player_Bank = Player_Bank
+    }
   }
   
+  #Advance to St. Charles Place. If you pass Go, collect $200
+  
+  
   if(draw_card == 8){
-    money = money + 50
+    Player_Bank = Player_Bank + 50
   }
   
   if(draw_card == 12){
     if(properties == 5){
-      money = money - 125
+      Player_Bank = Player_Bank - 125
     }
     if(properties == 6){
-      money = money - 150
+      Player_Bank = Player_Bank - 150
     }
   }
   
   if(draw_card == 13){
-    money = money - 15
+    Player_Bank = Player_Bank - 15
   }
   
   if(draw_card == 16){
-    money = money + 150
+    Player_Bank = Player_Bank + 150
   }
 }
 
 #Need to figure out how to exchange money between players
-Community_Chest_Money <- function(money){
-  money = money
+Community_Chest_Money <- function(Player_Bank){
+  Player_Bank = Player_Bank
   draw_card <- sample(1:16, 1, replace = TRUE)
   player_card <- Community_Chest$Community_Chest_Cards[draw_card]
   print(player_card)
   
   if(draw_card == 1){
-    money = money + 200
+    Player_Bank = Player_Bank + 200
   }
   
   if(draw_card == 2){
-    money = money + 200
+    Player_Bank = Player_Bank + 200
   }
   
   if(draw_card == 3){
-    money = money - 50
+    Player_Bank = Player_Bank - 50
   }
   
   if(draw_card == 4){
-    money = money + 50
+    Player_Bank = Player_Bank + 50
   }
   
   if(draw_card == 7){
-    money = money + 100
+    Player_Bank = Player_Bank + 100
   }
   
   if(draw_card == 8){
-    money = money + 20
+    Player_Bank = Player_Bank + 20
   }
   
   if(draw_card == 10){
-    money = money + 100
+    Player_Bank = Player_Bank + 100
   }
   
   if(draw_card == 11){
-    money = money - 100
+    Player_Bank = Player_Bank - 100
   }
   
   if(draw_card == 12){
-    money = money - 50
+    Player_Bank = Player_Bank - 50
   }
   
   if(draw_card == 13){
-    money = money + 25
+    Player_Bank = Player_Bank + 25
   }
   
   if(draw_card == 15){
-    money = money + 10
+    Player_Bank = Player_Bank + 10
   }
   
   if(draw_card == 16){
-    money = money + 100
+    Player_Bank = Player_Bank + 100
   }
 }
 
