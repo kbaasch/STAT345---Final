@@ -309,7 +309,7 @@ lets_move2 = function(location) {
   }
   
   listdata <- (list(location, double3)) # creates list for outputs "location" and "double3"
-  # if you need to access location from this function, use lets_move2(location)[[1]]
+  # if you need to access location from this function, use lets_move2(location_data[i-1,j])[[1]]
   # if you need to access double3, use lets_move2(double3)[[2]]
   return(listdata)
   
@@ -417,6 +417,7 @@ lets_play2 = function(turns, players) {
     }
   }
   print(location_data)
+  print(double3)
   
   # creates density plot of frequency of landing on each space for each player
   plot(density(location_data[,1]), xlim = c(0,40), col = "black")
@@ -697,9 +698,15 @@ lets_play3 = function(turns, players) {
 
   
   # creates density plot of frequency of landing on each space for each player
+  colors <- c("red", "blue", "green")
+  
   plot(density(location_data[,1]), xlim = c(0,40), col = "black")
   
-  colors <- c("red", "blue", "green")
+  for(k in 2:players){
+  plot(location_data[,k], xlim= c(0,40), col=colors[k-1], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
+  }
+  
+  
   
   for (k in 2:players) {
     lines(density(location_data[,k]), col = colors[k-1]) # adds a density line for each player after the first
@@ -718,7 +725,35 @@ lets_play3(100, 4)
 
 ## Play A Game!
 ```{r}
+Players <- c("Player 1", "Player 2", "Player 3", "Player 4")
+Player_Bank <- c(1250, 1250, 1250, 1250)
+The_Players <- data.frame(Players, Player_Bank)
 
+Property <- c("Mediterranean", "Baltic", "Reading Railroad", "Oriental", "Vermot", "Connecticut", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Tennessee", "New York", "Kentucky", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Pacific", "N. Carolina", "Pennsylvania", "Short Line Railroad", "Park Place", "Boardwalk")
+Owned_By_Player <- sample(1:4, 28, replace = TRUE)
+Space <- c(2, 4, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 19, 20, 22, 24, 25, 26, 27, 28, 29, 30, 32, 33, 35, 36, 38, 40)
+Property_Statuses <- data.frame(Property, Space, Owned_By_Player)
+
+
+Updating_Player_Bank <- function(location, j) {
+  if(location == 2 || location == 4 || location == 6 || location == 7 || location == 9 || location == 10 || location == 12 || location == 13 || location == 14 || location == 15 || location == 16 || location == 17 || location == 19 || location == 20 || location == 22 || location == 24 || location == 25 || location == 26 || location == 27 || location == 28 || location == 29 || location == 30 || location == 32 || location == 33 || location == 35 || location == 36 || location == 38 || location == 40){
+    
+    location = location
+    spot <- which(Property_Statuses$Space == location)
+    cost <- which(monopolyBoard$spaces == location)
+    owned_by_player <- Property_Statuses$Owned_By_Player[spot]
+    
+    The_Players$Player_Bank[owned_by_player] <- The_Players$Player_Bank[owned_by_player] + monopolyBoard$rent_0[cost]
+    
+    The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$rent_0[cost]
+    
+    The_Players
+  }
+}
+
+Updating_Player_Bank(12)
+
+The_Players
 ```
 
 
