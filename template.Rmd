@@ -1190,70 +1190,128 @@ lets_play3(100, 4)
 dice_roll <- sum(sample(1:6, 2, replace = TRUE))
 dice_roll
 
-#Need to figure out how to exchange money between players
-Chance_Money <- function(Player_Bank){
+Drawing_Chance = function(location, Player_Bank) {
+  location = location
   Player_Bank = Player_Bank
+  
   draw_card <- sample(1:16, 1, replace = TRUE)
   player_card <- Chance$Chance_Cards[draw_card]
   print(player_card)
+
   
-  #Advance to Go (Collect $200)
-  if(draw_card == 2){
-    Player_Bank = Player_Bank + 200
-  }
-  
-  #Advance to Illinois Ave. If you pass Go collect $200
-  if(draw_card == 3){
-    if(location > 25){
-      Player_Bank = Player_Bank + 200
-    }else{
-      Player_Bank = Player_Bank
+      if(draw_card == 1) {
+        location = 1
+      }
+      
+      if(draw_card == 2) {
+        location = 1
+        Player_Bank = Player_Bank + 200
+      }
+      
+      if(draw_card == 3) {
+        if(location > 25){
+          Player_Bank = Player_Bank + 200
+        }else{
+          Player_Bank = Player_Bank
     }
-  }
+        location = 25
+      }
   
-  #Advance to St. Charles Place. If you pass Go, collect $200
-  if(draw_card == 4){
-    if(location > 13 ){
-      Player_Bank = Player_Bank + 200
-    }else{
-      Player_Bank = Player_Bank
+      if(draw_card == 4){
+        if(location > 13 ){
+          Player_Bank = Player_Bank + 200
+        }else{
+          Player_Bank = Player_Bank
     }
-  }
+        location = 12
+      }
   
-  #Bank pays you dividend of $50
-  if(draw_card == 8){
-    Player_Bank = Player_Bank + 50
-  }
-  
-  #Speeding fine $15
-  if(draw_card == 13){
-    Player_Bank = Player_Bank - 15
-  }
-  
-  #Take a trip to Reading Railroad. If you pass Go, collect $200
-  if(draw_card == 14){
-    if(location > 6){
-      Player_Bank = Player_Bank + 200
-    }else{
-      Player_Bank = Player_Bank
+      if(draw_card == 5){
+        if(location >= 37 && location <= 5){
+              location = 6
+            } else {
+              if (location >= 6 && location <= 15){
+                location = 16
+              } else {
+                if(location >= 16 && location <= 25){
+                  location = 26
+                } else {
+                  location = 36
+                }
+              }
+            }
     }
-  }
   
-  #Your building loan matures. Collect $150
-  if(draw_card == 16){
-    Player_Bank = Player_Bank + 150
-  }
+    if(draw_card == 6){
+        if(location >= 37 && location <= 5){
+              location = 6
+            } else {
+              if (location >= 6 && location <= 15){
+                location = 16
+              } else {
+                if(location >= 16 && location <= 25){
+                  location = 26
+                } else {
+                  location = 36
+                }
+              }
+            }
+    }
+  
+    if(draw_card == 7){
+        if(location >= 29 && location <= 12){
+              location = 13
+            } else {
+              location = 29
+    }
+    }
+  
+    if(draw_card == 8){
+      Player_Bank = Player_Bank + 50
+    }
+  
+    if(draw_card == 10) {
+      location = location - 3
+    }
+  
+    if(draw_card == 11) {
+      location = 11
+    }
+  
+    if(draw_card == 13){
+      Player_Bank = Player_Bank - 15
+    }
+  
+    if(draw_card == 14) {
+      if(location > 6){
+        Player_Bank = Player_Bank + 200
+      }else{
+        Player_Bank = Player_Bank
+    }
+      location = 6
+    }
+  
+    if(draw_card == 16){
+      Player_Bank = Player_Bank + 150
+    }
+  
+    Player_Bank = Player_Bank
+    location = location
+    return(Player_Bank)
+    return(location)
 }
 
-#Need to figure out how to exchange money between players
-Community_Chest_Money <- function(Player_Bank){
+Drawing_Community_Chest = function(location, Player_Bank) {
+  location = location
   Player_Bank = Player_Bank
-  draw_card <- sample(1:16, 1, replace = TRUE)
-  player_card <- Community_Chest$Community_Chest_Cards[draw_card]
-  print(player_card)
   
-  #Advance to Go (Collect $200)
-  if(draw_card == 1){
+  draw_card_chest <- sample(1:16, 1, replace = TRUE)
+  player_card_chest <- Community_Chest$Community_Chest_Cards[draw_card_chest]
+  print(player_card_chest)
+  print(location)
+  
+  if (draw_card_chest == 1) {
+    location = 1
     Player_Bank = Player_Bank + 200
   }
   
@@ -1270,6 +1328,10 @@ Community_Chest_Money <- function(Player_Bank){
   #From sale of stock you get $50
   if(draw_card == 4){
     Player_Bank = Player_Bank + 50
+  }
+  
+  if(draw_card_chest == 6) {
+    location = 11
   }
   
   #Holiday fund matures. Receive $100
@@ -1311,7 +1373,14 @@ Community_Chest_Money <- function(Player_Bank){
   if(draw_card == 16){
     Player_Bank = Player_Bank + 100
   }
+  
+  location = location 
+  Player_Bank = Player_Bank
+  return(Player_Bank)
+  return(location)
 }
+
+
 
 Chance
 Community_Chest
