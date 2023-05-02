@@ -417,6 +417,7 @@ lets_play2 = function(turns, players) {
     }
   }
   print(location_data)
+  print(double3)
   
   # creates density plot of frequency of landing on each space for each player
   plot(density(location_data[,1]), xlim = c(0,40), col = "black")
