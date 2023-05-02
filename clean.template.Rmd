@@ -309,7 +309,7 @@ lets_move2 = function(location) {
   }
   
   listdata <- (list(location, double3)) # creates list for outputs "location" and "double3"
-  # if you need to access location from this function, use lets_move2(location)[[1]]
+  # if you need to access location from this function, use lets_move2(location_data[i-1,j])[[1]]
   # if you need to access double3, use lets_move2(double3)[[2]]
   return(listdata)
   
