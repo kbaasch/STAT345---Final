@@ -1454,6 +1454,7 @@ lets_move4 = function(location) {
 }
 
 lets_move4(12)
+lets_move4(Updating_Player_Bank())
 ```
 
 
