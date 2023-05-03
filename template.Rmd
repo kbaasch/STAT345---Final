@@ -634,6 +634,8 @@ location_data
 # olivia (ignore this its a work in progress)
 # Figure out how to have players pay and recieve money from landing on chance and community chest spaces
 
+# $200 every time you pass go
+
      if(draw_card == 5){
         if(location >= 37 && location <= 5){
               location = 6
