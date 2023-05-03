@@ -178,6 +178,21 @@ lets_move(20)
 ## who_goes_first2
 
 ```{r student2}
+
+who_goes_first2 <- function(num_players){
+  initial_rolls <- c()
+  for (i in 1:num_players) {
+    player_i_roll <- sum(sample(1:6, 2, replace=TRUE))
+    initial_rolls <- c(initial_rolls, player_i_roll) # vector of every player's roll
+#    print(paste("Player", i, "rolled", player_i_roll))
+  }
+  cat("\n")
+  if(sum(initial_rolls == max(initial_rolls)) >= 2){
+    while (sum(initial_rolls == max(initial_rolls)) >= 2) { # if players tied for highest number
+      tied_players <- which(initial_rolls==max(initial_rolls)) # identify which players tied
+#      print("It's a tie! Roll again")
+#      cat("\n")
+
 #the function "who_goes_first" simulates the initial roll before the game begins in order to determine which player goes first
 # input is a number of how many players are going to be playing
 # output is a list of players in order of who goes first
@@ -198,6 +213,36 @@ who_goes_first2 <- function(num_players){
       for (i in tied_players) { # tied players roll again
        player_i_roll2 <- sum(sample(1:6, 2, replace=TRUE))
        tie_breaker_rolls <- c(tie_breaker_rolls, player_i_roll2)
+
+#       print(paste("Player", i, "rolled", player_i_roll2))
+      }
+      initial_rolls <- tie_breaker_rolls
+      highest_roll <- max(tie_breaker_rolls)
+      highest_player2 <- tied_players[which(tie_breaker_rolls == highest_roll)]
+    }
+#    cat("\n")
+#    print(paste("Player", highest_player2, "goes first!"))
+  }
+  else {
+    highest_player <- which.max(initial_rolls) # who rolled the highest number
+#    print(paste("Player", highest_player, "goes first!"))
+#    return(highest_player)
+  
+    
+  # creating player order
+  player_order <- length(num_players)
+  player_order[1] <- as.integer(highest_player)
+
+ for (j in 2:num_players) {
+    
+  player_order[j] <- as.integer(player_order[j-1] + 1)
+  if (player_order[j] > num_players) {
+    player_order[j] <- 1
+  }
+ }
+  print(player_order)
+  }
+
        initial_rolls <- tie_breaker_rolls # update initial rolls
       }
     }
@@ -220,6 +265,7 @@ who_goes_first2 <- function(num_players){
     }
     #print(player_order)
   }
+
   playerlist <- (list(highest_player, player_order))
   return(playerlist)
 }
@@ -252,6 +298,15 @@ lets_play = function(turns, players) {
 print(location_data) 
 
   
+
+########################## plots ###############################
+
+  #vector of colors
+  colors <- c("red", "blue", "green","purple")
+  
+  # creates density plot of frequency of landing on each space for each player
+  plot(density(location_data[,1]), xlim = c(0,40), col = "black", xlab="Spaces", main= "Density of Landing Locations for all Players")
+  
 colors <- c("red", "blue", "green")
 
   # creates density plot of frequency of landing on each space for each player
@@ -263,7 +318,17 @@ colors <- c("red", "blue", "green")
   
   # creates density plot for total frequency landing on each space (all players spaces included)
   all_spaces <- as.vector(as.matrix(location_data))
+
+  plot(density(all_spaces), xlim = c(0,40), col = "black", xlab="Spaces", main="Density of Landing Locations for One Player")
+  
+  #creates frequency plots for landing on each space for each player.
+  for(k in 1:players){
+  plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
+  }
+  
+
   plot(density(all_spaces), xlim = c(0,40), col = "black")
+
 }
 
 lets_play(100, 4)
@@ -407,10 +472,20 @@ lets_play2 = function(turns, players) {
   print(location_data)
   print(double3)
   
+  
+  ########################## plots ###############################
+
+  #vector of colors
+  colors <- c("red", "blue", "green","purple")
+  
+  # creates density plot of frequency of landing on each space for each player
+  plot(density(location_data[,1]), xlim = c(0,40), col = "black", xlab="Spaces", main= "Density of Landing Locations for all Players")
+
   # creates density plot of frequency of landing on each space for each player
   plot(density(location_data[,1]), xlim = c(0,40), col = "black")
   
   colors <- c("red", "blue", "green")
+
   
   for (k in 2:players) {
     lines(density(location_data[,k]), col = colors[k-1]) # adds a density line for each player after the first
@@ -418,7 +493,16 @@ lets_play2 = function(turns, players) {
   
   # creates density plot for total frequency landing on each space (all players spaces included)
   all_spaces <- as.vector(as.matrix(location_data))
+
+  plot(density(all_spaces), xlim = c(0,40), col = "black", xlab="Spaces", main="Density of Landing Locations for One Player")
+  
+  #creates frequency plots for landing on each space for each player.
+  for(k in 1:players){
+  plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
+  }
+
   plot(density(all_spaces), xlim = c(0,40), col = "black")
+
   
 }
  
