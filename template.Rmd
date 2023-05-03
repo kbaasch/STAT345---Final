@@ -1312,17 +1312,17 @@ Drawing_Community_Chest = function(location) {
   }
   
   #Bank error in your favor. Collect $200
-  if(draw_card == 2){
+  if(draw_card_chest == 2){
     Player_Bank = Player_Bank + 200
   }
   
   #Doctor’s fee. Pay $50
-  if(draw_card == 3){
+  if(draw_card_chest == 3){
     Player_Bank = Player_Bank - 50
   }
   
   #From sale of stock you get $50
-  if(draw_card == 4){
+  if(draw_card_chest == 4){
     Player_Bank = Player_Bank + 50
   }
   
@@ -1331,42 +1331,42 @@ Drawing_Community_Chest = function(location) {
   }
   
   #Holiday fund matures. Receive $100
-  if(draw_card == 7){
+  if(draw_card_chest == 7){
     Player_Bank = Player_Bank + 100
   }
   
   #Income tax refund. Collect $20
-  if(draw_card == 8){
+  if(draw_card_chest == 8){
     Player_Bank = Player_Bank + 20
   }
   
   #Life insurance matures. Collect $100
-  if(draw_card == 10){
+  if(draw_card_chest == 10){
     Player_Bank = Player_Bank + 100
   }
   
   #Pay hospital fees of $100
-  if(draw_card == 11){
+  if(draw_card_chest == 11){
     Player_Bank = Player_Bank - 100
   }
   
   #Pay school fees of $50
-  if(draw_card == 12){
+  if(draw_card_chest == 12){
     Player_Bank = Player_Bank - 50
   }
   
   #Receive $25 consultancy fee
-  if(draw_card == 13){
+  if(draw_card_chest == 13){
     Player_Bank = Player_Bank + 25
   }
   
   #You have won second prize in a beauty contest. Collect $10
-  if(draw_card == 15){
+  if(draw_card_chest == 15){
     Player_Bank = Player_Bank + 10
   }
   
   #You inherit $100
-  if(draw_card == 16){
+  if(draw_card_chest == 16){
     Player_Bank = Player_Bank + 100
   }
   
@@ -1374,7 +1374,7 @@ Drawing_Community_Chest = function(location) {
   return(location)
 }
 
-
+Drawing_Community_Chest(10) # test
 
 Chance
 Community_Chest
@@ -1567,7 +1567,7 @@ print(Property_Statuses)
         location <- 11
         location_data[i,j] <- as.integer(location)
       }
-      
+  
       
     }
   }
