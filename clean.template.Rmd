@@ -8,7 +8,7 @@ date: "2023-04-21"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
+```{r, message=FALSE}
 #libraries
 library(dplyr)
 library(ggplot2)
@@ -320,53 +320,47 @@ lets_move2 = function(location) {
 # output is a list of players in order of who goes first
 who_goes_first2 <- function(num_players){
   initial_rolls <- c()
+  player_order <- length(num_players)
   for (i in 1:num_players) {
     player_i_roll <- sum(sample(1:6, 2, replace=TRUE))
-    initial_rolls <- c(initial_rolls, player_i_roll) # vector of every player's roll
-#    print(paste("Player", i, "rolled", player_i_roll))
+    initial_rolls <- c(initial_rolls, player_i_roll) # vector of every player's first roll
   }
-  cat("\n")
-  if(sum(initial_rolls == max(initial_rolls)) >= 2){
-    while (sum(initial_rolls == max(initial_rolls)) >= 2) { # if players tied for highest number
+  
+  if(sum(initial_rolls == max(initial_rolls)) >= 2){ # if more 1 person has the highest roll
+    
+    while (sum(initial_rolls == max(initial_rolls)) >= 2) { # keep rolling as long as players are tied
       tied_players <- which(initial_rolls==max(initial_rolls)) # identify which players tied
-#      print("It's a tie! Roll again")
-#      cat("\n")
+
       tie_breaker_rolls <- c()
       for (i in tied_players) { # tied players roll again
        player_i_roll2 <- sum(sample(1:6, 2, replace=TRUE))
        tie_breaker_rolls <- c(tie_breaker_rolls, player_i_roll2)
-#       print(paste("Player", i, "rolled", player_i_roll2))
+       initial_rolls <- tie_breaker_rolls # update initial rolls
       }
-      initial_rolls <- tie_breaker_rolls
-      highest_roll <- max(tie_breaker_rolls)
-      highest_player2 <- tied_players[which(tie_breaker_rolls == highest_roll)]
     }
-#    cat("\n")
-#    print(paste("Player", highest_player2, "goes first!"))
+    highest_roll <- max(tie_breaker_rolls)
+    highest_player <- tied_players[which(tie_breaker_rolls == highest_roll)]
   }
+  
   else {
     highest_player <- which.max(initial_rolls) # who rolled the highest number
-#    print(paste("Player", highest_player, "goes first!"))
-#    return(highest_player)
   
-    
-  # creating player order
-  player_order <- length(num_players)
-  player_order[1] <- as.integer(highest_player)
+    # creating player order
+    player_order[1] <- as.integer(highest_player)
 
- for (j in 2:num_players) {
+    for (j in 2:num_players) {
     
-  player_order[j] <- as.integer(player_order[j-1] + 1)
-  if (player_order[j] > num_players) {
-    player_order[j] <- 1
+      player_order[j] <- as.integer(player_order[j-1] + 1)
+      if (player_order[j] > num_players) {
+        player_order[j] <- 1
+      }
+    }
+    #print(player_order)
   }
- }
-  print(player_order)
-  }
-  
   playerlist <- (list(highest_player, player_order))
   return(playerlist)
 }
+
 
 
 lets_play2 = function(turns, players) {
@@ -702,19 +696,17 @@ lets_play3 = function(turns, players) {
   
   plot(density(location_data[,1]), xlim = c(0,40), col = "black")
   
-  for(k in 2:players){
-  plot(location_data[,k], xlim= c(0,40), col=colors[k-1], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
-  }
-  
-  
-  
   for (k in 2:players) {
-    lines(density(location_data[,k]), col = colors[k-1]) # adds a density line for each player after the first
+    lines(density(location_data[,k]), col = colors[k-1], xlab="Spaces", main= "Density of Landing Locations for all Players") # adds a density line for each player after the first
   }
   
   # creates density plot for total frequency landing on each space (all players spaces included)
   all_spaces <- as.vector(as.matrix(location_data))
-  plot(density(all_spaces), xlim = c(0,40), col = "black")
+  plot(density(all_spaces), xlim = c(0,40), col = "black", xlab="Spaces", main="Density of Landing Locations for One Player")
+  
+  for(k in 2:players){
+  plot(location_data[,k], xlim= c(0,40), col=colors[k-1], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
+  }
   
 }
 
@@ -736,7 +728,7 @@ Property_Statuses <- data.frame(Property, Space, Owned_By_Player)
 
 
 Updating_Player_Bank <- function(location, j) {
-  if(location == 2 || location == 4 || location == 6 || location == 7 || location == 9 || location == 10 || location == 12 || location == 13 || location == 14 || location == 15 || location == 16 || location == 17 || location == 19 || location == 20 || location == 22 || location == 24 || location == 25 || location == 26 || location == 27 || location == 28 || location == 29 || location == 30 || location == 32 || location == 33 || location == 35 || location == 36 || location == 38 || location == 40){
+  if(location %in% c(2, 4, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 19, 20, 22, 24, 25, 26, 27, 28, 29, 30, 32, 33, 35, 36, 38, 40) ){
     
     location = location
     spot <- which(Property_Statuses$Space == location)
