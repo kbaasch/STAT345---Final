@@ -668,146 +668,7 @@ location_data
 
 #################
 
-Updating_Player_Bank <- function(location) {
-  if(location == 2 || location == 4 || location == 6 || location == 7 || location == 9 || location == 10 || location == 12 || location == 13 || location == 14 || location == 15 || location == 16 || location == 17 || location == 19 || location == 20 || location == 22 || location == 24 || location == 25 || location == 26 || location == 27 || location == 28 || location == 29 || location == 30 || location == 32 || location == 33 || location == 35 || location == 36 || location == 38 || location == 40){
-    location = location
-    spot <- which(Property_Statuses$Space == location)
-    cost <- which(monopolyBoard$spaces == location)
-    owned_by_player <- Property_Statuses$Owned_By_Player[spot]
-#    The_Players$Player_Bank[owned_by_player] <- The_Players$Player_Bank[owned_by_player] + monopolyBoard$rent_0[cost]
-#    The_Players$Player_Bank[owned_by_player]
-#    print(The_Players)
-#    print(owned_by_player)
-#    print(cost)
-    
-#    The_Players$Player_Bank[owned_by_player] <- The_Players$Player_Bank[owned_by_player] + monopolyBoard$rent_0[cost]
-    
-#    The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$rent_0[cost]
-    
-    bank_list <- list(owned_by_player, cost)
-    return(bank_list)
 
-  }
-}
-
-Updating_Player_Bank(15)
-
-#########################################
-
-lets_move3 = function(location) {
-  dice_roll_1 <- sample(1:6, 1, replace = TRUE)
-  dice_roll_2 <- sample(1:6, 1, replace = TRUE)
-  
-  roll_total <- sum(dice_roll_1, dice_roll_2)
-  roll_double <- dice_roll_1 == dice_roll_2
-  
-    location = location + roll_total
-    double3 = "false"
-  
-#  print("your roll total is...")
-#  print(roll_total)
-
-  if (location <= 40) {
-      location = location
-  } else {
-      location = location - 40
-  }
-   
-#  print("your location is...")
-#  print(location)
-  
-#  Updating_Player_Bank(location)
-  
-  if(location == 8 || location == 23 || location == 27) {
-    location = Drawing_Chance(location)
-#    print("your location is...")
-#    print(location)
-#    Updating_Player_Bank(location)
-  }
-  
-  if(location == 3 || location == 18 || location == 34) {
-    location = Drawing_Community_Chest(location)
-#    print("your location is...")
-#    print(location)
-#    Updating_Player_Bank(location)
-  }
-    
-  # first double roll -> roll again
-  if (roll_double == TRUE) {
-    dice_roll_3 <- sample(1:6, 1, replace = TRUE)
-    dice_roll_4 <- sample(1:6, 1, replace = TRUE)
-    
-    roll_total2 <- sum(dice_roll_3, dice_roll_4)
-    roll_double2 <- dice_roll_3 == dice_roll_4
-    
-    location = location + roll_total2
-    double3 = "false"
-#    print("1 double")
-    
-    if (location <= 40) {
-      location = location
-    } else {
-      location = location - 40
-    }
-    
-    
-    if(location == 8 || location == 23 || location == 27) {
-    location = Drawing_Chance(location)
-    }
-  
-  if(location == 3 || location == 18 || location == 34) {
-    location = Drawing_Community_Chest(location)
-  }
-    
-#    Updating_Player_Bank(location)
-     
-      # second double roll -> roll again
-      if (roll_double2 == TRUE) {
-        dice_roll_5 <- sample(1:6, 1, replace = TRUE)
-        dice_roll_6 <- sample(1:6, 1, replace = TRUE)
-    
-        roll_total3 <- sum(dice_roll_5, dice_roll_6)
-        roll_double3 <- dice_roll_5 == dice_roll_6
-    
-        location = location + roll_total3
-        double3 = "false"
-#        print("2 doubles")
-        
-        if (location <= 40) {
-          location = location
-        } else {
-          location = location - 40
-        }
-        
-        
-        if(location == 8 || location == 23 || location == 27) {
-          location = Drawing_Chance(location)
-        }
-  
-        if(location == 3 || location == 18 || location == 34) {
-          location = Drawing_Community_Chest(location)
-         
-        }
-        
-#        Updating_Player_Bank(location)
-        
-        # third double roll -> go to jail
-          if (roll_double3 == TRUE) {
-            location = monopolyBoard$spaces[monopolyBoard$name == "Jail"]
-            double3 = "true"
-#            print("three doubles")
-          }
-      }
-  }  
-   
-  location = location 
-  
-#  print("your location is...")
-#  print(location)
-  listdata <- (list(location, double3, The_Players))
-  return(listdata)
-  
-}
 
 ##########
 
@@ -818,8 +679,7 @@ lets_play_idk = function(turns, players) {
   
   location_data <- as.data.frame(matrix(nrow = turns, ncol = players))
   double3data <- as.data.frame(matrix(nrow = turns, ncol = players))
-#  player_bank_amount <- 0
-#  player_bank_data <- data.frame(matrix(nrow = 2, ncol = players))
+  player_bank_data <- data.frame(matrix(nrow = 2, ncol = players))
   
     colnames(location_data) <- who_goes_first2(players)[[2]]
   
@@ -834,9 +694,6 @@ lets_play_idk = function(turns, players) {
         location = lets_move3(location_data[i-1,j])[[1]]
         location_data[i,j] <- as.integer(location)
         double3data[i,j] <- lets_move3(double3)[[2]]
-        
-  #      player_bank_amount <- lets_move3(location_data[i-1,j])[[3]]
-  #      player_bank_data <- as.integer(player_bank_amount)
         
       # deals with landing in jail from "go to jail" space and staying there for next 3 turns
       if (31 %in% location_data[i-1,j]) { # if you land on 31 (go to jail), next location is in jail (space 11)
@@ -861,18 +718,23 @@ lets_play_idk = function(turns, players) {
         location <- 11
         location_data[i,j] <- as.integer(location)
       }
+
         
+      # updating banks when players land on each others properties
+      if(location %in% c(2, 4, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 19, 20, 22, 24, 25, 26, 27, 28, 29, 30, 32, 33, 35, 36, 38, 40)) {
+            
+      location = location
+      spot <- which(Property_Statuses$Space == location)
+      cost <- which(monopolyBoard$spaces == location)
+      owned_by_player <- Property_Statuses$Owned_By_Player[spot]
         
-      owned_by_player <- Updating_Player_Bank(location)[[1]]
-      cost <- Updating_Player_Bank(location)[[2]]
       The_Players$Player_Bank[owned_by_player] <- The_Players$Player_Bank[owned_by_player] + monopolyBoard$rent_0[cost]
       The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$rent_0[cost]
-#  return(The_Players)
+          }
     }
   }
   print(location_data)
   print(double3data)
-#  print(player_bank_data)
   print(The_Players)
   
   # creates density plot of frequency of landing on each space for each player
