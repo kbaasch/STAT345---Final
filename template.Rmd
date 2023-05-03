@@ -681,8 +681,9 @@ Updating_Player_Bank <- function(location) {
 #    print(cost)
     
 #    The_Players$Player_Bank[owned_by_player] <- The_Players$Player_Bank[owned_by_player] + monopolyBoard$rent_0[cost]
-    
+#    p1 <- The_Players$Player_Bank[owned_by_player]
 #    The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$rent_0[cost]
+#    p2 <- The_Players$Player_Bank[j]
     
     bank_list <- list(owned_by_player, cost)
     return(bank_list)
@@ -804,7 +805,7 @@ lets_move3 = function(location) {
   
 #  print("your location is...")
 #  print(location)
-  listdata <- (list(location, double3, The_Players))
+  listdata <- (list(location, double3))
   return(listdata)
   
 }
@@ -819,7 +820,7 @@ lets_play_idk = function(turns, players) {
   location_data <- as.data.frame(matrix(nrow = turns, ncol = players))
   double3data <- as.data.frame(matrix(nrow = turns, ncol = players))
 #  player_bank_amount <- 0
-#  player_bank_data <- data.frame(matrix(nrow = 2, ncol = players))
+  player_bank_data <- data.frame(matrix(nrow = 2, ncol = players))
   
     colnames(location_data) <- who_goes_first2(players)[[2]]
   
@@ -862,11 +863,22 @@ lets_play_idk = function(turns, players) {
         location_data[i,j] <- as.integer(location)
       }
         
+#      player_bank_data[j] <- Updating_Player_Bank(location_data[i,j])[[1]]
         
-      owned_by_player <- Updating_Player_Bank(location)[[1]]
-      cost <- Updating_Player_Bank(location)[[2]]
-      The_Players$Player_Bank[owned_by_player] <- The_Players$Player_Bank[owned_by_player] + monopolyBoard$rent_0[cost]
-      The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$rent_0[cost]
+        
+          if(location == 2 || location == 4 || location == 6 || location == 7 || location == 9 || location == 10 || location == 12 || location == 13 || location == 14 || location == 15 || location == 16 || location == 17 || location == 19 || location == 20 || location == 22 || location == 24 || location == 25 || location == 26 || location == 27 || location == 28 || location == 29 || location == 30 || location == 32 || location == 33 || location == 35 || location == 36 || location == 38 || location == 40) {
+            
+    location = location
+    spot <- which(Property_Statuses$Space == location)
+    cost <- which(monopolyBoard$spaces == location)
+    owned_by_player <- Property_Statuses$Owned_By_Player[spot]
+        
+        
+#       owned_by_player <- Updating_Player_Bank(location_data[i,j])[[1]]
+#       cost <- Updating_Player_Bank(location_data[i,j])[[2]]
+       The_Players$Player_Bank[owned_by_player] <- The_Players$Player_Bank[owned_by_player] + monopolyBoard$rent_0[cost]
+       The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$rent_0[cost]
+          }
 #  return(The_Players)
     }
   }
