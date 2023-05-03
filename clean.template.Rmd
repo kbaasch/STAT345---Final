@@ -696,19 +696,17 @@ lets_play3 = function(turns, players) {
   
   plot(density(location_data[,1]), xlim = c(0,40), col = "black")
   
-  for(k in 2:players){
-  plot(location_data[,k], xlim= c(0,40), col=colors[k-1], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
-  }
-  
-  
-  
   for (k in 2:players) {
-    lines(density(location_data[,k]), col = colors[k-1]) # adds a density line for each player after the first
+    lines(density(location_data[,k]), col = colors[k-1], xlab="Spaces", main= "Density of Landing Locations for all Players") # adds a density line for each player after the first
   }
   
   # creates density plot for total frequency landing on each space (all players spaces included)
   all_spaces <- as.vector(as.matrix(location_data))
-  plot(density(all_spaces), xlim = c(0,40), col = "black")
+  plot(density(all_spaces), xlim = c(0,40), col = "black", xlab="Spaces", main="Density of Landing Locations for One Player")
+  
+  for(k in 2:players){
+  plot(location_data[,k], xlim= c(0,40), col=colors[k-1], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
+  }
   
 }
 
