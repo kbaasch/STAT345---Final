@@ -1210,10 +1210,8 @@ lets_play3(100, 4)
 dice_roll <- sum(sample(1:6, 2, replace = TRUE))
 dice_roll
 
-Drawing_Chance = function(location, Player_Bank) {
+Drawing_Chance = function(location) {
   location = location
-  Player_Bank = Player_Bank
-  
   draw_card <- sample(1:16, 1, replace = TRUE)
   player_card <- Chance$Chance_Cards[draw_card]
   print(player_card)
@@ -1315,20 +1313,18 @@ Drawing_Chance = function(location, Player_Bank) {
       Player_Bank = Player_Bank + 150
     }
   
-    Player_Bank = Player_Bank
+   
     location = location
-    return(Player_Bank)
     return(location)
 }
 
-Drawing_Community_Chest = function(location, Player_Bank) {
+Drawing_Community_Chest = function(location) {
   location = location
-  Player_Bank = Player_Bank
-  
   draw_card_chest <- sample(1:16, 1, replace = TRUE)
   player_card_chest <- Community_Chest$Community_Chest_Cards[draw_card_chest]
   print(player_card_chest)
   print(location)
+  
   
   if (draw_card_chest == 1) {
     location = 1
@@ -1395,8 +1391,6 @@ Drawing_Community_Chest = function(location, Player_Bank) {
   }
   
   location = location 
-  Player_Bank = Player_Bank
-  return(Player_Bank)
   return(location)
 }
 
@@ -1759,6 +1753,7 @@ lets_move4 = function(location) {
 }
 
 lets_move4(12)
+lets_move4(Updating_Player_Bank())
 ```
 
 

@@ -751,7 +751,7 @@ Updating_Player_Bank <- function(location, j) {
   }
 }
 
-Updating_Player_Bank(12)
+Updating_Player_Bank(12, 4)
 
 The_Players
 ```
