@@ -1178,11 +1178,14 @@ Drawing_Chance = function(location) {
   
    
     location = location
-    return(location)
+    amount = amount
+    list_location_amount <- list(location, amount)
+    return(list_location_amount)
 }
 
 Drawing_Community_Chest = function(location) {
   location = location
+  amount <- 0
   draw_card_chest <- sample(1:16, 1, replace = TRUE)
   player_card_chest <- Community_Chest$Community_Chest_Cards[draw_card_chest]
   print(player_card_chest)
@@ -1254,7 +1257,9 @@ Drawing_Community_Chest = function(location) {
   }
   
   location = location 
-  return(location)
+  amount = amount
+  list_location_amount <- list(location,amount)
+  return(list_location_amount)
 }
 
 Drawing_Community_Chest(10) # test
