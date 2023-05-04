@@ -469,7 +469,7 @@ Community_Chest <- data.frame(Community_Chest_Cards, Card_Numbers) #a dataframe 
 
 Drawing_Chance = function(location) {
   location = location #the player's current location
-  amount <- 0 #amount is later used to updated the player's bank in lets_play3 by the amount stated in certain cards
+  amount <- 0 #amount is later used to updated the player's bank in lets_play4
   draw_card <- sample(1:16, 1, replace = TRUE) #randomly selecting a card from 1:16 cards
   player_card <- Chance$Chance_Cards[draw_card] #finding the card in the Chance deck
   print(player_card)
