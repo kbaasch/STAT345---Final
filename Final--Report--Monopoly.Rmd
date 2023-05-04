@@ -206,6 +206,13 @@ spaces which are multiples of 7 tend to be landed on more frequently.
 This is the be expected due to the fact that a total of 7 has the
 highest probability when rolling 2 die.
 
+Within this section, we also wrote the function, who_goes_first, in
+order to determine the starting player order of the game. This function
+simulates an initial dice roll by however many players are going to play
+the game and incorporates re-rolling for players who tie. The end result
+is a list of the players in order of who will go first to be used as an
+input for playing the game later.
+
 ## 3. Double Down!
 
 Improve your system to incorporate going to jail, including the
