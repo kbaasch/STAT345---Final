@@ -631,48 +631,7 @@ location_data
 
 
 ```{r}
-# olivia (ignore this its a work in progress)
-# Figure out how to have players pay and recieve money from landing on chance and community chest spaces
-
-# $200 every time you pass go
-
-     if(draw_card == 5){
-        if(location >= 37 && location <= 5){
-              location = 6
-              
-              
-            } else if (location >= 6 && location <= 15){
-                location = 16
-              } else {
-                if(location >= 16 && location <= 25){
-                  location = 26
-                } else {
-                  location = 36
-                }
-              }
-            }
-  
-    if(draw_card == 6){
-        if(location >= 37 && location <= 5){
-              location = 6
-            } else {
-              if (location >= 6 && location <= 15){
-                location = 16
-              } else {
-                if(location >= 16 && location <= 25){
-                  location = 26
-                } else {
-                  location = 36
-                }
-              }
-            }
-    }
-
-#################
-
-
-
-##########
+# olivia
 
 # replaces NAs in rent_0 column with 0s
 monopolyBoard$rent_0[is.na(monopolyBoard$rent_0) == TRUE] <- as.integer(0)
@@ -748,6 +707,8 @@ lets_play_idk = function(turns, players) {
       if (lets_move3(location_data[i,j])[[3]] != 0) {
         The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] + lets_move3(location_data[i,j])[[3]]  
       }
+      
+      # luxury tax  
         
     }
   }
@@ -772,9 +733,8 @@ lets_play_idk = function(turns, players) {
  
 }
 
-lets_play_idk(10, 4)
+lets_play_idk(50, 4)
 
-# prob have to change how we call drawing_chance in lets_move3 (its a list now)
 
 ```
 
