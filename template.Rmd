@@ -743,6 +743,11 @@ lets_play_idk = function(turns, players) {
       if (Drawing_Community_Chest(location_data[i,j])[[2]] != 0) {
         The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] + Drawing_Community_Chest(location_data[i,j])[[2]]  
       }
+      
+      # Player gets $200 if they pass go
+      if (lets_move3(location_data[i,j])[[3]] != 0) {
+        The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] + lets_move3(location_data[i,j])[[3]]  
+      }
         
     }
   }
@@ -905,8 +910,10 @@ lets_move3 = function(location) {
 
   if (location <= 40) {
       location = location
+      amount = 0
   } else {
       location = location - 40
+      amount = 200
   }
    
   print("your location is...")
@@ -938,8 +945,10 @@ lets_move3 = function(location) {
     
     if (location <= 40) {
       location = location
+      amount = 0
     } else {
       location = location - 40
+      amount = 200
     }
     
     
@@ -965,8 +974,10 @@ lets_move3 = function(location) {
         
         if (location <= 40) {
           location = location
+          amount = 0
         } else {
           location = location - 40
+          amount = 200
         }
         
         if(location == 8 || location == 23 || location == 27) {
@@ -991,7 +1002,7 @@ lets_move3 = function(location) {
   
   print("your location is...")
   print(location)
-  listdata <- (list(location, double3))
+  listdata <- (list(location, double3, amount))
   return(listdata)
   
 }
