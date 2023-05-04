@@ -469,7 +469,8 @@ Community_Chest <- data.frame(Community_Chest_Cards, Card_Numbers) #a dataframe 
 
 Drawing_Chance = function(location) {
   location = location #the player's current location
-  draw_card <- sample(1:16, 1, replace = TRUE) #randomly selecting a card from 1:16
+  amount <- 0 #amount is later used to updated the player's bank in lets_play3 by the amount stated in certain cards
+  draw_card <- sample(1:16, 1, replace = TRUE) #randomly selecting a card from 1:16 cards
   player_card <- Chance$Chance_Cards[draw_card] #finding the card in the Chance deck
   print(player_card)
 
@@ -480,17 +481,28 @@ Drawing_Chance = function(location) {
       
       if(draw_card == 2) {
         location = 1
+        amount = 200
       }
       
       if(draw_card == 3) {
+        if(location > 25){
+          amount = 200
+        }else{
+          amount = amount
+    }
         location = 25
       }
   
       if(draw_card == 4){
+        if(location > 13 ){
+          amount = 200
+        }else{
+          amount = amount
+    }
         location = 12
       }
-    
-      if(draw_card == 5){ #takes into account which space the player is nearest to to determine updated location
+  
+      if(draw_card == 5){
         if(location >= 37 && location <= 5){
               location = 6
             } else {
@@ -506,7 +518,7 @@ Drawing_Chance = function(location) {
             }
     }
   
-    if(draw_card == 6){ #takes into account which space the player is nearest to to determine updated location
+    if(draw_card == 6){
         if(location >= 37 && location <= 5){
               location = 6
             } else {
@@ -522,29 +534,50 @@ Drawing_Chance = function(location) {
             }
     }
   
-    if(draw_card == 7){ #takes into account which space the player is nearest to to determine updated location
+    if(draw_card == 7){
         if(location >= 29 && location <= 12){
               location = 13
             } else {
               location = 29
     }
-  }
-  
-    if(draw_card == 11) {
-      location = 11
     }
   
-    if(draw_card == 14) {
-      location = 6
+    if(draw_card == 8){
+      amount = -50
     }
   
     if(draw_card == 10) {
       location = location - 3
     }
   
+    if(draw_card == 11) {
+      location = 11
+    }
+  
+    if(draw_card == 13){
+      amount = -15
+    }
+  
+    if(draw_card == 14) {
+      if(location > 6){
+        amount = 200
+      }else{
+        amount = amount
+    }
+      location = 6
+    }
+  
+    if(draw_card == 16){
+      amount = 150
+    }
+  
+   
     location = location
-    return(location)
+    amount = amount
+    list_location_amount <- list(location, amount)
+    return(list_location_amount)
 }
+
 
 
 #A function that randomly selects a numeric value 1:16 representing a Community Chest card and updates the player's location based on the card information
@@ -552,25 +585,82 @@ Drawing_Chance = function(location) {
 #output: the player's new location on the board
 
 Drawing_Community_Chest = function(location) {
-  location = location #the player's current location
-  draw_card_chest <- sample(1:16, 1, replace = TRUE) #randomly selecting a card from 1:16
-  player_card_chest <- Community_Chest$Community_Chest_Cards[draw_card_chest] #finding the card in the Community Chest deck
+  location = location
+  amount <- 0
+  draw_card_chest <- sample(1:16, 1, replace = TRUE)
+  player_card_chest <- Community_Chest$Community_Chest_Cards[draw_card_chest]
   print(player_card_chest)
-
-#The following if statements update the player's location based on the card that was drawn (if applicable) 
+  print(location)
+  
+  
   if (draw_card_chest == 1) {
     location = 1
-  } else {
-    if (draw_card_chest == 6) {
-    location = 11
-    } else {
-      location = location
-    }
+    amount = 200
+  }
   
+  #Bank error in your favor. Collect $200
+  if(draw_card_chest == 2){
+    amount = 200
+  }
+  
+  #Doctor’s fee. Pay $50
+  if(draw_card_chest == 3){
+    amount = -50
+  }
+  
+  #From sale of stock you get $50
+  if(draw_card_chest == 4){
+    amount = 50
+  }
+  
+  if(draw_card_chest == 6) {
+    location = 11
+  }
+  
+  #Holiday fund matures. Receive $100
+  if(draw_card_chest == 7){
+    amount = 100
+  }
+  
+  #Income tax refund. Collect $20
+  if(draw_card_chest == 8){
+    amount = 20
+  }
+  
+  #Life insurance matures. Collect $100
+  if(draw_card_chest == 10){
+    amount = 100
+  }
+  
+  #Pay hospital fees of $100
+  if(draw_card_chest == 11){
+    amount = -100
+  }
+  
+  #Pay school fees of $50
+  if(draw_card_chest == 12){
+    amount = -50
+  }
+  
+  #Receive $25 consultancy fee
+  if(draw_card_chest == 13){
+    amount = 25
+  }
+  
+  #You have won second prize in a beauty contest. Collect $10
+  if(draw_card_chest == 15){
+    amount = 10
+  }
+  
+  #You inherit $100
+  if(draw_card_chest == 16){
+    amount = 100
   }
   
   location = location 
-  return(location)
+  amount = amount
+  list_location_amount <- list(location,amount)
+  return(list_location_amount)
 }
 ```
 
@@ -729,7 +819,7 @@ lets_play3 = function(turns, players) {
       }
 
         
-      # updating banks when players land on each others properties
+      # updating banks if players land on each others' properties
       if(location %in% c(2, 4, 7, 9, 10, 12, 13, 14, 15, 17, 19, 20, 22, 24, 25, 27, 28, 29, 30, 32, 33, 35, 38, 40)) {
             
       location = location
@@ -740,7 +830,8 @@ lets_play3 = function(turns, players) {
       The_Players$Player_Bank[owned_by_player] <- The_Players$Player_Bank[owned_by_player] + monopolyBoard$rent_0[cost]
       The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$rent_0[cost]
       }
-        
+      
+      #updating banks if players land on others' railroads
       if(location %in% c(6, 16, 26, 36)){
         
       location = location
@@ -771,6 +862,8 @@ lets_play3 = function(turns, players) {
       if (5 %in% location_data[i,j] || 39 %in% location_data[i,j]) {
         The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$cost[location_data[i,j]] # subtracting cost of tax from player's bank
       }
+        
+      #
     }
   }
 
