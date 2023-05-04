@@ -272,7 +272,7 @@ print(location_data)
   plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
   }
 
-  plot(all_spaces, xlim = c(0,40), col = "black", type="h", xlab = "Spaces", ylab = "Frequency", main = "Frequency of Landing Locationas Overall")
+  plot(all_spaces, xlim = c(0,40), col = "black", type="h", xlab = "Spaces", ylab = "Frequency", main = "Frequency of Landing Locations Overall")
 }
 
 lets_play(100, 4)
@@ -438,7 +438,7 @@ lets_play2 = function(turns, players) {
   plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
   }
   
-  plot(all_spaces, xlim = c(0,40), col = "black", type="h", xlab = "Spaces", ylab = "Frequency", main = "Frequency of Landing Locationas Overall")
+  plot(all_spaces, xlim = c(0,40), col = "black", type="h", xlab = "Spaces", ylab = "Frequency", main = "Frequency of Landing Locations Overall")
  
 }
  
