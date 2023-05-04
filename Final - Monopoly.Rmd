@@ -782,6 +782,7 @@ lets_play3 = function(turns, players) {
   for(k in 1:players){
   plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
   }
+  
 }
 
 lets_play3(1000, 4)
