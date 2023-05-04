@@ -7,7 +7,7 @@ date: "2023-05-03"
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
-source("C:/Users/Maddie's Laptop/Documents/STAT 345/Projects/STAT345-SP23/Final Project/STAT345---Final/source_monopoly_code.R") 
+source("C:/Users/Maddie's Laptop/Documents/STAT 345/Projects/STAT345-SP23/Final Project/STAT345---Final/source_monopoly_code.R")
 ```
 
 #Lets Get Moving
@@ -26,14 +26,15 @@ lets_play2(1000,4)
 
 ```
 ##Findings
-###To complete this task we made a new function, lets_move2, that had the same components as lets_play but added rules when rolling doubles. If a player rolled a double the new location was recorded and then they could roll again. The same rule was applied for players that rolled 2 doubles consecutivley. Once a player rolled 3 doubles in a row they are sent to jail. To keep players in jail for 3 turns when sent from "Go to Jail" space or from rolling 3 doubles aspects of the old lets_play function were also updated in lets_play2. As before, the dataframe with players and their corresponding positions is outputed as well as frequency and density plots of these locations. As seen in the density plot, space 11, is landed on significantly more than the other spaces. Knowing that space 11 is the jail space on the monopoly board, this result doesn't come as a suprise. By adding rules about going to jail when landing on the "Go to Jail" and when rolling 3 doubles in a row, the jail location is landed on more frequently. 
+###To complete this task we made a new function, lets_move2, that had the same components as lets_play but added rules when rolling doubles. If a player rolled a double the new location was recorded and then they could roll again. The same rule was applied for players that rolled 2 doubles consecutivley. Once a player rolled 3 doubles in a row they are sent to jail. To keep players in jail for 3 turns when sent from "Go to Jail" space or from rolling 3 doubles aspects of the old lets_play function were also updated in lets_play2. As before, the dataframe with players and their corresponding positions is outputed as well as frequency and density plots of these locations. As seen in the density plot, space 11, is landed on significantly more than the other spaces. Knowing that space 11 is the jail space on the monopoly board, this result doesn't come as a suprise. By adding rules about going to jail when landing on the "Go to Jail" and when rolling 3 doubles in a row, the jail location is landed on more frequently.
 
+#Take a Chance!
+###Incorporate the movement cards into your system. You can ignore the effects of non-movement cards, but not their existence! Which properties are landed on most frequently now? Has this changed dramatically from the previous system (that didn't account for Chance)? Again, visualize this!
 
+```{r}
+lets_play3(1000,4)
 
+```
 
-
-##Analysis of Graphs
-
-
-
-
+##Findings
+###To incorporate the movement cards, chance and community chest, we created two functions to be added into the previous lets_move2 function. The two new functions allow players to "pick" a random card out of 16, then a series of if statements are used to direct the player to their new location. A new if statement was added into a copy of lets_move2 to allow them to "draw" a card if landing on specific board locations. The results with the added movement cards have an interesting affect on the frequency of landing on a space. As previously mentioned, the most frequent spaces landed on were about 7 spaces apart due to the probability of the sum of two die. The new frequency plots show that with the added movement cards these "hot spots" become less frequented as the movement cards allow players to travel around the board without relying on the sum of two die. The density plot looks very similar to the previous plot because space 11 or "Jail" is still the most frequented space. 

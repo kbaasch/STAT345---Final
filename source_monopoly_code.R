@@ -34,9 +34,6 @@ lets_move = function(location) {
   
 }
 
-lets_move(20)
-
-
 
 ## who_goes_first2
 who_goes_first2 <- function(num_players){
@@ -133,10 +130,6 @@ lets_play = function(turns, players) {
   }
   
 }
-
-lets_play(100, 4)
-
-
 
 
 ## double_down <- lets_move2
@@ -295,7 +288,7 @@ lets_play2 = function(turns, players) {
   
 }
 
-lets_play2(100, 4)
+
 ##the community chest and chance cards
 
 Card_Numbers <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16) # the card numbers
@@ -520,3 +513,73 @@ lets_move3 = function(location) {
   return(listdata)
   
 }
+
+lets_play3 = function(turns, players) {
+  
+  location_data <- as.data.frame(matrix(nrow = turns, ncol = players))
+  double3data <- as.data.frame(matrix(nrow = turns, ncol = players))
+  
+  colnames(location_data) <- who_goes_first2(players)[[2]]
+  
+  location = 1
+  location_data[1,] <- location
+  double3 = 0
+  
+  for (i in 2:turns) {
+    
+    for (j in 1:players) {
+      
+      location = lets_move3(location_data[i-1,j])[[1]]
+      location_data[i,j] <- as.integer(location)
+      double3data[i,j] <- lets_move3(double3)[[2]]
+      
+      # deals with landing in jail from "go to jail" space and staying there for next 3 turns
+      if (31 %in% location_data[i-1,j]) { # if you land on 31 (go to jail), next location is in jail (space 11)
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      } else if (11 %in% location_data[i-1,j] & 31 %in% location_data[i-2,j]) {
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      } else if (11 %in% location_data[i-2,j] & 31 %in% location_data[i-3,j]) {
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      }
+      
+      # landing in jail from 3x double roll and staying there for next 3 turns
+      if (11 %in% location_data[i,j] & "true" %in% double3data[i-1,j]) { # "true" means player double rolled 3x -> jail
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      } else if (11 %in% location_data[i-1,j] & "true" %in% double3data[i-2,j]) { # 
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      } else if (11 %in% location_data[i-2,j] & "true" %in% double3data[i-3,j]) {
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      }
+      
+    }
+  }
+  print(location_data)
+  print(double3data)
+  
+  
+  
+  # creates density plot of frequency of landing on each space for each player
+  colors <- c("red", "blue", "green","purple")
+  
+  plot(density(location_data[,1]), xlim = c(0,40), col = "black", xlab="Spaces", main= "Density of Landing Locations for All Players")
+  
+  for (k in 2:players) {
+    lines(density(location_data[,k]), col = colors[k-1]) # adds a density line for each player after the first
+  }
+  
+  # creates density plot for total frequency landing on each space (all players spaces included)
+  all_spaces <- as.vector(as.matrix(location_data))
+  plot(density(all_spaces), xlim = c(0,40), col = "black", xlab="Spaces", main="Density of Landing Locations Overall")
+  
+  for(k in 1:players){
+    plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
+  }
+  
+}
+
