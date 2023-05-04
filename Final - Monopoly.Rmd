@@ -676,4 +676,3 @@ lets_move3 = function(location) {
 }
 ```
 
-
