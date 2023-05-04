@@ -190,7 +190,8 @@ lets_play(1000,4)
 
 ```
 
-\## Findings ###We started with a simple function, lets_move, which
+## Findings 
+We started with a simple function, lets_move, which
 allowed one player to "roll" 2 dice, take the sum, and move the
 corresponding distance. The function also allowed the player to loop
 back to square 1 if the location was greater than 40, the amount of
@@ -225,7 +226,8 @@ lets_play2(1000,4)
 
 ```
 
-##Findings ###To complete this task we made a new function, lets_move2,
+##Findings 
+To complete this task we made a new function, lets_move2,
 that had the same components as lets_play but added rules when rolling
 doubles. If a player rolled a double the new location was recorded and
 then they could roll again. The same rule was applied for players that
@@ -254,7 +256,8 @@ lets_play3(1000,4)
 
 ```
 
-##Findings ###To incorporate the movement cards, chance and community
+##Findings 
+To incorporate the movement cards, chance and community
 chest, we created two functions to be added into the previous lets_move2
 function. The two new functions allow players to "pick" a random card
 out of 16, then a series of if statements are used to direct the player
