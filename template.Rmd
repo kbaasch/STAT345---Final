@@ -1074,7 +1074,7 @@ lets_play3(100, 4)
 
 #use lets_move2 for freq plot
 
- 
+Chance
 ```
 
 ## Section Five
@@ -1085,6 +1085,7 @@ dice_roll
 
 Drawing_Chance = function(location) {
   location = location
+  amount <- 0 
   draw_card <- sample(1:16, 1, replace = TRUE)
   player_card <- Chance$Chance_Cards[draw_card]
   print(player_card)
@@ -1096,23 +1097,23 @@ Drawing_Chance = function(location) {
       
       if(draw_card == 2) {
         location = 1
-        Player_Bank = Player_Bank + 200
+        amount = 200
       }
       
       if(draw_card == 3) {
         if(location > 25){
-          Player_Bank = Player_Bank + 200
+          amount = 200
         }else{
-          Player_Bank = Player_Bank
+          amount = amount
     }
         location = 25
       }
   
       if(draw_card == 4){
         if(location > 13 ){
-          Player_Bank = Player_Bank + 200
+          amount = 200
         }else{
-          Player_Bank = Player_Bank
+          amount = amount
     }
         location = 12
       }
@@ -1158,7 +1159,7 @@ Drawing_Chance = function(location) {
     }
   
     if(draw_card == 8){
-      Player_Bank = Player_Bank + 50
+      amount = -50
     }
   
     if(draw_card == 10) {
@@ -1170,29 +1171,32 @@ Drawing_Chance = function(location) {
     }
   
     if(draw_card == 13){
-      Player_Bank = Player_Bank - 15
+      amount = -15
     }
   
     if(draw_card == 14) {
       if(location > 6){
-        Player_Bank = Player_Bank + 200
+        amount = 200
       }else{
-        Player_Bank = Player_Bank
+        amount = amount
     }
       location = 6
     }
   
     if(draw_card == 16){
-      Player_Bank = Player_Bank + 150
+      amount = 150
     }
   
    
     location = location
-    return(location)
+    amount = amount
+    list_location_amount <- list(location, amount)
+    return(list_location_amount)
 }
 
 Drawing_Community_Chest = function(location) {
   location = location
+  amount <- 0
   draw_card_chest <- sample(1:16, 1, replace = TRUE)
   player_card_chest <- Community_Chest$Community_Chest_Cards[draw_card_chest]
   print(player_card_chest)
@@ -1201,22 +1205,22 @@ Drawing_Community_Chest = function(location) {
   
   if (draw_card_chest == 1) {
     location = 1
-    Player_Bank = Player_Bank + 200
+    amount = 200
   }
   
   #Bank error in your favor. Collect $200
   if(draw_card_chest == 2){
-    Player_Bank = Player_Bank + 200
+    amount = 200
   }
   
   #Doctor’s fee. Pay $50
   if(draw_card_chest == 3){
-    Player_Bank = Player_Bank - 50
+    amount = -50
   }
   
   #From sale of stock you get $50
   if(draw_card_chest == 4){
-    Player_Bank = Player_Bank + 50
+    amount = 50
   }
   
   if(draw_card_chest == 6) {
@@ -1225,46 +1229,48 @@ Drawing_Community_Chest = function(location) {
   
   #Holiday fund matures. Receive $100
   if(draw_card_chest == 7){
-    Player_Bank = Player_Bank + 100
+    amount = 100
   }
   
   #Income tax refund. Collect $20
   if(draw_card_chest == 8){
-    Player_Bank = Player_Bank + 20
+    amount = 20
   }
   
   #Life insurance matures. Collect $100
   if(draw_card_chest == 10){
-    Player_Bank = Player_Bank + 100
+    amount = 100
   }
   
   #Pay hospital fees of $100
   if(draw_card_chest == 11){
-    Player_Bank = Player_Bank - 100
+    amount = -100
   }
   
   #Pay school fees of $50
   if(draw_card_chest == 12){
-    Player_Bank = Player_Bank - 50
+    amount = -50
   }
   
   #Receive $25 consultancy fee
   if(draw_card_chest == 13){
-    Player_Bank = Player_Bank + 25
+    amount = 25
   }
   
   #You have won second prize in a beauty contest. Collect $10
   if(draw_card_chest == 15){
-    Player_Bank = Player_Bank + 10
+    amount = 10
   }
   
   #You inherit $100
   if(draw_card_chest == 16){
-    Player_Bank = Player_Bank + 100
+    amount = 100
   }
   
   location = location 
-  return(location)
+  amount = amount
+  list_location_amount <- list(location,amount)
+  return(list_location_amount)
 }
 
 Drawing_Community_Chest(10) # test

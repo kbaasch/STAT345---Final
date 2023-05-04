@@ -1,152 +1,15 @@
----
-title: "Super Awesome Project Template"
-output: word_document
-date: "2023-03-31"
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 ## libraries
-```{r, message=FALSE}
 library(dplyr)
 library(ggplot2)
 library(tidyverse)
-```
-
-
-## Monopoly Movement Rules!
-- Before starting the game, it is important to take note of the different types of "equipment" in Monopoly.
-
-### Equipment
-#### The Board
-- The Board consists of...
-  - 40 tiles, each of which have unique actions associated with them based on their type.
-  - 16 "CHANCE CARDS"
-  - 16 "COMMUNITY CHEST CARDS"
-  - 2 six-sided dice
-
-#### Types of Tiles
-- "PROPERTY" Tiles
-  - There are 8 different sets of properties
-  - Each set of properties has...
-      - its own color
-      - 2 or 3 properties
-  - These tiles can bought
-  - Each of these tiles have a specialized cost/profit associated with them
-  - **These tiles can generate a profit**
-  
-- "RAILROAD" Tiles
-  - There are 4 different railroads evenly spaced across the Board
-  - These tiles can be bought
-  - Each of these tiles have a specialized cost/profit associated with them
-  - **These tiles can generate a profit**
-  
-- "UTILITY" Tiles
-  - There are two utility tiles
-  - These tiles can be bought
-  - Each of these tiles have a specialized cost/profit associated with them
-  - **These tiles can generate a profit**
-  
-- "CHANCE" Tiles
-  - There are 3 chance tiles
-  - If one of these tiles is landed on, a "CHANCE CARD" is drawn
-    - each of these cards has a specialized action associated with them
-    
-- "COMMUNITY CHEST" Tiles
-  - There are 3 community chest tiles
-  - If one of these tiles is landed on, a "COMMUNITY CHEST CHEST" is drawn
-    - each of these cards has a specialized action associated with them
-    
-- "TAX" Tiles
-  - There are 2 tax tiles
-  - Each of these tiles has a cost associated with them
-  
-- "GO"
-  - This is the first tile
-  - Every time this tile is landed on or passed the player collects "$200"
-  
-- "IN JAIL"
-
-- "GO TO JAIL"
-  - When landed on, the player is moved to "IN JAIL"
-  
-- "FREE PARKING"
-
-### Moving around the Board and Generating Profits
-
-- The first step for beginning the game, even before getting to move the first game piece, is to determine which player will move first.
-  - To do this, each player will roll both dice and find the sum of the rolls. The player with the largest sum will start the game. Then the following turn will be the next player.
-    - i.e. if Player 2 starts, Player 3 will go next, then Player 4, then Player 4, then back to Player 2, and so on...
-    
-- All players will start on the "GO" tile.
-
-- To determine how many spaces to move, on their turn each player will roll both dice and find the sum of the rolls. They will then move forward that number of tiles.
-  - In the special case of rolling "doubles" (the roll of each die are equal),
-      - the player will find the sum of rolls and move forward this number of tiles
-      - then, the player will roll again and repeat the previous step.
-        - If the player rolls "doubles" again, repeat the previous two steps.
-        - If the player rolls "doubles" three times in a row, they immediately move to the "IN JAIL" tile.
-
-- After moving to their next location, the player will have different actions to complete based on the tile type.
-
-  - A player lands on a "PROPERTY" tile...
-    - If the player is the first person to land on the "PROPERTY" tile they can buy the "PROPERTY"
-    - Then, every time another player lands on this "PROPERTY", the player has to pay a fee and **the "PROPERTY" generates a profit**
-        - This profit is based on the rent of the "PROPERTY"
-    
-  - A player lands on a "RAILROAD" tile...
-    - If the player is the first person to land on the "RAILROAD" tile they can buy the "RAILROAD"
-    - Then, every time another player lands on this "RAILROAD", the player has to pay a fee and **the "RAILROAD" generates a profit**
-      - This profit is based on the number of "RAILROAD" tiles owned 
-   
-  - A player lands on a "UTILITY" tile...
-      - If the player is the first person to land on the "UTILITY" tile they can buy the "UTILITY"
-    - Then, every time another player lands on this "UTILITY", the player has to pay a fee and **the "UTILITY" generates a unique profit**
-      - This profit is based on the sum of the dice rolled
-      
-  - A player lands on a "CHANCE" or "COMMUNITY CHEST" tile...
-    - The player draws either a "CHANCE" or "COMMUNITY CHEST" card based on the type tile they landed on
-      - Then, the player completes the action on the card
-    - **These tiles cannot be bought and cannot generate a profit**
-    
-  - A player lands on a "TAX" tile...
-    - The player must pay a fee unique to the tile
-    - **These tiles cannot be bought and cannot generate a profit**
-
-  - A player lands on or passes "GO"...
-    - The player collects "$200"
-    - **This tile cannot be bought and cannot generate a profit**
-    
-  - A player lands on "IN JAIL"...
-    - There is no action to be completed
-    - **This tile cannot be bought and cannot generate a profit**
-    
-  - A player lands on "GO TO JAIL"...
-    - The player is immediately moved to "IN JAIL"
-    - The player is unable to move forward for the next three rolls
-    - **This tile cannot be bought and cannot generate a profit**
-    
-  - A player lands on "FREE PARKING"...
-    - Depending on the version of the game being played, the player will either,
-      - collect all money put into "FREE PARKING"
-      - complete no type of action
-    - **This tile cannot be bought and cannot generate a profit**
-        
-- After all players have rolled and moved, the next round begins and the process previously stated is repeated.
-
-- The game ends when three of the four players run out of money and the player remaining wins.
 
 ##the board
-```{r}
+
 monopolyBoard <- read.csv("MonopolyBoard.csv", header = T)
 monopolyBoard
-```
 
 
 ## lets_move
-
-```{r student1}
 # Using dice rolls to determine where a player will land on the board
 #input: "location", where the player is on the board
 #output: the players new location on the board after the have rolled
@@ -172,12 +35,10 @@ lets_move = function(location) {
 }
 
 lets_move(20)
-```
+
 
 
 ## who_goes_first2
-
-```{r student2}
 who_goes_first2 <- function(num_players){
   initial_rolls <- c()
   player_order <- length(num_players)
@@ -190,12 +51,12 @@ who_goes_first2 <- function(num_players){
     
     while (sum(initial_rolls == max(initial_rolls)) >= 2) { # keep rolling as long as players are tied
       tied_players <- which(initial_rolls==max(initial_rolls)) # identify which players tied
-
+      
       tie_breaker_rolls <- c()
       for (i in tied_players) { # tied players roll again
-       player_i_roll2 <- sum(sample(1:6, 2, replace=TRUE))
-       tie_breaker_rolls <- c(tie_breaker_rolls, player_i_roll2)
-       initial_rolls <- tie_breaker_rolls # update initial rolls
+        player_i_roll2 <- sum(sample(1:6, 2, replace=TRUE))
+        tie_breaker_rolls <- c(tie_breaker_rolls, player_i_roll2)
+        initial_rolls <- tie_breaker_rolls # update initial rolls
       }
     }
     highest_roll <- max(tie_breaker_rolls)
@@ -204,12 +65,12 @@ who_goes_first2 <- function(num_players){
   
   else {
     highest_player <- which.max(initial_rolls) # who rolled the highest number
-  
+    
     # creating player order
     player_order[1] <- as.integer(highest_player)
-
-    for (j in 2:num_players) {
     
+    for (j in 2:num_players) {
+      
       player_order[j] <- as.integer(player_order[j-1] + 1)
       if (player_order[j] > num_players) {
         player_order[j] <- 1
@@ -222,11 +83,10 @@ who_goes_first2 <- function(num_players){
 }
 
 who_goes_first2(4)
-```
+
 
 ## lets_play
 
-```{r student3}
 #A function to play Monopoly!
 #Utilizes lets_move to move the players around the board
 #input: "turns"; the amount of turns each player will take (i.e. the number of rounds in the game), "players"; a numeric value 1-4 representing the number of players in the game
@@ -241,19 +101,19 @@ lets_play = function(turns, players) {
   
   location = 1 #initializes the player at space 1 (i.e. GO!)
   location_data[1,] <- location
-
+  
   for (i in 2:turns) { # iterates through number of turns
     for (j in 1:players) { # rotates through each player
       location = lets_move(location_data[i-1,j])[[1]] # takes location from lets_move2 function and assigns it to location
       location_data[i,j] <- as.integer(location) # puts location value into the dataframe of locations for each player
     }
   }
-print(location_data) 
-
-
- ########################## plots ###############################
-
- #vector of colors
+  print(location_data) 
+  
+  
+  ########################## plots ###############################
+  
+  #vector of colors
   colors <- c("red", "blue", "green","purple")
   
   # creates density plot of frequency of landing on each space for each player
@@ -269,20 +129,17 @@ print(location_data)
   
   #creates frequency plot for frequency of landing on certain spaces for each player
   for(k in 1:players){
-  plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
+    plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
   }
-
+  
 }
 
 lets_play(100, 4)
 
-```
 
 
 
 ## double_down <- lets_move2
-
-```{r student4}
 #Double Down -- addition of jail and double rolls
 
 #Incorporating double rolls and sending players to jail when the players are rolling and moving
@@ -296,9 +153,9 @@ lets_move2 = function(location) {
   roll_total <- sum(dice_roll_1, dice_roll_2) #the sum of the two dice rolls
   roll_double <- dice_roll_1 == dice_roll_2 #checking if the player rolled a double
   
-    location = location + roll_total # updates location to be previous location + roll total
-    double3 = "false" # double3 is assigned "true" if the player double rolls 3x (as seen in if statement below), otherwise it is assigned "false" 
-    
+  location = location + roll_total # updates location to be previous location + roll total
+  double3 = "false" # double3 is assigned "true" if the player double rolls 3x (as seen in if statement below), otherwise it is assigned "false" 
+  
   # first double roll -> roll again
   if (roll_double == TRUE) { #checks if the player rolled a double with their first two rolls. if "TRUE", the player rolls again
     dice_roll_3 <- sample(1:6, 1, replace = TRUE) #the player's third dice roll
@@ -317,32 +174,32 @@ lets_move2 = function(location) {
     } else { #If greater than 40, it subtracts 40 from location to allow player to continue to move on the board
       location = location - 40
     }
-     
-      # second double roll -> roll again
-      if (roll_double2 == TRUE) { #if the player has rolled two doubles, they roll again
-        dice_roll_5 <- sample(1:6, 1, replace = TRUE) #the player's fifth roll
-        dice_roll_6 <- sample(1:6, 1, replace = TRUE) #the player's sixth roll
     
-        roll_total3 <- sum(dice_roll_5, dice_roll_6) #the sum of the fifth and sixth roll
-        roll_double3 <- dice_roll_5 == dice_roll_6 #checking to see if the player rolled a third double
-    
-        location = location + roll_total3 #the players new location
-        double3 = "false"
-        
-        if (location <= 40) { #checks the player's location again
-          location = location
-        } else {
-          location = location - 40
-        }
-        
-        # third double roll -> go to jail
-          if (roll_double3 == TRUE) { #checks if the player rolled three doubles in a row, if TRUE, the players goes to jail (space 11)
-            location = monopolyBoard$spaces[monopolyBoard$name == "Jail"]
-            double3 = "true"
-          }
+    # second double roll -> roll again
+    if (roll_double2 == TRUE) { #if the player has rolled two doubles, they roll again
+      dice_roll_5 <- sample(1:6, 1, replace = TRUE) #the player's fifth roll
+      dice_roll_6 <- sample(1:6, 1, replace = TRUE) #the player's sixth roll
+      
+      roll_total3 <- sum(dice_roll_5, dice_roll_6) #the sum of the fifth and sixth roll
+      roll_double3 <- dice_roll_5 == dice_roll_6 #checking to see if the player rolled a third double
+      
+      location = location + roll_total3 #the players new location
+      double3 = "false"
+      
+      if (location <= 40) { #checks the player's location again
+        location = location
+      } else {
+        location = location - 40
       }
+      
+      # third double roll -> go to jail
+      if (roll_double3 == TRUE) { #checks if the player rolled three doubles in a row, if TRUE, the players goes to jail (space 11)
+        location = monopolyBoard$spaces[monopolyBoard$name == "Jail"]
+        double3 = "true"
+      }
+    }
   }  
-    
+  
   if (location <= 40) { #checks the players location on the board
     location = location
   } else {
@@ -355,12 +212,11 @@ lets_move2 = function(location) {
   return(listdata)
   
 }
-```
 
 
 ## lets_play2
 
-```{r}
+
 #A function to move players around the board while incorporating double rolls and going to jail
 #input: "turns"; the amount of turns each player takes (i.e. how many rounds the game is), "players"; a numeric value 1-4 representing the number of players in the game
 #output: a dataframe showing each players' location after each of their turns; a density plot showing each players' location data throughout the game; a density plot showing the overall location data throughout the game
@@ -371,21 +227,21 @@ lets_play2 = function(turns, players) {
   location_data <- as.data.frame(matrix(nrow = turns, ncol = players)) # dataframe will keep data for locations of players for each turn
   double3data <- as.data.frame(matrix(nrow = turns, ncol = players)) # dataframe will say "true" if player double rolled 3x (which lands them in jail) and "false" if they didn't double roll 3x
   
-    # puts players in order
-    colnames(location_data) <- who_goes_first2(players)[[2]]
+  # puts players in order
+  colnames(location_data) <- who_goes_first2(players)[[2]]
   
-    location = 1 # each player starts at location 1
-    location_data[1,] <- location
-    double3 = 0 # initializing "double3" which will be later assigned a "true" or "false" based on if player double rolled 3x
+  location = 1 # each player starts at location 1
+  location_data[1,] <- location
+  double3 = 0 # initializing "double3" which will be later assigned a "true" or "false" based on if player double rolled 3x
   
-    for (i in 2:turns) { # iterates through number of turns
+  for (i in 2:turns) { # iterates through number of turns
+    
+    for (j in 1:players) { # rotates through each player
       
-        for (j in 1:players) { # rotates through each player
-          
-        location = lets_move2(location_data[i-1,j])[[1]] # takes location from lets_move2 function and assigns it to location
-        location_data[i,j] <- as.integer(location) # puts location value into the dataframe of locations for each player
-        double3data[i,j] <- lets_move2(double3)[[2]] # takes "true" or "false" value from double3 and adds it to double3data dataframe
-        
+      location = lets_move2(location_data[i-1,j])[[1]] # takes location from lets_move2 function and assigns it to location
+      location_data[i,j] <- as.integer(location) # puts location value into the dataframe of locations for each player
+      double3data[i,j] <- lets_move2(double3)[[2]] # takes "true" or "false" value from double3 and adds it to double3data dataframe
+      
       # deals with landing in jail from "go to jail" space and staying there for next 3 turns
       if (31 %in% location_data[i-1,j]) { # if you landed on 31 in the last turn (i-1 turn), you go to jail (space 11) for the ith turn
         location <- 11
@@ -397,7 +253,7 @@ lets_play2 = function(turns, players) {
         location <- 11
         location_data[i,j] <- as.integer(location)
       }
-        
+      
       # landing in jail from 3x double roll and staying there for next 3 turns
       if (11 %in% location_data[i,j] & "true" %in% double3data[i-1,j]) { # if player's location is 11 (jail) and double3data is"true" (player double rolled 3x), player stays in jail. all 3 if/else if statements keep player in jail for the next 3 turns
         location <- 11
@@ -409,7 +265,7 @@ lets_play2 = function(turns, players) {
         location <- 11
         location_data[i,j] <- as.integer(location)
       }
-        
+      
     }
   }
   print(location_data)
@@ -417,8 +273,8 @@ lets_play2 = function(turns, players) {
   
   
   ########################## plots ###############################
-
- #vector of colors
+  
+  #vector of colors
   colors <- c("red", "blue", "green","purple")
   
   # creates density plot of frequency of landing on each space for each player
@@ -434,15 +290,13 @@ lets_play2 = function(turns, players) {
   
   #creates frequency plot for frequency of landing on certain spaces for each player
   for(k in 1:players){
-  plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
+    plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
   }
- 
+  
 }
- 
+
 lets_play2(100, 4)
-```
 ##the community chest and chance cards
-```{r}
 
 Card_Numbers <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16) # the card numbers
 
@@ -455,10 +309,9 @@ Chance <- data.frame(Chance_Cards, Card_Numbers) #a dataframe associating each c
 Community_Chest_Cards <- c("Advance to Go (Collect $200)", "Bank error in your favor. Collect $200", "Doctor’s fee. Pay $50", "From sale of stock you get $50", "Get Out of Jail Free", "Go to Jail. Go directly to jail, do not pass Go, do not collect $200", "Holiday fund matures. Receive $100", "Income tax refund. Collect $20", "It is your birthday. Collect $10 from every player", "Life insurance matures. Collect $100", "Pay hospital fees of $100", "Pay school fees of $50", "Receive $25 consultancy fee", "You are assessed for street repair. $40 per house. $115 per hotel", "You have won second prize in a beauty contest. Collect $10", "You inherit $100") # the card information
 
 Community_Chest <- data.frame(Community_Chest_Cards, Card_Numbers) #a dataframe associating each community chest card with a number
-```
+
 
 ##drawing community chest and chance cards
-```{r}
 #A function that randomly selects a numeric value 1:16 representing a Chance card and updates the player's location based on the card information
 #input: "location"; a numeric value 1:40 representing the player's location on the board
 #output: the player's new location on the board
@@ -468,78 +321,78 @@ Drawing_Chance = function(location) {
   draw_card <- sample(1:16, 1, replace = TRUE) #randomly selecting a card from 1:16
   player_card <- Chance$Chance_Cards[draw_card] #finding the card in the Chance deck
   print(player_card)
-
-#The following if statements update the player's location based on the card that was drawn (if applicable)  
-      if(draw_card == 1) {
-        location = 1
-      }
-      
-      if(draw_card == 2) {
-        location = 1
-      }
-      
-      if(draw_card == 3) {
-        location = 25
-      }
   
-      if(draw_card == 4){
-        location = 12
+  #The following if statements update the player's location based on the card that was drawn (if applicable)  
+  if(draw_card == 1) {
+    location = 1
+  }
+  
+  if(draw_card == 2) {
+    location = 1
+  }
+  
+  if(draw_card == 3) {
+    location = 25
+  }
+  
+  if(draw_card == 4){
+    location = 12
+  }
+  
+  if(draw_card == 5){ #takes into account which space the player is nearest to to determine updated location
+    if(location >= 37 && location <= 5){
+      location = 6
+    } else {
+      if (location >= 6 && location <= 15){
+        location = 16
+      } else {
+        if(location >= 16 && location <= 25){
+          location = 26
+        } else {
+          location = 36
+        }
       }
-    
-      if(draw_card == 5){ #takes into account which space the player is nearest to to determine updated location
-        if(location >= 37 && location <= 5){
-              location = 6
-            } else {
-              if (location >= 6 && location <= 15){
-                location = 16
-              } else {
-                if(location >= 16 && location <= 25){
-                  location = 26
-                } else {
-                  location = 36
-                }
-              }
-            }
-    }
-  
-    if(draw_card == 6){ #takes into account which space the player is nearest to to determine updated location
-        if(location >= 37 && location <= 5){
-              location = 6
-            } else {
-              if (location >= 6 && location <= 15){
-                location = 16
-              } else {
-                if(location >= 16 && location <= 25){
-                  location = 26
-                } else {
-                  location = 36
-                }
-              }
-            }
-    }
-  
-    if(draw_card == 7){ #takes into account which space the player is nearest to to determine updated location
-        if(location >= 29 && location <= 12){
-              location = 13
-            } else {
-              location = 29
     }
   }
   
-    if(draw_card == 11) {
-      location = 11
-    }
-  
-    if(draw_card == 14) {
+  if(draw_card == 6){ #takes into account which space the player is nearest to to determine updated location
+    if(location >= 37 && location <= 5){
       location = 6
+    } else {
+      if (location >= 6 && location <= 15){
+        location = 16
+      } else {
+        if(location >= 16 && location <= 25){
+          location = 26
+        } else {
+          location = 36
+        }
+      }
     }
+  }
   
-    if(draw_card == 10) {
-      location = location - 3
+  if(draw_card == 7){ #takes into account which space the player is nearest to to determine updated location
+    if(location >= 29 && location <= 12){
+      location = 13
+    } else {
+      location = 29
     }
+  }
   
-    location = location
-    return(location)
+  if(draw_card == 11) {
+    location = 11
+  }
+  
+  if(draw_card == 14) {
+    location = 6
+  }
+  
+  if(draw_card == 10) {
+    location = location - 3
+  }
+  
+  location = location
+  return(location)
 }
 
 
@@ -552,27 +405,25 @@ Drawing_Community_Chest = function(location) {
   draw_card_chest <- sample(1:16, 1, replace = TRUE) #randomly selecting a card from 1:16
   player_card_chest <- Community_Chest$Community_Chest_Cards[draw_card_chest] #finding the card in the Community Chest deck
   print(player_card_chest)
-
-#The following if statements update the player's location based on the card that was drawn (if applicable) 
+  
+  #The following if statements update the player's location based on the card that was drawn (if applicable) 
   if (draw_card_chest == 1) {
     location = 1
   } else {
     if (draw_card_chest == 6) {
-    location = 11
+      location = 11
     } else {
       location = location
     }
-  
+    
   }
   
   location = location 
   return(location)
 }
-```
 
 
 ## lets_move3 -> incorporating chance and community chest spaces and cards
-```{r}
 #A function that expands on lets_move2 to add the actions of Community Chest and Chance spaces and their respective cards
 #input: "location"; a numeric value 1 to 40; where the player in on the board
 #output: the players new location on the board
@@ -584,16 +435,16 @@ lets_move3 = function(location) {
   roll_total <- sum(dice_roll_1, dice_roll_2)
   roll_double <- dice_roll_1 == dice_roll_2
   
-    location = location + roll_total
-    double3 = "false"
-
-
+  location = location + roll_total
+  double3 = "false"
+  
+  
   if (location <= 40) {
-      location = location
+    location = location
   } else {
-      location = location - 40
+    location = location - 40
   }
-   
+  
   
   if(location == 8 || location == 23 || location == 27) { #check's if the player's location is a Chance space
     location = Drawing_Chance(location) #if TRUE, the player draws a Chance card using the Drawing_Chance function which updates their location
@@ -602,7 +453,7 @@ lets_move3 = function(location) {
   if(location == 3 || location == 18 || location == 34) { #check's if the player's location is a Community Chest space
     location = Drawing_Community_Chest(location) #if TRUE, the player draws a Community Chest card using the Drawing_Community_Chest which updates their location
   }
-    
+  
   # first double roll -> roll again
   if (roll_double == TRUE) {
     dice_roll_3 <- sample(1:6, 1, replace = TRUE)
@@ -622,53 +473,51 @@ lets_move3 = function(location) {
     
     
     if(location == 8 || location == 23 || location == 27) { #check's if the player's location is a Chance space
-    location = Drawing_Chance(location) #if TRUE, the player draws a Chance card using the Drawing_Chance function which updates their location
+      location = Drawing_Chance(location) #if TRUE, the player draws a Chance card using the Drawing_Chance function which updates their location
     }
-  
-  if(location == 3 || location == 18 || location == 34) { #check's if the player's location is a Community Chest space
-    location = Drawing_Community_Chest(location) #if TRUE, the player draws a Community Chest card using the Drawing_Community_Chest which updates their location
+    
+    if(location == 3 || location == 18 || location == 34) { #check's if the player's location is a Community Chest space
+      location = Drawing_Community_Chest(location) #if TRUE, the player draws a Community Chest card using the Drawing_Community_Chest which updates their location
     }
-     
-      # second double roll -> roll again
-      if (roll_double2 == TRUE) {
-        dice_roll_5 <- sample(1:6, 1, replace = TRUE)
-        dice_roll_6 <- sample(1:6, 1, replace = TRUE)
     
-        roll_total3 <- sum(dice_roll_5, dice_roll_6)
-        roll_double3 <- dice_roll_5 == dice_roll_6
-    
-        location = location + roll_total3
-        double3 = "false"
-        
-        if (location <= 40) {
-          location = location
-        } else {
-          location = location - 40
-        }
-        
-        if(location == 8 || location == 23 || location == 27) { #check's if the player's location is a Chance space
-          location = Drawing_Chance(location) #if TRUE, the player draws a Chance card using the Drawing_Chance function which updates their location
-        }
-  
-        if(location == 3 || location == 18 || location == 34) { #check's if the player's location is a Community Chest space
-          location = Drawing_Community_Chest(location) #if TRUE, the player draws a Community Chest card using the Drawing_Community_Chest which updates their location
-         
-        }
-        
-        # third double roll -> go to jail
-          if (roll_double3 == TRUE) {
-            location = monopolyBoard$spaces[monopolyBoard$name == "Jail"]
-            double3 = "true"
-
-          }
+    # second double roll -> roll again
+    if (roll_double2 == TRUE) {
+      dice_roll_5 <- sample(1:6, 1, replace = TRUE)
+      dice_roll_6 <- sample(1:6, 1, replace = TRUE)
+      
+      roll_total3 <- sum(dice_roll_5, dice_roll_6)
+      roll_double3 <- dice_roll_5 == dice_roll_6
+      
+      location = location + roll_total3
+      double3 = "false"
+      
+      if (location <= 40) {
+        location = location
+      } else {
+        location = location - 40
       }
+      
+      if(location == 8 || location == 23 || location == 27) { #check's if the player's location is a Chance space
+        location = Drawing_Chance(location) #if TRUE, the player draws a Chance card using the Drawing_Chance function which updates their location
+      }
+      
+      if(location == 3 || location == 18 || location == 34) { #check's if the player's location is a Community Chest space
+        location = Drawing_Community_Chest(location) #if TRUE, the player draws a Community Chest card using the Drawing_Community_Chest which updates their location
+        
+      }
+      
+      # third double roll -> go to jail
+      if (roll_double3 == TRUE) {
+        location = monopolyBoard$spaces[monopolyBoard$name == "Jail"]
+        double3 = "true"
+        
+      }
+    }
   }  
-   
+  
   location = location 
-
+  
   listdata <- (list(location, double3))
   return(listdata)
   
 }
-```
-
