@@ -3,11 +3,10 @@ library(dplyr)
 library(ggplot2)
 library(tidyverse)
 
-
 ##the board
+
 monopolyBoard <- read.csv("MonopolyBoard.csv", header = T)
 monopolyBoard
-
 
 
 ## lets_move
@@ -36,6 +35,7 @@ lets_move = function(location) {
 }
 
 lets_move(20)
+
 
 
 ## who_goes_first2
@@ -82,9 +82,11 @@ who_goes_first2 <- function(num_players){
   return(playerlist)
 }
 
+who_goes_first2(4)
 
 
 ## lets_play
+
 #A function to play Monopoly!
 #Utilizes lets_move to move the players around the board
 #input: "turns"; the amount of turns each player will take (i.e. the number of rounds in the game), "players"; a numeric value 1-4 representing the number of players in the game
@@ -109,19 +111,13 @@ lets_play = function(turns, players) {
   print(location_data) 
   
   
-  
   ########################## plots ###############################
   
   #vector of colors
   colors <- c("red", "blue", "green","purple")
   
   # creates density plot of frequency of landing on each space for each player
-  plot(density(location_data[,1]), xlim = c(0,40), col = "black", xlab="Spaces", main= "Density of Landing Locations for all Players")
-  
-  colors <- c("red", "blue", "green")
-  
-  # creates density plot of frequency of landing on each space for each player
-  plot(density(location_data[,1]), xlim = c(0,40), col = "black")
+  plot(density(location_data[,1]), xlim = c(0,40), col = "black", xlab="Spaces", main= "Density of Landing Locations for All Players")
   
   for (k in 2:players) {
     lines(density(location_data[,k]), col = colors[k-1]) # adds a density line for each player after the first
@@ -129,16 +125,12 @@ lets_play = function(turns, players) {
   
   # creates density plot for total frequency landing on each space (all players spaces included)
   all_spaces <- as.vector(as.matrix(location_data))
+  plot(density(all_spaces), xlim = c(0,40), col = "black", xlab="Spaces", main="Density of Landing Locations Overall")
   
-  plot(density(all_spaces), xlim = c(0,40), col = "black", xlab="Spaces", main="Density of Landing Locations for One Player")
-  
-  #creates frequency plots for landing on each space for each player.
+  #creates frequency plot for frequency of landing on certain spaces for each player
   for(k in 1:players){
     plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
   }
-  
-  
-  plot(density(all_spaces), xlim = c(0,40), col = "black")
   
 }
 
@@ -224,6 +216,7 @@ lets_move2 = function(location) {
 
 ## lets_play2
 
+
 #A function to move players around the board while incorporating double rolls and going to jail
 #input: "turns"; the amount of turns each player takes (i.e. how many rounds the game is), "players"; a numeric value 1-4 representing the number of players in the game
 #output: a dataframe showing each players' location after each of their turns; a density plot showing each players' location data throughout the game; a density plot showing the overall location data throughout the game
@@ -285,13 +278,7 @@ lets_play2 = function(turns, players) {
   colors <- c("red", "blue", "green","purple")
   
   # creates density plot of frequency of landing on each space for each player
-  plot(density(location_data[,1]), xlim = c(0,40), col = "black", xlab="Spaces", main= "Density of Landing Locations for all Players")
-  
-  # creates density plot of frequency of landing on each space for each player
-  plot(density(location_data[,1]), xlim = c(0,40), col = "black")
-  
-  colors <- c("red", "blue", "green")
-  
+  plot(density(location_data[,1]), xlim = c(0,40), col = "black", xlab="Spaces", main= "Density of Landing Locations for All Players")
   
   for (k in 2:players) {
     lines(density(location_data[,k]), col = colors[k-1]) # adds a density line for each player after the first
@@ -299,22 +286,16 @@ lets_play2 = function(turns, players) {
   
   # creates density plot for total frequency landing on each space (all players spaces included)
   all_spaces <- as.vector(as.matrix(location_data))
+  plot(density(all_spaces), xlim = c(0,40), col = "black", xlab="Spaces", main="Density of Landing Locations Overall")
   
-  plot(density(all_spaces), xlim = c(0,40), col = "black", xlab="Spaces", main="Density of Landing Locations for One Player")
-  
-  #creates frequency plots for landing on each space for each player.
+  #creates frequency plot for frequency of landing on certain spaces for each player
   for(k in 1:players){
     plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
   }
   
-  plot(density(all_spaces), xlim = c(0,40), col = "black")
-  
-  
 }
 
 lets_play2(100, 4)
-
-
 ##the community chest and chance cards
 
 Card_Numbers <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16) # the card numbers
