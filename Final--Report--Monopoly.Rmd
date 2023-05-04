@@ -1,29 +1,290 @@
 ---
-title: "Final--Report--Monopoly"
+title: "Final Monopoly Report"
 output: word_document
 date: "2023-05-03"
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
-source("C:/Users/Maddie's Laptop/Documents/STAT 345/Projects/STAT345-SP23/Final Project/STAT345---Final/source_monopoly_code.R") 
+source("C:/Users/Maddie's Laptop/Documents/STAT 345/Projects/STAT345-SP23/Final Project/STAT345---Final/source_monopoly_code.R")
 ```
 
-#Lets Get Moving
-###Build a system that allows for up to 4 players to move around the game board. As a first attempt, focus on standard dice rolls, ignoring additional rules related to rolling doubles, jail, or special cards. Which properties are landed on most frequently? Create a visualization for this!
+## 1. Rules!
+
+-   Before starting the game, it is important to take note of the
+    different types of "equipment" in Monopoly. \### Equipment
+
+#### The Board
+
+-   The Board consists of...
+    -   40 tiles, each of which have unique actions associated with them
+        based on their type.
+    -   16 "CHANCE CARDS"
+    -   16 "COMMUNITY CHEST CARDS"
+    -   2 six-sided dice
+
+#### Types of Tiles
+
+-   "PROPERTY" Tiles
+
+    -   There are 8 different sets of properties
+    -   Each set of properties has...
+        -   its own color
+        -   2 or 3 properties
+    -   These tiles can bought
+    -   Each of these tiles have a specialized cost/profit associated
+        with them
+    -   **These tiles can generate a profit**
+
+-   "RAILROAD" Tiles
+
+    -   There are 4 different railroads evenly spaced across the Board
+    -   These tiles can be bought
+    -   Each of these tiles have a specialized cost/profit associated
+        with them
+    -   **These tiles can generate a profit**
+
+-   "UTILITY" Tiles
+
+    -   There are two utility tiles
+    -   These tiles can be bought
+    -   Each of these tiles have a specialized cost/profit associated
+        with them
+    -   **These tiles can generate a profit**
+
+-   "CHANCE" Tiles
+
+    -   There are 3 chance tiles
+    -   If one of these tiles is landed on, a "CHANCE CARD" is drawn
+        -   each of these cards has a specialized action associated with
+            them
+
+-   "COMMUNITY CHEST" Tiles
+
+    -   There are 3 community chest tiles
+    -   If one of these tiles is landed on, a "COMMUNITY CHEST CHEST" is
+        drawn
+        -   each of these cards has a specialized action associated with
+            them
+
+-   "TAX" Tiles
+
+    -   There are 2 tax tiles
+    -   Each of these tiles has a cost associated with them
+
+-   "GO"
+
+    -   This is the first tile
+    -   Every time this tile is landed on or passed the player collects
+        "\$200"
+
+-   "IN JAIL"
+
+-   "GO TO JAIL"
+
+    -   When landed on, the player is moved to "IN JAIL"
+
+-   "FREE PARKING"
+
+#### Moving around the Board and Generating Profits
+
+-   The first step for beginning the game, even before getting to move
+    the first game piece, is to determine which player will move first.
+
+    -   To do this, each player will roll both dice and find the sum of
+        the rolls. The player with the largest sum will start the game.
+        Then the following turn will be the next player.
+        -   i.e. if Player 2 starts, Player 3 will go next, then Player
+            4, then Player 4, then back to Player 2, and so on...
+
+-   All players will start on the "GO" tile.
+
+-   To determine how many spaces to move, on their turn each player will
+    roll both dice and find the sum of the rolls. They will then move
+    forward that number of tiles.
+
+    -   In the special case of rolling "doubles" (the roll of each die
+        are equal),
+        -   the player will find the sum of rolls and move forward this
+            number of tiles
+        -   then, the player will roll again and repeat the previous
+            step.
+            -   If the player rolls "doubles" again, repeat the previous
+                two steps.
+            -   If the player rolls "doubles" three times in a row, they
+                immediately move to the "IN JAIL" tile.
+
+-   After moving to their next location, the player will have different
+    actions to complete based on the tile type.
+
+    -   A player lands on a "PROPERTY" tile...
+        -   If the player is the first person to land on the "PROPERTY"
+            tile they can buy the "PROPERTY"
+        -   Then, every time another player lands on this "PROPERTY",
+            the player has to pay a fee and **the "PROPERTY" generates a
+            profit**
+            -   This profit is based on the rent of the "PROPERTY"
+    -   A player lands on a "RAILROAD" tile...
+        -   If the player is the first person to land on the "RAILROAD"
+            tile they can buy the "RAILROAD"
+        -   Then, every time another player lands on this "RAILROAD",
+            the player has to pay a fee and **the "RAILROAD" generates a
+            profit**
+            -   This profit is based on the number of "RAILROAD" tiles
+                owned
+    -   A player lands on a "UTILITY" tile...
+        -   If the player is the first person to land on the "UTILITY"
+            tile they can buy the "UTILITY"
+        -   Then, every time another player lands on this "UTILITY", the
+            player has to pay a fee and **the "UTILITY" generates a
+            unique profit**
+            -   This profit is based on the sum of the dice rolled
+    -   A player lands on a "CHANCE" or "COMMUNITY CHEST" tile...
+        -   The player draws either a "CHANCE" or "COMMUNITY CHEST" card
+            based on the type tile they landed on
+            -   Then, the player completes the action on the card
+        -   **These tiles cannot be bought and cannot generate a
+            profit**
+    -   A player lands on a "TAX" tile...
+        -   The player must pay a fee unique to the tile
+        -   **These tiles cannot be bought and cannot generate a
+            profit**
+    -   A player lands on or passes "GO"...
+        -   The player collects "\$200"
+        -   **This tile cannot be bought and cannot generate a profit**
+    -   A player lands on "IN JAIL"...
+        -   There is no action to be completed
+        -   **This tile cannot be bought and cannot generate a profit**
+    -   A player lands on "GO TO JAIL"...
+        -   The player is immediately moved to "IN JAIL"
+        -   The player is unable to move forward for the next three
+            rolls
+        -   **This tile cannot be bought and cannot generate a profit**
+    -   A player lands on "FREE PARKING"...
+        -   Depending on the version of the game being played, the
+            player will either,
+            -   collect all money put into "FREE PARKING"
+            -   complete no type of action
+        -   **This tile cannot be bought and cannot generate a profit**
+
+-   After all players have rolled and moved, the next round begins and
+    the process previously stated is repeated.
+
+-   The game ends when three of the four players run out of money and
+    the player remaining wins.
+
+## 2. Lets Get Moving:
+
+Build a system that allows for up to 4 players to move around the game
+board. As a first attempt, focus on standard dice rolls, ignoring
+additional rules related to rolling doubles, jail, or special cards.
+Which properties are landed on most frequently? Create a visualization
+for this!
+
 ```{r}
 lets_play(1000,4)
 
 ```
-##Findings
-###We started with a simple function, lets_move, which allowed one player to "roll" 2 dice, take the sum, and move the corresponding distance. The function also allowed the player to loop back to square 1 if the location was greater than 40, the amount of squares on the board, then the actual location would be: location-40. We then made a function, lets_play, that allows multiple players to take turns "rolling" the dice and moving to a new location. This function makes a dataframe of the players and their positions on the board for each turn, and plots the data using density as well as frequency plots. Because no specific rules about rolling doubles or going to jail are incorporated in these function, the results are as expected. Looking at the frequency plot, space 7 and spaces which are multiples of 7 tend to be landed on more frequently. This is the be expected due to the fact that a total of 7 has the highest probability when rolling 2 die. 
 
-#Double Down!
-###Improve your system to incorporate going to jail, including the doubles-rolling condition. Which properties are landed on most frequently now? Has this changed dramatically from the previous system (that didn't account for jail)? Again, visualize this!
+\## Findings ###We started with a simple function, lets_move, which
+allowed one player to "roll" 2 dice, take the sum, and move the
+corresponding distance. The function also allowed the player to loop
+back to square 1 if the location was greater than 40, the amount of
+squares on the board, then the actual location would be: location-40. We
+then made a function, lets_play, that allows multiple players to take
+turns "rolling" the dice and moving to a new location. This function
+creates a data frame of the players and their positions on the board for
+each turn, and plots both density and frequency plots for how often a
+player lands on a specific space. Because no specific rules about
+rolling doubles or going to jail are incorporated in these function, the
+results are as expected. Looking at the frequency plot, space 7 and
+spaces which are multiples of 7 tend to be landed on more frequently.
+This is the be expected due to the fact that a total of 7 has the
+highest probability when rolling 2 die.
+
+Within this section, we also wrote the function, who_goes_first, in
+order to determine the starting player order of the game. This function
+simulates an initial dice roll by however many players are going to play
+the game and incorporates re-rolling for players who tie. The end result
+is a list of the players in order of who will go first to be used as an
+input for playing the game later.
+
+## 3. Double Down!
+
+Improve your system to incorporate going to jail, including the
+doubles-rolling condition. Which properties are landed on most
+frequently now? Has this changed dramatically from the previous system
+(that didn't account for jail)? Again, visualize this!
+
 ```{r}
 lets_play2(1000,4)
 
 ```
+
+##Findings ###To complete this task we made a new function, lets_move2,
+that had the same components as lets_play but added rules when rolling
+doubles. If a player rolled a double the new location was recorded and
+then they could roll again. The same rule was applied for players that
+rolled 2 doubles consecutively. Once a player rolled 3 doubles in a row
+they are sent to jail. To keep players in jail for 3 turns when sent
+from "Go to Jail" space or from rolling 3 doubles aspects of the old
+lets_play function were also updated in lets_play2. As before, the data
+frame with players and their corresponding positions is outputted as
+well as frequency and density plots of these locations. As seen in the
+density plot, space 11, is landed on significantly more than the other
+spaces. Knowing that space 11 is the jail space on the monopoly board,
+this result doesn't come as a surprise. By adding rules about going to
+jail when landing on the "Go to Jail" and when rolling 3 doubles in a
+row, the jail location is landed on more frequently.
+
+## 4. Take a Chance!
+
+Incorporate the movement cards into your system. You can ignore the
+effects of non-movement cards, but not their existence! Which properties
+are landed on most frequently now? Has this changed dramatically from
+the previous system (that didn't account for Chance)? Again, visualize
+this!
+
+```{r}
+lets_play3(1000,4)
+
+```
+
+##Findings ###To incorporate the movement cards, chance and community
+chest, we created two functions to be added into the previous lets_move2
+function. The two new functions allow players to "pick" a random card
+out of 16, then a series of if statements are used to direct the player
+to their new location. A new if statement was added into a copy of
+lets_move2 to allow them to "draw" a card if landing on specific board
+locations. The results with the added movement cards have an interesting
+affect on the frequency of landing on a space. As previously mentioned,
+the most frequent spaces landed on were about 7 spaces apart due to the
+probability of the sum of two die. The new frequency plots show that
+with the added movement cards these "hot spots" become less frequented
+as the movement cards allow players to travel around the board without
+relying on the sum of two die. The density plot looks very similar to
+the previous plot because space 11 or "Jail" is still the most
+frequented space.
+
+## 5. Play a Game!
+
+Extend your system to allow for up to 4 players to "play" the game. You
+may choose a reasonable starting board and player money level (so, you
+don't have to buy properties). Include payments between players,
+payments to the bank, and payments from the bank (there are several
+cards that will effect these that you should account for). You do not
+need to consider mortgaging properties (so a player loses when their
+liquid cash has run out). How long do games typically last given your
+starting board and money level? How does this change if money paid to
+the bank is placed in "Free Parking" and awarded to players landing on
+that space?
+
+```{r}
+
+```
+
 ##Findings
-###To complete this task we made a new function, lets_move2, that had the same components as lets_play but added rules when rolling doubles. If a player rolled a double the new location was recorded and then they could roll again. The same rule was applied for players that rolled 2 doubles consecutivley. Once a player rolled 3 doubles in a row they are sent to jail. To keep players in jail for 3 turns when sent from "Go to Jail" space or from rolling 3 doubles aspects of the old lets_play function were also updated in lets_play2. As before, the dataframe with players and their corresponding positions is outputed as well as frequency and density plots of these locations. As seen in the density plot, space 11, is landed on significantly more than the other spaces. Knowing that space 11 is the jail space on the monopoly board, this result doesn't come as a suprise. By adding rules about going to jail when landing on the "Go to Jail" and when rolling 3 doubles in a row, the jail location is landed on more frequently. 
