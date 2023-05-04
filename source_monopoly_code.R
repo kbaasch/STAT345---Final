@@ -34,9 +34,6 @@ lets_move = function(location) {
   
 }
 
-lets_move(20)
-
-
 
 ## who_goes_first2
 who_goes_first2 <- function(num_players){
@@ -133,10 +130,6 @@ lets_play = function(turns, players) {
   }
   
 }
-
-lets_play(100, 4)
-
-
 
 
 ## double_down <- lets_move2
@@ -295,7 +288,7 @@ lets_play2 = function(turns, players) {
   
 }
 
-lets_play2(100, 4)
+
 ##the community chest and chance cards
 
 Card_Numbers <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16) # the card numbers
@@ -590,5 +583,3 @@ lets_play3 = function(turns, players) {
   
 }
 
-
-lets_play3(1000, 4)
