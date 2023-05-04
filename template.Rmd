@@ -734,13 +734,15 @@ lets_play_idk = function(turns, players) {
       The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$rent_0[cost]
       }
       
-      # if location is chance, update amount
+      # Updating player bank if they gained or lost money from a Chance card
+      if (Drawing_Chance(location_data[i,j])[[2]] != 0) {
+        The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] + Drawing_Chance(location_data[i,j])[[2]]  
+      }
         
-        
-        
- #     if (location %in% chance$space) {
- #     The_Players$Player_Bank[j] <- chance$amount
- #     }
+      # Updating player bank if they gained or lost money from a Community Chest card 
+      if (Drawing_Community_Chest(location_data[i,j])[[2]] != 0) {
+        The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] + Drawing_Community_Chest(location_data[i,j])[[2]]  
+      }
         
     }
   }
@@ -766,6 +768,8 @@ lets_play_idk = function(turns, players) {
 }
 
 lets_play_idk(10, 4)
+
+# prob have to change how we call drawing_chance in lets_move3 (its a list now)
 
 ```
 
@@ -909,13 +913,13 @@ lets_move3 = function(location) {
   print(location)
   
   if(location == 8 || location == 23 || location == 27) {
-    location = Drawing_Chance(location)
+    location = Drawing_Chance(location)[[1]]
     print("your location is...")
     print(location)
   }
   
   if(location == 3 || location == 18 || location == 34) {
-    location = Drawing_Community_Chest(location)
+    location = Drawing_Community_Chest(location)[[1]]
     print("your location is...")
     print(location)
   }
@@ -940,11 +944,11 @@ lets_move3 = function(location) {
     
     
     if(location == 8 || location == 23 || location == 27) {
-    location = Drawing_Chance(location)
+    location = Drawing_Chance(location)[[1]]
     }
   
   if(location == 3 || location == 18 || location == 34) {
-    location = Drawing_Community_Chest(location)
+    location = Drawing_Community_Chest(location)[[1]]
     }
      
       # second double roll -> roll again
@@ -966,11 +970,11 @@ lets_move3 = function(location) {
         }
         
         if(location == 8 || location == 23 || location == 27) {
-          location = Drawing_Chance(location)
+          location = Drawing_Chance(location)[[1]]
         }
   
         if(location == 3 || location == 18 || location == 34) {
-          location = Drawing_Community_Chest(location)
+          location = Drawing_Community_Chest(location)[[1]]
          
         }
         
@@ -1193,6 +1197,7 @@ Drawing_Chance = function(location) {
     list_location_amount <- list(location, amount)
     return(list_location_amount)
 }
+
 
 Drawing_Community_Chest = function(location) {
   location = location
