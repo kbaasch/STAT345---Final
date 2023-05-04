@@ -423,7 +423,6 @@ Drawing_Community_Chest = function(location) {
 }
 
 
-## lets_move3 -> incorporating chance and community chest spaces and cards
 #A function that expands on lets_move2 to add the actions of Community Chest and Chance spaces and their respective cards
 #input: "location"; a numeric value 1 to 40; where the player in on the board
 #output: the players new location on the board
