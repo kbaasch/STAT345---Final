@@ -745,6 +745,20 @@ lets_play3 = function(turns, players) {
   plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
   }
   
+  # second set of frequency plots
+  for (k in 1:players) {
+    colors <- c("coral1", "steelblue1", "palegreen2","plum2")
+    freq_data <- data.frame(space = 1:40, freq = tabulate(location_data[, k], nbins = 40))
+    density_plot <- ggplot(freq_data, aes(x = space, y = freq)) +
+     geom_bar(stat = "identity", fill = colors[k], color = "black") +
+     ggtitle(paste0("Player ", k, ": Frequency of Landing on Each Space")) +
+     xlab("Spaces") +
+     ylab("Frequency") +
+     theme_minimal()
+    
+    print(density_plot)
+  }
+  
 }
 lets_play3(100,4)
 
