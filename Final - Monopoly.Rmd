@@ -904,7 +904,7 @@ lets_play4 = function(turns, players) {
 
         
       # updating banks when players land on each others properties
-      if(location %in% c(2, 4, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 19, 20, 22, 24, 25, 26, 27, 28, 29, 30, 32, 33, 35, 36, 38, 40)) {
+      if(location %in% c(2, 4, 7, 9, 10, 12, 13, 14, 15, 17, 19, 20, 22, 24, 25, 27, 28, 29, 30, 32, 33, 35, 38, 40)) {
             
       location = location
       spot <- which(Property_Statuses$Space == location)
@@ -913,6 +913,17 @@ lets_play4 = function(turns, players) {
         
       The_Players$Player_Bank[owned_by_player] <- The_Players$Player_Bank[owned_by_player] + monopolyBoard$rent_0[cost]
       The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$rent_0[cost]
+      }
+        
+      if(location %in% c(6, 16, 26, 36)){
+        
+      location = location
+      spot <- which(Property_Statuses$Space == location)
+      cost <- which(monopolyBoard$spaces == location)
+      owned_by_player <- Property_Statuses$Owned_By_Player[spot]
+        
+      The_Players$Player_Bank[owned_by_player] <- The_Players$Player_Bank[owned_by_player] + 200
+      The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - 200
       }
       
       # Updating player bank if they gained or lost money from a Chance card
@@ -956,8 +967,11 @@ lets_play4 = function(turns, players) {
   for(k in 1:players){
   plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
   }
+  
 }
 
+
 lets_play4(1000, 4)
+
 
 ```
