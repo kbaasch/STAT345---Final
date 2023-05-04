@@ -272,6 +272,7 @@ print(location_data)
   plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
   }
 
+  plot(all_spaces, xlim = c(0,40), col = "black", type="h", xlab = "Spaces", ylab = "Frequency", main = "Frequency of Landing Locationas Overall")
 }
 
 lets_play(100, 4)
@@ -436,11 +437,14 @@ lets_play2 = function(turns, players) {
   for(k in 1:players){
   plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
   }
+  
+  plot(all_spaces, xlim = c(0,40), col = "black", type="h", xlab = "Spaces", ylab = "Frequency", main = "Frequency of Landing Locationas Overall")
  
 }
  
-lets_play2(100, 4)
+lets_play2(10000, 4)
 ```
+
 ##the community chest and chance cards
 ```{r}
 
@@ -671,4 +675,5 @@ lets_move3 = function(location) {
   
 }
 ```
+
 
