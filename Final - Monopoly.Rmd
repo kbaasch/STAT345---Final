@@ -289,6 +289,38 @@ print(properties_landed)
     
     print(property_plot)
     
+    
+########################## location frequency plot ###############################
+locations_landed <- as.vector(as.matrix(location_data))
+
+location_names <- c("GO", "Mediterranean", "Community Chest 1", "Baltic ", "Income Tax", "Reading Railroad", "Oriental","Chance 1", "Vermot", "Conecticut", "Jail", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Community Chest 2", "Tennessee", "New York","Free Parking", "Kentucky", "Chance 2", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific", "N. Carolina", "Community Chest 3", "Pennsylvania", "Short Line Railroad", "Chance 3", "Park Place", "Luxury Tax", "Boardwalk")
+
+locations_landed <- as.data.frame(locations_landed) 
+locations_landed <- as.data.frame(locations_landed)
+locations_landed <- locations_landed %>% group_by(locations_landed) %>% summarise(n())
+locations_landed <- as.data.frame(locations_landed)
+locations_landed <- cbind(location_names, locations_landed)
+names(locations_landed) <- c("Name", "Location", "Occurances")
+print(locations_landed)
+
+    colors_locations <- c("white","purple","navy", "purple","white", "black", "lightblue","navy", "lightblue", "lightblue", "white", "violet", "lightgray", "violet", "violet", "black", "orange","navy", "orange", "orange","white", "red","navy", "red", "red", "black", "yellow", "yellow", "lightgray", "yellow","white", "darkgreen", "darkgreen","navy", "darkgreen", "black","navy", "blue","white", "blue")
+    
+    
+  #creates a frequency plot for the number of times each property is landed on 
+    location_plot <- ggplot(locations_landed, aes(x = Name, y = Occurances)) +
+      geom_bar(stat = "identity", fill = colors_locations, color = "black") +
+      scale_x_discrete(limits = locations_landed$Name) +
+      ggtitle("Frequency of Landing on each Location") +
+      xlab("Location") +
+      ylab("Frequency") +
+      theme(axis.text.x.bottom = element_text(angle=90, vjust = 0.001)) +
+      scale_color_manual(name = "Properties",
+                         breaks = c("GO", "Mediterranean", "Community Chest 1", "Baltic ", "Income Tax", "Reading Railroad", "Oriental","Chance 1", "Vermot", "Conecticut", "Jail", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Community Chest 2", "Tennessee", "New York","Free Parking", "Kentucky", "Chance 2", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific", "N. Carolina", "Community Chest 3", "Pennsylvania", "Short Line Railroad", "Chance 3", "Park Place", "Luxury Tax", "Boardwalk"),
+                         values = colors_locations) 
+    
+    print(location_plot)  
+
+    
  ########################## location plots ###############################
 
  #vector of colors
@@ -505,6 +537,38 @@ print(properties_landed)
                          values = colors_properties)
     
     print(property_plot)
+
+    
+########################## location frequency plot ###############################
+locations_landed <- as.vector(as.matrix(location_data))
+
+location_names <- c("GO", "Mediterranean", "Community Chest 1", "Baltic ", "Income Tax", "Reading Railroad", "Oriental","Chance 1", "Vermot", "Conecticut", "Jail", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Community Chest 2", "Tennessee", "New York","Free Parking", "Kentucky", "Chance 2", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific", "N. Carolina", "Community Chest 3", "Pennsylvania", "Short Line Railroad", "Chance 3", "Park Place", "Luxury Tax", "Boardwalk")
+
+locations_landed <- as.data.frame(locations_landed) 
+locations_landed <- as.data.frame(locations_landed)
+locations_landed <- locations_landed %>% group_by(locations_landed) %>% summarise(n())
+locations_landed <- as.data.frame(locations_landed)
+locations_landed <- cbind(location_names, locations_landed)
+names(locations_landed) <- c("Name", "Location", "Occurances")
+print(locations_landed)
+
+    colors_locations <- c("white","purple","navy", "purple","white", "black", "lightblue","navy", "lightblue", "lightblue", "white", "violet", "lightgray", "violet", "violet", "black", "orange","navy", "orange", "orange","white", "red","navy", "red", "red", "black", "yellow", "yellow", "lightgray", "yellow","white", "darkgreen", "darkgreen","navy", "darkgreen", "black","navy", "blue","white", "blue")
+    
+    
+  #creates a frequency plot for the number of times each property is landed on 
+    location_plot <- ggplot(locations_landed, aes(x = Name, y = Occurances)) +
+      geom_bar(stat = "identity", fill = colors_locations, color = "black") +
+      scale_x_discrete(limits = locations_landed$Name) +
+      ggtitle("Frequency of Landing on each Location") +
+      xlab("Location") +
+      ylab("Frequency") +
+      theme(axis.text.x.bottom = element_text(angle=90, vjust = 0.001)) +
+      scale_color_manual(name = "Properties",
+                         breaks = c("GO", "Mediterranean", "Community Chest 1", "Baltic ", "Income Tax", "Reading Railroad", "Oriental","Chance 1", "Vermot", "Conecticut", "Jail", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Community Chest 2", "Tennessee", "New York","Free Parking", "Kentucky", "Chance 2", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific", "N. Carolina", "Community Chest 3", "Pennsylvania", "Short Line Railroad", "Chance 3", "Park Place", "Luxury Tax", "Boardwalk"),
+                         values = colors_locations) 
+    
+    print(location_plot)  
+    
     
 ########################## location plots ###############################
 
@@ -981,8 +1045,41 @@ print(properties_landed)
                          values = colors_properties)
     
     print(property_plot)
+  
+      
+
+########################## location frequency plot ###############################
+locations_landed <- as.vector(as.matrix(location_data))
+
+location_names <- c("GO", "Mediterranean", "Community Chest 1", "Baltic ", "Income Tax", "Reading Railroad", "Oriental","Chance 1", "Vermot", "Conecticut", "Jail", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Community Chest 2", "Tennessee", "New York","Free Parking", "Kentucky", "Chance 2", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific", "N. Carolina", "Community Chest 3", "Pennsylvania", "Short Line Railroad", "Chance 3", "Park Place", "Luxury Tax", "Boardwalk")
+
+locations_landed <- as.data.frame(locations_landed) 
+locations_landed <- as.data.frame(locations_landed)
+locations_landed <- locations_landed %>% group_by(locations_landed) %>% summarise(n())
+locations_landed <- as.data.frame(locations_landed)
+locations_landed <- cbind(location_names, locations_landed)
+names(locations_landed) <- c("Name", "Location", "Occurances")
+print(locations_landed)
+
+    colors_locations <- c("white","purple","navy", "purple","white", "black", "lightblue","navy", "lightblue", "lightblue", "white", "violet", "lightgray", "violet", "violet", "black", "orange","navy", "orange", "orange","white", "red","navy", "red", "red", "black", "yellow", "yellow", "lightgray", "yellow","white", "darkgreen", "darkgreen","navy", "darkgreen", "black","navy", "blue","white", "blue")
     
     
+  #creates a frequency plot for the number of times each property is landed on 
+    location_plot <- ggplot(locations_landed, aes(x = Name, y = Occurances)) +
+      geom_bar(stat = "identity", fill = colors_locations, color = "black") +
+      scale_x_discrete(limits = locations_landed$Name) +
+      ggtitle("Frequency of Landing on each Location") +
+      xlab("Location") +
+      ylab("Frequency") +
+      theme(axis.text.x.bottom = element_text(angle=90, vjust = 0.001)) +
+      scale_color_manual(name = "Properties",
+                         breaks = c("GO", "Mediterranean", "Community Chest 1", "Baltic ", "Income Tax", "Reading Railroad", "Oriental","Chance 1", "Vermot", "Conecticut", "Jail", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Community Chest 2", "Tennessee", "New York","Free Parking", "Kentucky", "Chance 2", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific", "N. Carolina", "Community Chest 3", "Pennsylvania", "Short Line Railroad", "Chance 3", "Park Place", "Luxury Tax", "Boardwalk"),
+                         values = colors_locations) 
+    
+    print(location_plot)  
+    
+    
+        
 ########################## location plots ###############################    
   
   # creates density plot of frequency of landing on each space for each player
@@ -1287,6 +1384,37 @@ print(properties_landed)
     
     print(property_plot) 
     
+
+########################## location frequency plot ###############################
+locations_landed <- as.vector(as.matrix(location_data))
+
+location_names <- c("GO", "Mediterranean", "Community Chest 1", "Baltic ", "Income Tax", "Reading Railroad", "Oriental","Chance 1", "Vermot", "Conecticut", "Jail", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Community Chest 2", "Tennessee", "New York","Free Parking", "Kentucky", "Chance 2", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific", "N. Carolina", "Community Chest 3", "Pennsylvania", "Short Line Railroad", "Chance 3", "Park Place", "Luxury Tax", "Boardwalk")
+
+locations_landed <- as.data.frame(locations_landed) 
+locations_landed <- as.data.frame(locations_landed)
+locations_landed <- locations_landed %>% group_by(locations_landed) %>% summarise(n())
+locations_landed <- as.data.frame(locations_landed)
+locations_landed <- cbind(location_names, locations_landed)
+names(locations_landed) <- c("Name", "Location", "Occurances")
+print(locations_landed)
+
+    colors_locations <- c("white","purple","navy", "purple","white", "black", "lightblue","navy", "lightblue", "lightblue", "white", "violet", "lightgray", "violet", "violet", "black", "orange","navy", "orange", "orange","white", "red","navy", "red", "red", "black", "yellow", "yellow", "lightgray", "yellow","white", "darkgreen", "darkgreen","navy", "darkgreen", "black","navy", "blue","white", "blue")
+    
+    
+  #creates a frequency plot for the number of times each property is landed on 
+    location_plot <- ggplot(locations_landed, aes(x = Name, y = Occurances)) +
+      geom_bar(stat = "identity", fill = colors_locations, color = "black") +
+      scale_x_discrete(limits = locations_landed$Name) +
+      ggtitle("Frequency of Landing on each Location") +
+      xlab("Location") +
+      ylab("Frequency") +
+      theme(axis.text.x.bottom = element_text(angle=90, vjust = 0.001)) +
+      scale_color_manual(name = "Properties",
+                         breaks = c("GO", "Mediterranean", "Community Chest 1", "Baltic ", "Income Tax", "Reading Railroad", "Oriental","Chance 1", "Vermot", "Conecticut", "Jail", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Community Chest 2", "Tennessee", "New York","Free Parking", "Kentucky", "Chance 2", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific", "N. Carolina", "Community Chest 3", "Pennsylvania", "Short Line Railroad", "Chance 3", "Park Place", "Luxury Tax", "Boardwalk"),
+                         values = colors_locations) 
+    
+    print(location_plot)  
+    
     
     
 ########################## location plots ###############################
@@ -1496,6 +1624,37 @@ print(properties_landed)
                          values = colors_properties)
     
     print(property_plot) 
+    
+
+########################## location frequency plot ###############################
+locations_landed <- as.vector(as.matrix(location_data))
+
+location_names <- c("GO", "Mediterranean", "Community Chest 1", "Baltic ", "Income Tax", "Reading Railroad", "Oriental","Chance 1", "Vermot", "Conecticut", "Jail", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Community Chest 2", "Tennessee", "New York","Free Parking", "Kentucky", "Chance 2", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific", "N. Carolina", "Community Chest 3", "Pennsylvania", "Short Line Railroad", "Chance 3", "Park Place", "Luxury Tax", "Boardwalk")
+
+locations_landed <- as.data.frame(locations_landed) 
+locations_landed <- as.data.frame(locations_landed)
+locations_landed <- locations_landed %>% group_by(locations_landed) %>% summarise(n())
+locations_landed <- as.data.frame(locations_landed)
+locations_landed <- cbind(location_names, locations_landed)
+names(locations_landed) <- c("Name", "Location", "Occurances")
+print(locations_landed)
+
+    colors_locations <- c("white","purple","navy", "purple","white", "black", "lightblue","navy", "lightblue", "lightblue", "white", "violet", "lightgray", "violet", "violet", "black", "orange","navy", "orange", "orange","white", "red","navy", "red", "red", "black", "yellow", "yellow", "lightgray", "yellow","white", "darkgreen", "darkgreen","navy", "darkgreen", "black","navy", "blue","white", "blue")
+    
+    
+  #creates a frequency plot for the number of times each property is landed on 
+    location_plot <- ggplot(locations_landed, aes(x = Name, y = Occurances)) +
+      geom_bar(stat = "identity", fill = colors_locations, color = "black") +
+      scale_x_discrete(limits = locations_landed$Name) +
+      ggtitle("Frequency of Landing on each Location") +
+      xlab("Location") +
+      ylab("Frequency") +
+      theme(axis.text.x.bottom = element_text(angle=90, vjust = 0.001)) +
+      scale_color_manual(name = "Properties",
+                         breaks = c("GO", "Mediterranean", "Community Chest 1", "Baltic ", "Income Tax", "Reading Railroad", "Oriental","Chance 1", "Vermot", "Conecticut", "Jail", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Community Chest 2", "Tennessee", "New York","Free Parking", "Kentucky", "Chance 2", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific", "N. Carolina", "Community Chest 3", "Pennsylvania", "Short Line Railroad", "Chance 3", "Park Place", "Luxury Tax", "Boardwalk"),
+                         values = colors_locations) 
+    
+    print(location_plot)  
     
     
     
