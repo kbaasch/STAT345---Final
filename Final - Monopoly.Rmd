@@ -592,11 +592,11 @@ print(locations_landed)
   plot(density(all_spaces), xlim = c(0,40), col = "black", xlab="Spaces", main="Density of Landing Locations Overall")
   
   #creates frequency plot for frequency of landing on certain spaces for each player
-  for(k in 1:players){
-  plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
-  }
+ # for(k in 1:players){
+ # plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
+ # }
   
-  plot(all_spaces, xlim = c(0,40), col = "black", type="h", xlab = "Spaces", ylab = "Frequency", main = "Frequency of Landing Locations Overall")
+ # plot(all_spaces, xlim = c(0,40), col = "black", type="h", xlab = "Spaces", ylab = "Frequency", main = "Frequency of Landing Locations Overall")
   
   # second set of frequency plots for individual player locations
   for (k in 1:players) {
@@ -1102,9 +1102,9 @@ print(locations_landed)
   all_spaces <- as.vector(as.matrix(location_data))
   plot(density(all_spaces), xlim = c(0,40), col = "black", xlab="Spaces", main="Density of Landing Locations Overall")
   
-  for(k in 1:players){
-  plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
-  }
+ # for(k in 1:players){
+ # plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
+#  }
   
   # second set of frequency plots for individual player locations
   for (k in 1:players) {
@@ -1442,9 +1442,9 @@ print(locations_landed)
   all_spaces <- as.vector(as.matrix(location_data))
   plot(density(all_spaces), xlim = c(0,40), col = "black", xlab="Spaces", main="Density of Landing Locations Overall")
   
-  for(k in 1:players){
-  plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
-  }
+  #for(k in 1:players){
+  #plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
+ # }
   
   # second set of frequency plots for individual player locations
   for (k in 1:players) {
