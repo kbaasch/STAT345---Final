@@ -13,6 +13,8 @@ knitr::opts_chunk$set(echo = TRUE)
 source("source_monopoly_code.R")
 ```
 
+
+
 ## 1. Rules!
 
 -   Before starting the game, it is important to take note of the
@@ -178,6 +180,13 @@ source("source_monopoly_code.R")
 
 -   The game ends when three of the four players run out of money and
     the player remaining wins.
+    
+###Graph explinations 
+In the plots for "Frequency of Landing on each Property" and "Frequency of Landing on each Location" the colors of the bars represent the different colors associated with groups of properties or the type of location on a physical monopoly board. For example, the navy bars represent all Chance and Community Chest spaces on the board, light gray represent the utility properties, black represents all railroads, etc.
+
+The plot, "Density of Landing Locations for All Players", shows the percentage of times each space is landed on for each player. The four colors represent each player.
+
+The plot, "Frequency of Landing Locations Overall", shows how many times each space is landed on for a given player. Since the frequency plots for each player look very similar we decided to only display one.
 
 ## 2. Lets Get Moving:
 
@@ -191,9 +200,7 @@ for this!
 lets_play(1000,4)
 
 ```
-
 ## Findings
-
 We started with a simple function, lets_move, which allowed one player
 to "roll" 2 dice, take the sum, and move the corresponding distance. The
 function also allowed the player to loop back to square 1 if the
@@ -228,7 +235,8 @@ lets_play2(1000,4)
 
 ```
 
-##Findings To complete this task we made a new function, lets_move2,
+##Findings 
+To complete this task we made a new function, lets_move2,
 that had the same components as lets_play but added rules when rolling
 doubles. If a player rolled a double the new location was recorded and
 then they could roll again. The same rule was applied for players that
@@ -257,7 +265,8 @@ lets_play3(1000,4)
 
 ```
 
-##Findings To incorporate the movement cards, chance and community
+##Findings 
+To incorporate the movement cards, chance and community
 chest, we created two functions to be added into the previous lets_move2
 function. The two new functions allow players to "pick" a random card
 out of 16, then a series of if statements are used to direct the player
@@ -291,3 +300,10 @@ lets_play5(1000,4)
 ```
 
 ##Findings
+
+This section contains the function lets_play4. This function expands on lets_play3 by adding players' banks. While using the lets_play4 function, you can choose how many players you want to be in the game and how many turns you want the players to take. 
+
+Within lets_play4, the first step is to create the player banks in a data frame called The_Players and to determine which players own which properties in a data frame called Property_Statuses. Then, as the player's are progressing through their turns, the respective banks of the player who lands on a location and the player who owns the location are updated based on the property's rent. In addition, if the player lands on a Chest or Community Chest space, they may earn money or have to pay depending on what card they drew. 
+
+After all turns have been completed, lets_play4 will print four data frames showing all of the players locations through the game, the player banks, the total number of times each property was landed on, and the total number of times each location was landed on. Additionally, the function will print a frequency plot showing the amount of times each property was landed on, a frequency plot showing the amount of times each location was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
+
