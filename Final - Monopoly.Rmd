@@ -232,6 +232,8 @@ This section contains the function to play the game! lets_play utilizes both let
 
 After all turns have been completed, lets_play will print three data frames showing all of the players locations through the game, the total number of times each property was landed on, and the total number of times each location was landed on. Additionally, it will a frequency plot showing the amount of times each property was landed on, a frequency plot showing the amount of times each location was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
 
+In the plots for "Frequency of Landing on each Property" and "Frequency of Landing on each Location" the colors of the bars represent the different colors associated with groups of properties or the type of location on a physical monopoly board. For example, the navy bars represent all Chance and Community Chest spaces on the board, light gray represent the utility properties, black represents all railroads, etc.
+
 ```{r Let's Get Moving}
 #A function that allows players to move around the board while take turns for a set number of rounds
 
@@ -448,6 +450,8 @@ This section contains the function lets_play2 which incorporates lets_move2 and 
 
 After all turns have been completed, lets_play2 will print three data frames showing all of the players locations through the game, the total number of times each property was landed on, and the total number of times each location was landed on. Additionally it will print a frequency plot showing the amount of times each property was landed on, a frequency plot showing the amount of times each location was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
 
+In the plots for "Frequency of Landing on each Property" and "Frequency of Landing on each Location" the colors of the bars represent the different colors associated with groups of properties or the type of location on a physical monopoly board. For example, the navy bars represent all Chance and Community Chest spaces on the board, light gray represent the utility properties, black represents all railroads, etc.
+
 ```{r Double Down}
 #A function to move players around the board while incorporating double rolls and going to jail
 
@@ -635,6 +639,7 @@ Community_Chest <- data.frame(Community_Chest_Cards, Card_Numbers) #a dataframe 
 
 ##Drawing_Chance and Drawing_Community_Chest
 This section contains the functions Drawing_Chance and Drawing_Community_Chest. If a player lands on a Chance or Community Chest space, these functions will randomly select on of the sixteen cards from the respective deck. Most of these cards will either update the player's location or the player's bank (player banks are added and discussed later in _Play a Game_). 
+
 ```{r Taking a Chance}
 #A function that randomly selects a numeric value 1:16 representing a Chance card and updates the player's location based on the card information
 #input: "location"; a numeric value 1:40 representing the player's location on the board
@@ -961,6 +966,8 @@ This section contains the function lets_play3 which incorporates lets_move3 and 
 
 After all turns have been completed, lets_play3 will print three data frames showing all of the players locations through the game, the total number of times each property was landed on, and the total number of times each location was landed on. Additionally, it will print a frequency plot showing the amount of times each property was landed on, a frequency plot showing the amount of times each location was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
 
+In the plots for "Frequency of Landing on each Property" and "Frequency of Landing on each Location" the colors of the bars represent the different colors associated with groups of properties or the type of location on a physical monopoly board. For example, the navy bars represent all Chance and Community Chest spaces on the board, light gray represent the utility properties, black represents all railroads, etc.
+
 ```{r Take a Chance}
 #A function to move players around the board while incorporating chance and community chest cards and their effects
 
@@ -1242,6 +1249,8 @@ Within lets_play4, the first step is to create the player banks in a data frame 
 
 After all turns have been completed, lets_play4 will print four data frames showing all of the players locations through the game, the player banks, the total number of times each property was landed on, and the total number of times each location was landed on. Additionally, the function will print a frequency plot showing the amount of times each property was landed on, a frequency plot showing the amount of times each location was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
 
+In the plots for "Frequency of Landing on each Property" and "Frequency of Landing on each Location" the colors of the bars represent the different colors associated with groups of properties or the type of location on a physical monopoly board. For example, the navy bars represent all Chance and Community Chest spaces on the board, light gray represent the utility properties, black represents all railroads, etc.
+
 ```{r Play a Game}
 #A function to move players around the board while incorporating player banks
 
@@ -1488,6 +1497,8 @@ This section contains the function lets_play5 which expands on lets_play4 to inc
 Every payment that a player makes that would go to the general bank rather than another player is now paid to Free Parking. Then, if a player lands on Free Parking, they receive the amount of money stored in the Free_Parking data frame. Free_Parking is then reset to 0 and can immediately begin accumulating money again. 
 
 After all turns have been completed, lets_play5 will print five data frames showing all of the players locations through the game, the player banks, the money remaining in Free Parking, the total number of times each property was landed on, and the total number of times each location was landed on. Additionally, the function will print a frequency plot showing the amount of times each property was landed on, a frequency plot showing the amount of times each location was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
+
+In the plots for "Frequency of Landing on each Property" and "Frequency of Landing on each Location" the colors of the bars represent the different colors associated with groups of properties or the type of location on a physical monopoly board. For example, the navy bars represent all Chance and Community Chest spaces on the board, light gray represent the utility properties, black represents all railroads, etc.
 
 ```{r Play a Game}
 #A function to move players around the board while incorporating player banks and the free parking space
