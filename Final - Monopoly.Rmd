@@ -1490,7 +1490,6 @@ print(properties_landed)
       ggtitle("Frequency of Landing on each Property") +
       xlab("Property") +
       ylab("Frequency") +
-      theme(axis.text.x.bottom = element_text(angle=90))
       theme(axis.text.x.bottom = element_text(angle=90, vjust = 0.001)) +
       scale_color_manual(name = "Properties",
                          breaks = c("Mediterranean", "Baltic", "Reading Railroad", "Oriental", "Vermot", "Conecticut", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Tennessee", "New York", "Kentucky", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Pacific", "N. Carolina", "Pennsylvania", "Short Line Railroad", "Park Place", "Boardwalk"),
