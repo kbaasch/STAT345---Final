@@ -248,9 +248,37 @@ lets_play = function(turns, players) {
       location_data[i,j] <- as.integer(location) # puts location value into the dataframe of locations for each player
     }
   }
+  
 print(location_data) 
 
+### All Properties Landed On ###
+properties_landed <- as.vector(as.matrix(location_data))
 
+properties_landed <- properties_landed[properties_landed == 2 | properties_landed == 4 | properties_landed == 6 | properties_landed == 7 | properties_landed == 9 | properties_landed == 10 | properties_landed == 12 | properties_landed == 13 | properties_landed == 14 | properties_landed == 15 | properties_landed == 16 | properties_landed == 17 | properties_landed == 19 | properties_landed == 20 | properties_landed == 22 | properties_landed == 24 | properties_landed == 25 | properties_landed == 26 | properties_landed == 27 | properties_landed == 28 | properties_landed == 29 | properties_landed == 30 | properties_landed == 32 | properties_landed == 33 | properties_landed == 35 | properties_landed == 36 | properties_landed == 38 | properties_landed == 40]
+
+property_names <- c("Mediterranean", "Baltic", "Reading Railroad", "Oriental", "Vermot", "Conecticut", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Tennessee", "New York", "Kentucky", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Pacific", "N. Carolina", "Pennsylvania", "Short Line Railroad", "Park Place", "Boardwalk")
+
+properties_landed <- as.data.frame(properties_landed) 
+properties_landed <- as.data.frame(properties_landed)
+properties_landed <- properties_landed %>% group_by(properties_landed) %>% summarise(n())
+properties_landed <- as.data.frame(properties_landed)
+properties_landed <- cbind(property_names, properties_landed)
+names(properties_landed) <- c("Property", "Location", "Occurances")
+print(properties_landed)
+
+    colors_properties <- c("purple", "purple", "black", "lightblue", "lightblue", "lightblue", "violet", "lightgray", "violet", "violet", "black", "orange", "orange", "orange", "red", "red", "red", "black", "yellow", "yellow", "lightgray", "yellow", "darkgreen", "darkgreen", "darkgreen", "black", "blue", "blue")
+    #freq_data <- data.frame(space = properties_landed$Property, freq = properties_landed$Occurances)
+    property_plot <- ggplot(properties_landed, aes(x = Property, y = Occurances)) +
+      geom_bar(stat = "identity", fill = colors_properties, color = "black") +
+      scale_x_discrete(limits = properties_landed$Property) +
+      ggtitle("Frequency of Landing on each Property") +
+      xlab("Property") +
+      ylab("Frequency") +
+      theme(axis.text.x.bottom = element_text(angle=90)) +
+      theme_minimal()
+    
+    print(property_plot)
+    
  ########################## plots ###############################
 
  #vector of colors
@@ -273,9 +301,12 @@ print(location_data)
   }
 
   plot(all_spaces, xlim = c(0,40), col = "black", type="h", xlab = "Spaces", ylab = "Frequency", main = "Frequency of Landing Locations Overall")
+  
+  
 }
 
-lets_play(100, 4)
+lets_play(1000, 4)
+
 
 ```
 
@@ -417,6 +448,34 @@ lets_play2 = function(turns, players) {
   print(double3)
   
   
+  ### All Properties Landed On ###
+properties_landed <- as.vector(as.matrix(location_data))
+
+properties_landed <- properties_landed[properties_landed == 2 | properties_landed == 4 | properties_landed == 6 | properties_landed == 7 | properties_landed == 9 | properties_landed == 10 | properties_landed == 12 | properties_landed == 13 | properties_landed == 14 | properties_landed == 15 | properties_landed == 16 | properties_landed == 17 | properties_landed == 19 | properties_landed == 20 | properties_landed == 22 | properties_landed == 24 | properties_landed == 25 | properties_landed == 26 | properties_landed == 27 | properties_landed == 28 | properties_landed == 29 | properties_landed == 30 | properties_landed == 32 | properties_landed == 33 | properties_landed == 35 | properties_landed == 36 | properties_landed == 38 | properties_landed == 40]
+
+property_names <- c("Mediterranean", "Baltic", "Reading Railroad", "Oriental", "Vermot", "Conecticut", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Tennessee", "New York", "Kentucky", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Pacific", "N. Carolina", "Pennsylvania", "Short Line Railroad", "Park Place", "Boardwalk")
+
+properties_landed <- as.data.frame(properties_landed) 
+properties_landed <- as.data.frame(properties_landed)
+properties_landed <- properties_landed %>% group_by(properties_landed) %>% summarise(n())
+properties_landed <- as.data.frame(properties_landed)
+properties_landed <- cbind(property_names, properties_landed)
+names(properties_landed) <- c("Property", "Location", "Occurances")
+print(properties_landed)
+
+    colors_properties <- c("purple", "purple", "black", "lightblue", "lightblue", "lightblue", "violet", "lightgray", "violet", "violet", "black", "orange", "orange", "orange", "red", "red", "red", "black", "yellow", "yellow", "lightgray", "yellow", "darkgreen", "darkgreen", "darkgreen", "black", "blue", "blue")
+    #freq_data <- data.frame(space = properties_landed$Property, freq = properties_landed$Occurances)
+    property_plot <- ggplot(properties_landed, aes(x = Property, y = Occurances)) +
+      geom_bar(stat = "identity", fill = colors_properties, color = "black") +
+      scale_x_discrete(limits = properties_landed$Property) +
+      ggtitle("Frequency of Landing on each Property") +
+      xlab("Property") +
+      ylab("Frequency") +
+      theme(axis.text.x.bottom = element_text(angle=90)) +
+      theme_minimal()
+    
+    print(property_plot)
+    
   ########################## plots ###############################
 
  #vector of colors
@@ -442,7 +501,7 @@ lets_play2 = function(turns, players) {
  
 }
  
-lets_play2(10000, 4)
+lets_play2(1000, 4)
 ```
 
 ##the community chest and chance cards
@@ -472,7 +531,6 @@ Drawing_Chance = function(location) {
   amount <- 0 #amount is later used to updated the player's bank in lets_play4
   draw_card <- sample(1:16, 1, replace = TRUE) #randomly selecting a card from 1:16 cards
   player_card <- Chance$Chance_Cards[draw_card] #finding the card in the Chance deck
-  print(player_card)
 
 #The following if statements update the player's location based on the card that was drawn (if applicable)  
       if(draw_card == 1) {
@@ -589,8 +647,6 @@ Drawing_Community_Chest = function(location) {
   amount <- 0
   draw_card_chest <- sample(1:16, 1, replace = TRUE)
   player_card_chest <- Community_Chest$Community_Chest_Cards[draw_card_chest]
-  print(player_card_chest)
-  print(location)
   
   
   if (draw_card_chest == 1) {
@@ -767,6 +823,8 @@ lets_move3 = function(location) {
 
 ```
 
+
+##lets_play3
 ```{r}
 lets_play3 = function(turns, players) {
   
@@ -816,7 +874,37 @@ lets_play3 = function(turns, players) {
   print(location_data)
   print(double3data)
 
+  
+  
+### All Properties Landed On ###
+properties_landed <- as.vector(as.matrix(location_data))
 
+properties_landed <- properties_landed[properties_landed == 2 | properties_landed == 4 | properties_landed == 6 | properties_landed == 7 | properties_landed == 9 | properties_landed == 10 | properties_landed == 12 | properties_landed == 13 | properties_landed == 14 | properties_landed == 15 | properties_landed == 16 | properties_landed == 17 | properties_landed == 19 | properties_landed == 20 | properties_landed == 22 | properties_landed == 24 | properties_landed == 25 | properties_landed == 26 | properties_landed == 27 | properties_landed == 28 | properties_landed == 29 | properties_landed == 30 | properties_landed == 32 | properties_landed == 33 | properties_landed == 35 | properties_landed == 36 | properties_landed == 38 | properties_landed == 40]
+
+property_names <- c("Mediterranean", "Baltic", "Reading Railroad", "Oriental", "Vermot", "Conecticut", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Tennessee", "New York", "Kentucky", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Pacific", "N. Carolina", "Pennsylvania", "Short Line Railroad", "Park Place", "Boardwalk")
+
+properties_landed <- as.data.frame(properties_landed) 
+properties_landed <- as.data.frame(properties_landed)
+properties_landed <- properties_landed %>% group_by(properties_landed) %>% summarise(n())
+properties_landed <- as.data.frame(properties_landed)
+properties_landed <- cbind(property_names, properties_landed)
+names(properties_landed) <- c("Property", "Location", "Occurances")
+print(properties_landed)
+
+    colors_properties <- c("purple", "purple", "black", "lightblue", "lightblue", "lightblue", "violet", "lightgray", "violet", "violet", "black", "orange", "orange", "orange", "red", "red", "red", "black", "yellow", "yellow", "lightgray", "yellow", "darkgreen", "darkgreen", "darkgreen", "black", "blue", "blue")
+    #freq_data <- data.frame(space = properties_landed$Property, freq = properties_landed$Occurances)
+    property_plot <- ggplot(properties_landed, aes(x = Property, y = Occurances)) +
+      geom_bar(stat = "identity", fill = colors_properties, color = "black") +
+      scale_x_discrete(limits = properties_landed$Property) +
+      ggtitle("Frequency of Landing on each Property") +
+      xlab("Property") +
+      ylab("Frequency") +
+      theme(axis.text.x.bottom = element_text(angle=90)) +
+      theme_minimal()
+    
+    print(property_plot)
+    
+    
   
   # creates density plot of frequency of landing on each space for each player
   colors <- c("red", "blue", "green","purple")
@@ -850,10 +938,14 @@ lets_play3 = function(turns, players) {
   }
   
 }
-lets_play3(100,4)
+
+lets_play3(1000,4)
+
 
 ```
 
+
+##lets_move4
 ```{r}
 #A function that expands on lets_move3 to add the collection of $200 every time a player passes "Go"
 #input: "location"; a numeric value 1 to 40; where the player in on the board
@@ -961,6 +1053,8 @@ lets_move4 = function(location) {
 
 ```
 
+
+##lets_play4 <- Play a Game!
 ```{r}
 
 lets_play4 = function(turns, players) {
@@ -978,9 +1072,9 @@ lets_play4 = function(turns, players) {
       
         for (j in 1:players) {
           
-        location = lets_move3(location_data[i-1,j])[[1]]
+        location = lets_move4(location_data[i-1,j])[[1]]
         location_data[i,j] <- as.integer(location)
-        double3data[i,j] <- lets_move3(location)[[2]]
+        double3data[i,j] <- lets_move4(location)[[2]]
         
       # deals with landing in jail from "go to jail" space and staying there for next 3 turns
       if (31 %in% location_data[i-1,j]) { # if you land on 31 (go to jail), next location is in jail (space 11)
@@ -1057,7 +1151,36 @@ lets_play4 = function(turns, players) {
 
   print(The_Players)
   
+
   
+  
+  ### All Properties Landed On ###
+properties_landed <- as.vector(as.matrix(location_data))
+
+properties_landed <- properties_landed[properties_landed == 2 | properties_landed == 4 | properties_landed == 6 | properties_landed == 7 | properties_landed == 9 | properties_landed == 10 | properties_landed == 12 | properties_landed == 13 | properties_landed == 14 | properties_landed == 15 | properties_landed == 16 | properties_landed == 17 | properties_landed == 19 | properties_landed == 20 | properties_landed == 22 | properties_landed == 24 | properties_landed == 25 | properties_landed == 26 | properties_landed == 27 | properties_landed == 28 | properties_landed == 29 | properties_landed == 30 | properties_landed == 32 | properties_landed == 33 | properties_landed == 35 | properties_landed == 36 | properties_landed == 38 | properties_landed == 40]
+
+property_names <- c("Mediterranean", "Baltic", "Reading Railroad", "Oriental", "Vermot", "Conecticut", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Tennessee", "New York", "Kentucky", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Pacific", "N. Carolina", "Pennsylvania", "Short Line Railroad", "Park Place", "Boardwalk")
+
+properties_landed <- as.data.frame(properties_landed) 
+properties_landed <- as.data.frame(properties_landed)
+properties_landed <- properties_landed %>% group_by(properties_landed) %>% summarise(n())
+properties_landed <- as.data.frame(properties_landed)
+properties_landed <- cbind(property_names, properties_landed)
+names(properties_landed) <- c("Property", "Location", "Occurances")
+print(properties_landed)
+
+    colors_properties <- c("purple", "purple", "black", "lightblue", "lightblue", "lightblue", "violet", "lightgray", "violet", "violet", "black", "orange", "orange", "orange", "red", "red", "red", "black", "yellow", "yellow", "lightgray", "yellow", "darkgreen", "darkgreen", "darkgreen", "black", "blue", "blue")
+    #freq_data <- data.frame(space = properties_landed$Property, freq = properties_landed$Occurances)
+    property_plot <- ggplot(properties_landed, aes(x = Property, y = Occurances)) +
+      geom_bar(stat = "identity", fill = colors_properties, color = "black") +
+      scale_x_discrete(limits = properties_landed$Property) +
+      ggtitle("Frequency of Landing on each Property") +
+      xlab("Property") +
+      ylab("Frequency") +
+      theme(axis.text.x.bottom = element_text(angle=90)) +
+      theme_minimal()
+    
+    print(property_plot)  
     # creates density plot of frequency of landing on each space for each player
   colors <- c("red", "blue", "green","purple")
   
@@ -1066,6 +1189,9 @@ lets_play4 = function(turns, players) {
   for (k in 2:players) {
     lines(density(location_data[,k]), col = colors[k-1]) # adds a density line for each player after the first
   }
+  
+  
+  
   
   # creates density plot for total frequency landing on each space (all players spaces included)
   all_spaces <- as.vector(as.matrix(location_data))
