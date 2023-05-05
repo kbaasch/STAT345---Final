@@ -140,6 +140,7 @@ library(tidyverse)
 ##The Board
 ```{r}
 monopolyBoard <- read.csv("MonopolyBoard.csv", header = T)
+monopolyBoard[is.na(monopolyBoard)] <- 0
 monopolyBoard
 ```
 
@@ -1209,8 +1210,8 @@ The_Players <- data.frame(Players, Player_Bank)
       cost <- which(monopolyBoard$spaces == location)
       owned_by_player <- Property_Statuses$Owned_By_Player[spot]
         
-      The_Players$Player_Bank[owned_by_player] <- The_Players$Player_Bank[owned_by_player] + monopolyBoard$rent_0[cost]
-      The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$rent_0[cost]
+      The_Players$Player_Bank[owned_by_player] <- The_Players$Player_Bank[owned_by_player] + monopolyBoard$rent_3[cost]
+      The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$rent_3[cost]
       }
       
       #updating banks if players land on others' railroads
@@ -1408,8 +1409,8 @@ The_Players <- data.frame(Players, Player_Bank)
       cost <- which(monopolyBoard$spaces == location)
       owned_by_player <- Property_Statuses$Owned_By_Player[spot]
         
-      The_Players$Player_Bank[owned_by_player] <- The_Players$Player_Bank[owned_by_player] + monopolyBoard$rent_0[cost]
-      The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$rent_0[cost]
+      The_Players$Player_Bank[owned_by_player] <- The_Players$Player_Bank[owned_by_player] + monopolyBoard$rent_3[cost]
+      The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$rent_3[cost]
       }
       
       #updating banks if players land on others' railroads
