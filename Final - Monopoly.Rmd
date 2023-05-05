@@ -232,11 +232,14 @@ who_goes_first2(4)
 ## lets_play
 This section contains the function to play the game! lets_play utilizes both lets_move and who_goes_first2 to determine which player will start the game and each players location for each of the predetermined number of turns. While using the lets_play function, you can choose how many players you want to be in the game and how many turns you want the players to take. 
 
-After all turns have been completed, lets_play will print two data frames showing all of the players locations through the game and the number of times each property was landed on, a frequency plot showing the amount of times each property was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
+After all turns have been completed, lets_play will print three data frames showing all of the players locations through the game, the total number of times each property was landed on, and the total number of times each location was landed on. Additionally, it will a frequency plot showing the amount of times each property was landed on, a frequency plot showing the amount of times each location was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
 
 ```{r Let's Get Moving}
+#A function that allows players to move around the board while take turns for a set number of rounds
+
 #input: "turns"; the amount of turns each player will take (i.e. the number of rounds in the game), "players"; a numeric value 1-4 representing the number of players in the game
-#output: "location_data"; a data frame showing each players' location after each of their turns, "properties_landed"; a data frame showing the number of times each property was landed on; a frequency plot properties landed; a density plot showing each players' location data throughout the game; a density plot showing the overall location data throughout the game; a frequency plot for each players' location data
+
+#output: "location_data"; a data frame showing each players' location after each of their turns, "properties_landed"; a data frame showing the number of times each property was landed on; a frequency plot properties landed "locations_landed"; a data frame showing the number of times each location was landed on, a frequency plot showing the total number of times each property was landed on, a frequency plot showing the total number of times each location was landed on, a density plot showing each players' location data throughout the game, a density plot showing the overall location data throughout the game, a frequency plot for each players' location data
 
 lets_play = function(turns, players) {
   
@@ -447,12 +450,14 @@ lets_move2 = function(location) {
 ## lets_play2
 This section contains the function lets_play2 which incorporates lets_move2 and who_goes_first2 to determine which player will start the game and each players location for each of the predetermined number of turns. This is an updated version of lets_play where players are now able to roll doubles and go to jail. While using the lets_play2 function, you can choose how many players you want to be in the game and how many turns you want the players to take. 
 
-After all turns have been completed, lets_play2 will print two data frames showing all of the players locations through the game and the number of times each property was landed on, a frequency plot showing the amount of times each property was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
+After all turns have been completed, lets_play2 will print three data frames showing all of the players locations through the game, the total number of times each property was landed on, and the total number of times each location was landed on. Additionally it will print a frequency plot showing the amount of times each property was landed on, a frequency plot showing the amount of times each location was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
 
 ```{r Double Down}
 #A function to move players around the board while incorporating double rolls and going to jail
+
 #input: "turns"; the amount of turns each player takes (i.e. how many rounds the game is), "players"; a numeric value 1-4 representing the number of players in the game
-#output: "location_data"; a data frame showing each players' location after each of their turns, "properties_landed"; a data frame showing the number of times each property was landed on; a frequency plot properties landed; a density plot showing each players' location data throughout the game; a density plot showing the overall location data throughout the game; a frequency plot for each players' location data
+
+#output: "location_data"; a data frame showing each players' location after each of their turns, "properties_landed"; a data frame showing the number of times each property was landed on; a frequency plot properties landed "locations_landed"; a data frame showing the number of times each location was landed on, a frequency plot showing the total number of times each property was landed on, a frequency plot showing the total number of times each location was landed on, a density plot showing each players' location data throughout the game, a density plot showing the overall location data throughout the game, a frequency plot for each players' location data
 
 lets_play2 = function(turns, players) {
   
@@ -958,12 +963,14 @@ lets_move3 = function(location) {
 ##lets_play3
 This section contains the function lets_play3 which incorporates lets_move3 and who_goes_first2 to determine which player will start the game and each players location for each of the predetermined number of turns. This is an updated version of lets_play3 where players are now able use the Chance and Community Chest spaces. While using the lets_play2 function, you can choose how many players you want to be in the game and how many turns you want the players to take. 
 
-After all turns have been completed, lets_play3 will print two data frames showing all of the players locations through the game and the number of times each property was landed on, a frequency plot showing the amount of times each property was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
+After all turns have been completed, lets_play3 will print three data frames showing all of the players locations through the game, the total number of times each property was landed on, and the total number of times each location was landed on. Additionally, it will print a frequency plot showing the amount of times each property was landed on, a frequency plot showing the amount of times each location was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
 
 ```{r Take a Chance}
 #A function to move players around the board while incorporating chance and community chest cards and their effects
+
 #input: "turns"; the amount of turns each player takes (i.e. how many rounds the game is), "players"; a numeric value 1-4 representing the number of players in the game
-#output: "location_data"; a data frame showing each players' location after each of their turns, "properties_landed"; a data frame showing the number of times each property was landed on; a frequency plot properties landed; a density plot showing each players' location data throughout the game; a density plot showing the overall location data throughout the game; a frequency plot for each players' location data
+
+#output: "location_data"; a data frame showing each players' location after each of their turns, "properties_landed"; a data frame showing the number of times each property was landed on, "locations_landed"; a data frame showing the number of times each location was landed on, a frequency plot showing the total number of times each property was landed on, a frequency plot showing the total number of times each location was landed on, a density plot showing each players' location data throughout the game, a density plot showing the overall location data throughout the game, a frequency plot for each players' location data
 
 lets_play3 = function(turns, players) {
   
@@ -1237,12 +1244,14 @@ This section contains the function lets_play4. This function expands on lets_pla
 
 Within lets_play4, the first step is to create the player banks in a data frame called The_Players and to determine which players own which properties in a data frame called Property_Statuses. Then, as the player's are progressing through their turns, the respective banks of the player who lands on a location and the player who owns the location are updated based on the property's rent. In addition, if the player lands on a Chest or Community Chest space, they may earn money or have to pay depending on what card they drew. 
 
-After all turns have been completed, lets_play4 will print three data frames showing all of the players locations through the game, the player banks, and the number of times each property was landed on. Additionally, the function will print a frequency plot showing the amount of times each property was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
+After all turns have been completed, lets_play4 will print four data frames showing all of the players locations through the game, the player banks, the total number of times each property was landed on, and the total number of times each location was landed on. Additionally, the function will print a frequency plot showing the amount of times each property was landed on, a frequency plot showing the amount of times each location was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
 
 ```{r Play a Game}
 #A function to move players around the board while incorporating player banks
+
 #input: "turns"; the amount of turns each player takes (i.e. how many rounds the game is), "players"; a numeric value 1-4 representing the number of players in the game
-#output: "location_data"; a data frame showing each players' location after each of their turns, "The_Players"; a data frame showing each players' personal bank, "properties_landed"; a data frame showing the number of times each property was landed on; a frequency plot properties landed; a density plot showing each players' location data throughout the game; a density plot showing the overall location data throughout the game; a frequency plot for each players' location data
+
+#output: "location_data"; a data frame showing each players' location after each of their turns, "The_Players"; a data frame showing each players' personal bank, "properties_landed"; a data frame showing the number of times each property was landed on, "locations_landed"; a data frame showing the number of times each location was landed on, a frequency plot showing the total number of times each property was landed on, a frequency plot showing the total number of times each location was landed on, a density plot showing each players' location data throughout the game, a density plot showing the overall location data throughout the game, a frequency plot for each players' location data
 
 lets_play4 = function(turns, players) {
   
@@ -1463,12 +1472,14 @@ This section contains the function lets_play5 which expands on lets_play4 to inc
 
 Every payment that a player makes that would go to the general bank rather than another player is now paid to Free Parking. Then, if a player lands on Free Parking, they receive the amount of money stored in the Free_Parking data frame. Free_Parking is then reset to 0 and can immediately begin accumulating money again. 
 
-After all turns have been completed, lets_play5 will print four data frames showing all of the players locations through the game, the player banks, the money remaining in Free Parking, and the number of times each property was landed on. Additionally, the function will print a frequency plot showing the amount of times each property was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
+After all turns have been completed, lets_play5 will print five data frames showing all of the players locations through the game, the player banks, the money remaining in Free Parking, the total number of times each property was landed on, and the total number of times each location was landed on. Additionally, the function will print a frequency plot showing the amount of times each property was landed on, a frequency plot showing the amount of times each location was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
 
 ```{r Play a Game}
 #A function to move players around the board while incorporating player banks and the free parking space
+
 #input: "turns"; the amount of turns each player takes (i.e. how many rounds the game is), "players"; a numeric value 1-4 representing the number of players in the game
-#output: "location_data"; a data frame showing each players' location after each of their turns, "The_Players"; a data frame showing each players' personal bank,"Free_Parking"; a data frame showing the amount of money Free Parking (space 21) contains, "properties_landed"; a data frame showing the number of times each property was landed on; a frequency plot properties landed; a density plot showing each players' location data throughout the game; a density plot showing the overall location data throughout the game; a frequency plot for each players' location data
+
+#output: "location_data"; a data frame showing each players' location after each of their turns, "The_Players"; a data frame showing each players' personal bank,"Free_Parking"; a data frame showing the amount of money Free Parking (space 21) contains, "properties_landed"; a data frame showing the number of times each property was landed on, "locations_landed"; a data frame showing the number of times each location was landed on, a frequency plot showing the total number of times each property was landed on, a frequency plot showing the total number of times each location was landed on, a density plot showing each players' location data throughout the game, a density plot showing the overall location data throughout the game, a frequency plot for each players' location data
 
 lets_play5 = function(turns, players) {
   
