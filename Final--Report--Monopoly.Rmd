@@ -16,7 +16,9 @@ source("C:/Users/Maddie's Laptop/Documents/STAT 345/Projects/STAT345-SP23/Final 
 ## 1. Rules!
 
 -   Before starting the game, it is important to take note of the
-    different types of "equipment" in Monopoly. \### Equipment
+    different types of "equipment" in Monopoly. 
+    
+### Equipment
 
 #### The Board
 
