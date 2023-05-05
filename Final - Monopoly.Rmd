@@ -1,5 +1,5 @@
 ---
-title: "Super Awesome Project Template"
+title: "Let's Play Monopoly!"
 output: word_document
 date: "2023-03-31"
 ---
@@ -137,21 +137,22 @@ library(tidyverse)
 
 - The game ends when three of the four players run out of money and the player remaining wins.
 
-##the board
+##The Board
 ```{r}
 monopolyBoard <- read.csv("MonopolyBoard.csv", header = T)
 monopolyBoard
 ```
 
 
+_Lets Get Moving _
 ## lets_move
+This section contains on the function lets_move which determines where a player will move to on the board. It does not incorporate any special movements such as double rolls, jail, or chance/community chest cards.
 
-```{r student1}
+```{r Lets Get Moving}
 # Using dice rolls to determine where a player will land on the board
 #input: "location", where the player is on the board
 #output: the players new location on the board after the have rolled
 
-#note that this is only accounting for standard dice rolls, no special rules yet...
 
 lets_move = function(location) {
   dice_roll_1 <- sample(1:6, 1, replace = TRUE) #A random roll of a six-sided die
@@ -170,14 +171,16 @@ lets_move = function(location) {
   print(location)
   
 }
-
-lets_move(20)
 ```
 
-
 ## who_goes_first2
+This section contains the function to determine which of the four players in the game will get to move first. Within the function, each player will roll two dice and take the sum of the rolls. The player with the highest sum gets to go first, and the next player is the player with the next numerical value (i.e. if player 3 has the highest sum, the order is: 3, 4, 1, 2). In the case of a tie, the players that are tied will continue to roll until they have different sums. 
 
-```{r student2}
+```{r Let's Get Moving}
+#A function to determine which of four players gets to roll first
+#input: "num_players"; the number of players in the game
+#output: "playerlist"; a list containing the player order
+
 who_goes_first2 <- function(num_players){
   initial_rolls <- c()
   player_order <- length(num_players)
@@ -225,12 +228,13 @@ who_goes_first2(4)
 ```
 
 ## lets_play
+This section contains the function to play the game! lets_play utilizes both lets_move and who_goes_first2 to determine which player will start the game and each players location for each of the predetermined number of turns. While using the lets_play function, you can choose how many players you want to be in the game and how many turns you want the players to take. 
 
-```{r student3}
-#A function to play Monopoly!
-#Utilizes lets_move to move the players around the board
+After all turns have been completed, lets_play will print two data frames showing all of the players locations through the game and the number of times each property was landed on, a frequency plot showing the amount of times each property was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
+
+```{r Let's Get Moving}
 #input: "turns"; the amount of turns each player will take (i.e. the number of rounds in the game), "players"; a numeric value 1-4 representing the number of players in the game
-#output: a dataframe showing each players' location after each of their turns; a density plot showing each players' location data throughout the game; a density plot showing the overall location data throughout the game
+#output: "location_data"; a data frame showing each players' location after each of their turns, "properties_landed"; a data frame showing the number of times each property was landed on; a frequency plot properties landed; a density plot showing each players' location data throughout the game; a density plot showing the overall location data throughout the game; a frequency plot for each players' location data
 
 lets_play = function(turns, players) {
   
@@ -325,15 +329,16 @@ lets_play(1000, 4)
 ```
 
 
+_Double Down_ 
+##lets_move2
+This section contains the function lets_move2 that expands on lets_move by adding the ability for players to go to jail and to utilize double rolls while playing. !WARNING! If you roll three doubles in a row you'll be sent in jail!
 
-## double_down <- lets_move2
-
-```{r student4}
+```{r Double Down}
 #Double Down -- addition of jail and double rolls
 
 #Incorporating double rolls and sending players to jail when the players are rolling and moving
 #input: "location"; a numeric value 1 to 40; where the player in on the board
-#output: the players new location on the board
+#output: "listdata"; a list containing the player's new location on the board and if the player rolled doubles three times in a row.
 
 lets_move2 = function(location) {
   dice_roll_1 <- sample(1:6, 1, replace = TRUE) #a standard, six-sided dice roll
@@ -403,13 +408,15 @@ lets_move2 = function(location) {
 }
 ```
 
-
 ## lets_play2
+This section contains the function lets_play2 which incorporates lets_move2 and who_goes_first2 to determine which player will start the game and each players location for each of the predetermined number of turns. This is an updated version of lets_play where players are now able to roll doubles and go to jail. While using the lets_play2 function, you can choose how many players you want to be in the game and how many turns you want the players to take. 
 
-```{r}
+After all turns have been completed, lets_play2 will print two data frames showing all of the players locations through the game and the number of times each property was landed on, a frequency plot showing the amount of times each property was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
+
+```{r Double Down}
 #A function to move players around the board while incorporating double rolls and going to jail
 #input: "turns"; the amount of turns each player takes (i.e. how many rounds the game is), "players"; a numeric value 1-4 representing the number of players in the game
-#output: a dataframe showing each players' location after each of their turns; a density plot showing each players' location data throughout the game; a density plot showing the overall location data throughout the game
+#output: "location_data"; a data frame showing each players' location after each of their turns, "properties_landed"; a data frame showing the number of times each property was landed on; a frequency plot properties landed; a density plot showing each players' location data throughout the game; a density plot showing the overall location data throughout the game; a frequency plot for each players' location data
 
 lets_play2 = function(turns, players) {
   
@@ -535,8 +542,12 @@ print(properties_landed)
 lets_play2(1000, 4)
 ```
 
-##the community chest and chance cards
-```{r}
+
+_Take a Chance_
+##The Community Chest and Chance Cards
+This section contains the data frames for both the Chance and Community Chest cards. Each data frame contains 16 cards, each of which have a description. 
+
+```{r Take a Chance}
 
 Card_Numbers <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16) # the card numbers
 
@@ -551,11 +562,12 @@ Community_Chest_Cards <- c("Advance to Go (Collect $200)", "Bank error in your f
 Community_Chest <- data.frame(Community_Chest_Cards, Card_Numbers) #a dataframe associating each community chest card with a number
 ```
 
-##drawing community chest and chance cards
-```{r}
+##Drawing_Chance and Drawing_Community_Chest
+This section contains the functions Drawing_Chance and Drawing_Community_Chest. If a player lands on a Chance or Community Chest space, these functions will randomly select on of the sixteen cards from the respective deck. Most of these cards will either update the player's location or the player's bank (player banks are added and discussed later in _Play a Game_). 
+```{r Taking a Chance}
 #A function that randomly selects a numeric value 1:16 representing a Chance card and updates the player's location based on the card information
 #input: "location"; a numeric value 1:40 representing the player's location on the board
-#output: the player's new location on the board
+#output: "list_location_amount"; a list contain the player's updated location and the amount that their bank will be changed by (note that amount will not be used in lets_move3 and lets_play3, it is used in lets_move4 and lets_play4)
 
 Drawing_Chance = function(location) {
   location = location #the player's current location
@@ -753,10 +765,12 @@ Drawing_Community_Chest = function(location) {
 
 
 ## lets_move3 -> incorporating chance and community chest spaces and cards
-```{r}
+This section contains that function lets_move3 which utilizes Drawing_Chance and Drawing_Community  to draw either a Chance or Community chest card when a player lands on a Chance or Community Chest space.
+
+```{r Take a Chance}
 #A function that expands on lets_move2 to add the actions of Community Chest and Chance spaces and their respective cards
 #input: "location"; a numeric value 1 to 40; where the player in on the board
-#output: the players new location on the board
+#output: "listdata"; a list containing the player's new location on the board and if the player rolled doubles three times in a row.
 
 lets_move3 = function(location) {
   dice_roll_1 <- sample(1:6, 1, replace = TRUE)
@@ -776,11 +790,11 @@ lets_move3 = function(location) {
   }
    
   
-  if(location == 8 || location == 23 || location == 27) {
+  if(location == 8 || location == 23 || location == 27) { #if the player lands on a Chance space, they draw a Chance card
     location = Drawing_Chance(location)
   }
   
-  if(location == 3 || location == 18 || location == 34) {
+  if(location == 3 || location == 18 || location == 34) { #if the player lands on a Community Chest space, they draw a Community Chest card
     location = Drawing_Community_Chest(location)
   }
     
@@ -802,11 +816,11 @@ lets_move3 = function(location) {
     }
     
     
-    if(location == 8 || location == 23 || location == 27) {
+    if(location == 8 || location == 23 || location == 27) { #if the player lands on a Chance space, they draw a Chance card
     location = Drawing_Chance(location)
     }
   
-  if(location == 3 || location == 18 || location == 34) {
+  if(location == 3 || location == 18 || location == 34) { #if the player lands on a Community Chest space, they draw a Community Chest card
     location = Drawing_Community_Chest(location)
     }
      
@@ -827,11 +841,11 @@ lets_move3 = function(location) {
           location = location - 40
         }
         
-        if(location == 8 || location == 23 || location == 27) {
+        if(location == 8 || location == 23 || location == 27) { #if the player lands on a Chance space, they draw a Chance card
           location = Drawing_Chance(location)
         }
   
-        if(location == 3 || location == 18 || location == 34) {
+        if(location == 3 || location == 18 || location == 34) { #if the player lands on a Community Chest space, they draw a Community Chest card
           location = Drawing_Community_Chest(location)
          
         }
@@ -847,16 +861,25 @@ lets_move3 = function(location) {
    
   location = location 
 
-  listdata <- (list(location, double3))
+  listdata <- (list(location, double3)) # creates list for outputs "location" and "double3"
+  # if you need to access location from this function, use lets_move3(location_data[i-1,j])[[1]]
+  # if you need to access double3, use lets_move3(double3)[[2]]
   return(listdata)
   
 }
 
 ```
 
-
 ##lets_play3
-```{r}
+This section contains the function lets_play3 which incorporates lets_move3 and who_goes_first2 to determine which player will start the game and each players location for each of the predetermined number of turns. This is an updated version of lets_play3 where players are now able use the Chance and Community Chest spaces. While using the lets_play2 function, you can choose how many players you want to be in the game and how many turns you want the players to take. 
+
+After all turns have been completed, lets_play3 will print two data frames showing all of the players locations through the game and the number of times each property was landed on, a frequency plot showing the amount of times each property was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
+
+```{r Take a Chance}
+#A function to move players around the board while incorporating chance and community chest cards and their effects
+#input: "turns"; the amount of turns each player takes (i.e. how many rounds the game is), "players"; a numeric value 1-4 representing the number of players in the game
+#output: "location_data"; a data frame showing each players' location after each of their turns, "properties_landed"; a data frame showing the number of times each property was landed on; a frequency plot properties landed; a density plot showing each players' location data throughout the game; a density plot showing the overall location data throughout the game; a frequency plot for each players' location data
+
 lets_play3 = function(turns, players) {
   
   location_data <- as.data.frame(matrix(nrow = turns, ncol = players))
@@ -978,11 +1001,14 @@ lets_play3(1000,4)
 ```
 
 
+_Play a Game_
 ##lets_move4
-```{r}
+This section contains the function lets_move4 which is an updated version of lets_move3. Players now will collect $200 every time they pass "GO" (space 1). Additionally, this function utilizes the "amount" object that certain cards in Drawing_Chance and Drawing_Community Chest contain which affects the player's bank later in lets_play4.
+
+```{r Play a Game}
 #A function that expands on lets_move3 to add the collection of $200 every time a player passes "Go"
 #input: "location"; a numeric value 1 to 40; where the player in on the board
-#output: the players new location on the board
+#output: "listdata"; a list that contains location (the player's updated location), double3 (if the player rolled doubles three times in a row), and amount (a money value that may affect the player's bank)
 
 lets_move4 = function(location) {
   dice_roll_1 <- sample(1:6, 1, replace = TRUE) 
@@ -1087,11 +1113,32 @@ lets_move4 = function(location) {
 ```
 
 
-##lets_play4 <- Play a Game!
-```{r}
+##lets_play4
+This section contains the function letsplay_4. This function expands on lets_play3 by adding players' banks. While using the lets_play4 function, you can choose how many players you want to be in the game and how many turns you want the players to take. 
+
+Within lets_play4, the first step is to create the player banks in a data frame called The_Players and to determine which players own which properties in a data frame called Property_Statuses. Then, as the player's are progressing through their turns, the respective banks of the player who lands on a location and the player who owns the location are updated based on the property's rent. In addition, if the player lands on a Chest or Community Chest space, they may earn money or have to pay depending on what card they drew. 
+
+After all turns have been completed, lets_play4 will print three data frames showing all of the players locations through the game, the player banks, and the number of times each property was landed on. Additionally, the function will print a frequency plot showing the amount of times each property was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
+
+```{r Play a Game}
+#A function to move players around the board while incorporating player banks
+#input: "turns"; the amount of turns each player takes (i.e. how many rounds the game is), "players"; a numeric value 1-4 representing the number of players in the game
+#output: "location_data"; a data frame showing each players' location after each of their turns, "properties_landed"; a data frame showing the number of times each property was landed on; a frequency plot properties landed; a density plot showing each players' location data throughout the game; a density plot showing the overall location data throughout the game; a frequency plot for each players' location data
 
 lets_play4 = function(turns, players) {
   
+  #creates the player banks
+  Players <- c("Player 1", "Player 2", "Player 3", "Player 4")
+  Player_Bank <- c(1250, 1250, 1250, 1250)
+The_Players <- data.frame(Players, Player_Bank)
+
+  #determines which players own which properties
+  Property <- c("Mediterranean", "Baltic", "Reading Railroad", "Oriental", "Vermot", "Connecticut", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Tennessee", "New York", "Kentucky", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Pacific", "N. Carolina", "Pennsylvania", "Short Line Railroad", "Park Place", "Boardwalk")
+  Owned_By_Player <- sample(1:4, 28, replace = TRUE)
+  Space <- c(2, 4, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 19, 20, 22, 24, 25, 26, 27, 28, 29, 30, 32, 33, 35, 36, 38, 40)
+  Property_Statuses <- data.frame(Property, Space, Owned_By_Player)
+
+
   location_data <- as.data.frame(matrix(nrow = turns, ncol = players))
   double3data <- as.data.frame(matrix(nrow = turns, ncol = players))
   
@@ -1181,7 +1228,8 @@ lets_play4 = function(turns, players) {
       #
     }
   }
-
+  
+  print(location_data)
   print(The_Players)
   
 
