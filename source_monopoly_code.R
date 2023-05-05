@@ -683,8 +683,8 @@ Drawing_Community_Chest = function(location) {
 #output: the players new location on the board
 
 lets_move3 = function(location) {
-  dice_roll_1 <- sample(1:6, 1, replace = TRUE) 
-  dice_roll_2 <- sample(1:6, 1, replace = TRUE) 
+  dice_roll_1 <- sample(1:6, 1, replace = TRUE)
+  dice_roll_2 <- sample(1:6, 1, replace = TRUE)
   
   roll_total <- sum(dice_roll_1, dice_roll_2)
   roll_double <- dice_roll_1 == dice_roll_2
@@ -695,17 +695,19 @@ lets_move3 = function(location) {
   
   if (location <= 40) {
     location = location
+    amount = 0
   } else {
     location = location - 40
+    amount = 200
   }
   
   
-  if(location == 8 || location == 23 || location == 27) { #check's if the player's location is a Chance space
-    location = Drawing_Chance(location) #if TRUE, the player draws a Chance card using the Drawing_Chance function which updates their location
+  if(location == 8 || location == 23 || location == 27) { #if the player lands on a Chance space, they draw a Chance card
+    location = Drawing_Chance(location)[[1]]
   }
   
-  if(location == 3 || location == 18 || location == 34) { #check's if the player's location is a Community Chest space
-    location = Drawing_Community_Chest(location) #if TRUE, the player draws a Community Chest card using the Drawing_Community_Chest which updates their location
+  if(location == 3 || location == 18 || location == 34) { #if the player lands on a Community Chest space, they draw a Community Chest card
+    location = Drawing_Community_Chest(location)[[1]]
   }
   
   # first double roll -> roll again
@@ -721,17 +723,19 @@ lets_move3 = function(location) {
     
     if (location <= 40) {
       location = location
+      amount = 0
     } else {
       location = location - 40
+      amount = 200
     }
     
     
-    if(location == 8 || location == 23 || location == 27) { #check's if the player's location is a Chance space
-      location = Drawing_Chance(location) #if TRUE, the player draws a Chance card using the Drawing_Chance function which updates their location
+    if(location == 8 || location == 23 || location == 27) { #if the player lands on a Chance space, they draw a Chance card
+      location = Drawing_Chance(location)[[1]]
     }
     
-    if(location == 3 || location == 18 || location == 34) { #check's if the player's location is a Community Chest space
-      location = Drawing_Community_Chest(location) #if TRUE, the player draws a Community Chest card using the Drawing_Community_Chest which updates their location
+    if(location == 3 || location == 18 || location == 34) { #if the player lands on a Community Chest space, they draw a Community Chest card
+      location = Drawing_Community_Chest(location)[[1]]
     }
     
     # second double roll -> roll again
@@ -747,16 +751,18 @@ lets_move3 = function(location) {
       
       if (location <= 40) {
         location = location
+        amount = 0
       } else {
         location = location - 40
+        amount = 200
       }
       
-      if(location == 8 || location == 23 || location == 27) { #check's if the player's location is a Chance space
-        location = Drawing_Chance(location) #if TRUE, the player draws a Chance card using the Drawing_Chance function which updates their location
+      if(location == 8 || location == 23 || location == 27) { #if the player lands on a Chance space, they draw a Chance card
+        location = Drawing_Chance(location)[[1]]
       }
       
-      if(location == 3 || location == 18 || location == 34) { #check's if the player's location is a Community Chest space
-        location = Drawing_Community_Chest(location) #if TRUE, the player draws a Community Chest card using the Drawing_Community_Chest which updates their location
+      if(location == 3 || location == 18 || location == 34) { #if the player lands on a Community Chest space, they draw a Community Chest card
+        location = Drawing_Community_Chest(location)[[1]]
         
       }
       
@@ -771,7 +777,9 @@ lets_move3 = function(location) {
   
   location = location 
   
-  listdata <- (list(location, double3))
+  listdata <- (list(location, double3, amount)) # creates list for outputs "location" and "double3"
+  # if you need to access location from this function, use lets_move3(location_data[i-1,j])[[1]]
+  # if you need to access double3, use lets_move3(double3)[[2]]
   return(listdata)
   
 }
