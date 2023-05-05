@@ -701,11 +701,11 @@ lets_move3 = function(location) {
   
   
   if(location == 8 || location == 23 || location == 27) { #check's if the player's location is a Chance space
-    location = Drawing_Chance_0(location) #if TRUE, the player draws a Chance card using the Drawing_Chance function which updates their location
+    location = Drawing_Chance(location) #if TRUE, the player draws a Chance card using the Drawing_Chance function which updates their location
   }
   
   if(location == 3 || location == 18 || location == 34) { #check's if the player's location is a Community Chest space
-    location = Drawing_Community_Chest_0(location) #if TRUE, the player draws a Community Chest card using the Drawing_Community_Chest which updates their location
+    location = Drawing_Community_Chest(location) #if TRUE, the player draws a Community Chest card using the Drawing_Community_Chest which updates their location
   }
   
   # first double roll -> roll again
@@ -727,11 +727,11 @@ lets_move3 = function(location) {
     
     
     if(location == 8 || location == 23 || location == 27) { #check's if the player's location is a Chance space
-      location = Drawing_Chance_0(location) #if TRUE, the player draws a Chance card using the Drawing_Chance function which updates their location
+      location = Drawing_Chance(location) #if TRUE, the player draws a Chance card using the Drawing_Chance function which updates their location
     }
     
     if(location == 3 || location == 18 || location == 34) { #check's if the player's location is a Community Chest space
-      location = Drawing_Community_Chest_0(location) #if TRUE, the player draws a Community Chest card using the Drawing_Community_Chest which updates their location
+      location = Drawing_Community_Chest(location) #if TRUE, the player draws a Community Chest card using the Drawing_Community_Chest which updates their location
     }
     
     # second double roll -> roll again
@@ -752,11 +752,11 @@ lets_move3 = function(location) {
       }
       
       if(location == 8 || location == 23 || location == 27) { #check's if the player's location is a Chance space
-        location = Drawing_Chance_0(location) #if TRUE, the player draws a Chance card using the Drawing_Chance function which updates their location
+        location = Drawing_Chance(location) #if TRUE, the player draws a Chance card using the Drawing_Chance function which updates their location
       }
       
       if(location == 3 || location == 18 || location == 34) { #check's if the player's location is a Community Chest space
-        location = Drawing_Community_Chest_0(location) #if TRUE, the player draws a Community Chest card using the Drawing_Community_Chest which updates their location
+        location = Drawing_Community_Chest(location) #if TRUE, the player draws a Community Chest card using the Drawing_Community_Chest which updates their location
         
       }
       
