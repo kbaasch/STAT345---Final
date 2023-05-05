@@ -245,9 +245,9 @@ then they could roll again. The same rule was applied for players that
 rolled 2 doubles consecutively. Once a player rolled 3 doubles in a row
 they are sent to jail. To keep players in jail for 3 turns when sent
 from "Go to Jail" space or from rolling 3 doubles aspects of the old
-lets_play function were also updated in lets_play2. As before, the data
-frame with players and their corresponding positions is outputted as
-well as frequency and density plots of these locations. As seen in the
+lets_play function were also updated in lets_play2. 
+
+As before, the frequency and density plots of the players locations are outputted. As seen in the
 density plot, space 11, is landed on significantly more than the other
 spaces. Knowing that space 11 is the jail space on the monopoly board,
 this result doesn't come as a surprise. By adding rules about going to
@@ -274,7 +274,9 @@ function. The two new functions allow players to "pick" a random card
 out of 16, then a series of if statements are used to direct the player
 to their new location. A new if statement was added into a copy of
 lets_move2 to allow them to "draw" a card if landing on specific board
-locations. The results with the added movement cards have an interesting
+locations. 
+
+The results with the added movement cards have an interesting
 affect on the frequency of landing on a space. As previously mentioned,
 the most frequent spaces landed on were about 7 spaces apart due to the
 probability of the sum of two die. The new frequency plots show that
@@ -308,4 +310,6 @@ This section contains the function lets_play4. This function expands on lets_pla
 Within lets_play4, the first step is to create the player banks in a data frame called The_Players and to determine which players own which properties in a data frame called Property_Statuses. Then, as the player's are progressing through their turns, the respective banks of the player who lands on a location and the player who owns the location are updated based on the property's rent. In addition, if the player lands on a Chest or Community Chest space, they may earn money or have to pay depending on what card they drew. 
 
 After all turns have been completed, lets_play4 will print four data frames showing all of the players locations through the game, the player banks, the total number of times each property was landed on, and the total number of times each location was landed on. Additionally, the function will print a frequency plot showing the amount of times each property was landed on, a frequency plot showing the amount of times each location was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
+
+Since no additions related to the players movement were made in this function, the density and frequency plots look very similar as those seen in the output of lets_play3.
 
