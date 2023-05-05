@@ -10,14 +10,14 @@ editor_options:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
-source("C:/Users/Maddie's Laptop/Documents/STAT 345/Projects/STAT345-SP23/Final Project/STAT345---Final/source_monopoly_code.R")
+source("~/STAT 345/Projects/STAT345-SP23/Final Project/STAT345---Final/source_monopoly_code.R")
 ```
 
 ## 1. Rules!
 
 -   Before starting the game, it is important to take note of the
-    different types of "equipment" in Monopoly. 
-    
+    different types of "equipment" in Monopoly.
+
 ### Equipment
 
 #### The Board
@@ -192,29 +192,29 @@ lets_play(1000,4)
 
 ```
 
-## Findings 
-We started with a simple function, lets_move, which
-allowed one player to "roll" 2 dice, take the sum, and move the
-corresponding distance. The function also allowed the player to loop
-back to square 1 if the location was greater than 40, the amount of
-squares on the board, then the actual location would be: location-40. We
-then made a function, lets_play, that allows multiple players to take
-turns "rolling" the dice and moving to a new location. This function
-creates a data frame of the players and their positions on the board for
-each turn, and plots both density and frequency plots for how often a
-player lands on a specific space. Because no specific rules about
-rolling doubles or going to jail are incorporated in these function, the
-results are as expected. Looking at the frequency plot, space 7 and
-spaces which are multiples of 7 tend to be landed on more frequently.
-This is the be expected due to the fact that a total of 7 has the
-highest probability when rolling 2 die.
+## Findings
+
+We started with a simple function, lets_move, which allowed one player
+to "roll" 2 dice, take the sum, and move the corresponding distance. The
+function also allowed the player to loop back to square 1 if the
+location was greater than 40, the amount of squares on the board, then
+the actual location would be: location-40. We then made a function,
+lets_play, that allows multiple players to take turns "rolling" the dice
+and moving to a new location. This function creates a data frame of the
+players and their positions on the board for each turn, and plots both
+density and frequency plots for how often a player lands on a specific
+space. Because no specific rules about rolling doubles or going to jail
+are incorporated in these function, the results are as expected. Looking
+at the frequency plot, space 7 and spaces which are multiples of 7 tend
+to be landed on more frequently. This is the be expected due to the fact
+that a total of 7 has the highest probability when rolling 2 die.
 
 Within this section, we also wrote the function, who_goes_first, in
 order to determine the starting player order of the game. This function
-simulates an initial dice roll by however many players are going to play
-the game and incorporates re-rolling for players who tie. The end result
-is a list of the players in order of who will go first to be used as an
-input for playing the game later.
+simulates an initial dice roll for however many players are going to
+play the game and incorporates re-rolling for players who tie. The end
+result is a list of the players in order of who will go first to be used
+as an input for playing the game later.
 
 ## 3. Double Down!
 
@@ -228,8 +228,7 @@ lets_play2(1000,4)
 
 ```
 
-##Findings 
-To complete this task we made a new function, lets_move2,
+##Findings To complete this task we made a new function, lets_move2,
 that had the same components as lets_play but added rules when rolling
 doubles. If a player rolled a double the new location was recorded and
 then they could roll again. The same rule was applied for players that
@@ -258,8 +257,7 @@ lets_play3(1000,4)
 
 ```
 
-##Findings 
-To incorporate the movement cards, chance and community
+##Findings To incorporate the movement cards, chance and community
 chest, we created two functions to be added into the previous lets_move2
 function. The two new functions allow players to "pick" a random card
 out of 16, then a series of if statements are used to direct the player
