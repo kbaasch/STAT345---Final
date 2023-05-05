@@ -1114,7 +1114,7 @@ lets_move4 = function(location) {
 
 
 ##lets_play4
-This section contains the function letsplay_4. This function expands on lets_play3 by adding players' banks. While using the lets_play4 function, you can choose how many players you want to be in the game and how many turns you want the players to take. 
+This section contains the function lets_play4. This function expands on lets_play3 by adding players' banks. While using the lets_play4 function, you can choose how many players you want to be in the game and how many turns you want the players to take. 
 
 Within lets_play4, the first step is to create the player banks in a data frame called The_Players and to determine which players own which properties in a data frame called Property_Statuses. Then, as the player's are progressing through their turns, the respective banks of the player who lands on a location and the player who owns the location are updated based on the property's rent. In addition, if the player lands on a Chest or Community Chest space, they may earn money or have to pay depending on what card they drew. 
 
