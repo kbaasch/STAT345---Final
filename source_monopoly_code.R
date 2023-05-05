@@ -10,7 +10,8 @@ monopolyBoard[is.na(monopolyBoard)] <- 0
 monopolyBoard
 
 
-## lets_move
+############################################ lets_move ##############################################
+
 # Using dice rolls to determine where a player will land on the board
 #input: "location", where the player is on the board
 #output: the players new location on the board after the have rolled
@@ -83,7 +84,7 @@ who_goes_first2 <- function(num_players){
 who_goes_first2(4)
 
 
-## lets_play
+############################################### lets_play ##########################################
 
 #A function to play Monopoly!
 #Utilizes lets_move to move the players around the board
@@ -135,6 +136,8 @@ lets_play = function(turns, players) {
 
 ## double_down <- lets_move2
 #Double Down -- addition of jail and double rolls
+
+############################################# lets_move2 ###########################################
 
 #Incorporating double rolls and sending players to jail when the players are rolling and moving
 #input: "location"; a numeric value 1 to 40; where the player in on the board
@@ -208,7 +211,7 @@ lets_move2 = function(location) {
 }
 
 
-## lets_play2
+############################################### lets_play2 ###########################################
 
 
 #A function to move players around the board while incorporating double rolls and going to jail
@@ -416,6 +419,7 @@ Drawing_Community_Chest_0 = function(location) {
   return(location)
 }
 
+############################################## lets_move3 ###########################################
 
 #A function that expands on lets_move2 to add the actions of Community Chest and Chance spaces and their respective cards
 #input: "location"; a numeric value 1 to 40; where the player in on the board
@@ -515,6 +519,8 @@ lets_move3 = function(location) {
   
 }
 
+############################################ lets_play3 ##############################################
+
 lets_play3 = function(turns, players) {
   
   location_data <- as.data.frame(matrix(nrow = turns, ncol = players))
@@ -583,4 +589,5 @@ lets_play3 = function(turns, players) {
   }
   
 }
+
 
