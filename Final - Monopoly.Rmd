@@ -238,7 +238,7 @@ After all turns have been completed, lets_play will print two data frames showin
 
 lets_play = function(turns, players) {
   
-  location_data <- as.data.frame(matrix(nrow = turns, ncol = players)) # dataframe will keep data for locations of players for each turn
+  location_data <- as.data.frame(matrix(nrow = turns, ncol = players)) # data frame that will keep data for locations of players for each turn
   
   # puts players in order
   colnames(location_data) <- who_goes_first2(players)[[2]]
@@ -249,7 +249,7 @@ lets_play = function(turns, players) {
   for (i in 2:turns) { # iterates through number of turns
     for (j in 1:players) { # rotates through each player
       location = lets_move(location_data[i-1,j])[[1]] # takes location from lets_move2 function and assigns it to location
-      location_data[i,j] <- as.integer(location) # puts location value into the dataframe of locations for each player
+      location_data[i,j] <- as.integer(location) # puts location value into the data frame of locations for each player
     }
   }
   
@@ -280,8 +280,10 @@ print(properties_landed)
       ggtitle("Frequency of Landing on each Property") +
       xlab("Property") +
       ylab("Frequency") +
-      theme(axis.text.x.bottom = element_text(angle=90)) +
-      theme_minimal()
+      theme(axis.text.x.bottom = element_text(angle=90, vjust = 0.001)) +
+      scale_color_manual(name = "Properties",
+                         breaks = c("Mediterranean", "Baltic", "Reading Railroad", "Oriental", "Vermot", "Conecticut", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Tennessee", "New York", "Kentucky", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Pacific", "N. Carolina", "Pennsylvania", "Short Line Railroad", "Park Place", "Boardwalk"),
+                         values = colors_properties)
     
     print(property_plot)
     
