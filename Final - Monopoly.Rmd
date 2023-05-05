@@ -138,6 +138,7 @@ library(tidyverse)
 - The game ends when three of the four players run out of money and the player remaining wins.
 
 ##The Board
+Note that you will need to download MonopolyBoard.csv in order for this code chunk to work.
 ```{r}
 monopolyBoard <- read.csv("MonopolyBoard.csv", header = T)
 monopolyBoard[is.na(monopolyBoard)] <- 0
@@ -150,7 +151,7 @@ _Lets Get Moving _
 This section contains on the function lets_move which determines where a player will move to on the board. It does not incorporate any special movements such as double rolls, jail, or chance/community chest cards.
 
 ```{r Lets Get Moving}
-# Using dice rolls to determine where a player will land on the board
+#A function that uses dice rolls to determine where a player will land on the board
 #input: "location", where the player is on the board
 #output: the players new location on the board after the have rolled
 
@@ -231,11 +232,14 @@ who_goes_first2(4)
 ## lets_play
 This section contains the function to play the game! lets_play utilizes both lets_move and who_goes_first2 to determine which player will start the game and each players location for each of the predetermined number of turns. While using the lets_play function, you can choose how many players you want to be in the game and how many turns you want the players to take. 
 
-After all turns have been completed, lets_play will print two data frames showing all of the players locations through the game and the number of times each property was landed on, a frequency plot showing the amount of times each property was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
+After all turns have been completed, lets_play will print three data frames showing all of the players locations through the game, the total number of times each property was landed on, and the total number of times each location was landed on. Additionally, it will a frequency plot showing the amount of times each property was landed on, a frequency plot showing the amount of times each location was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
 
 ```{r Let's Get Moving}
+#A function that allows players to move around the board while take turns for a set number of rounds
+
 #input: "turns"; the amount of turns each player will take (i.e. the number of rounds in the game), "players"; a numeric value 1-4 representing the number of players in the game
-#output: "location_data"; a data frame showing each players' location after each of their turns, "properties_landed"; a data frame showing the number of times each property was landed on; a frequency plot properties landed; a density plot showing each players' location data throughout the game; a density plot showing the overall location data throughout the game; a frequency plot for each players' location data
+
+#output: "location_data"; a data frame showing each players' location after each of their turns, "properties_landed"; a data frame showing the number of times each property was landed on; a frequency plot properties landed "locations_landed"; a data frame showing the number of times each location was landed on, a frequency plot showing the total number of times each property was landed on, a frequency plot showing the total number of times each location was landed on, a density plot showing each players' location data throughout the game, a density plot showing the overall location data throughout the game, a frequency plot for each players' location data
 
 lets_play = function(turns, players) {
   
@@ -287,6 +291,38 @@ print(properties_landed)
                          values = colors_properties) 
     
     print(property_plot)
+    
+    
+########################## location frequency plot ###############################
+locations_landed <- as.vector(as.matrix(location_data))
+
+location_names <- c("GO", "Mediterranean", "Community Chest 1", "Baltic ", "Income Tax", "Reading Railroad", "Oriental","Chance 1", "Vermot", "Conecticut", "Jail", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Community Chest 2", "Tennessee", "New York","Free Parking", "Kentucky", "Chance 2", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific", "N. Carolina", "Community Chest 3", "Pennsylvania", "Short Line Railroad", "Chance 3", "Park Place", "Luxury Tax", "Boardwalk")
+
+locations_landed <- as.data.frame(locations_landed) 
+locations_landed <- as.data.frame(locations_landed)
+locations_landed <- locations_landed %>% group_by(locations_landed) %>% summarise(n())
+locations_landed <- as.data.frame(locations_landed)
+locations_landed <- cbind(location_names, locations_landed)
+names(locations_landed) <- c("Name", "Location", "Occurances")
+print(locations_landed)
+
+    colors_locations <- c("white","purple","navy", "purple","white", "black", "lightblue","navy", "lightblue", "lightblue", "white", "violet", "lightgray", "violet", "violet", "black", "orange","navy", "orange", "orange","white", "red","navy", "red", "red", "black", "yellow", "yellow", "lightgray", "yellow","white", "darkgreen", "darkgreen","navy", "darkgreen", "black","navy", "blue","white", "blue")
+    
+    
+  #creates a frequency plot for the number of times each property is landed on 
+    location_plot <- ggplot(locations_landed, aes(x = Name, y = Occurances)) +
+      geom_bar(stat = "identity", fill = colors_locations, color = "black") +
+      scale_x_discrete(limits = locations_landed$Name) +
+      ggtitle("Frequency of Landing on each Location") +
+      xlab("Location") +
+      ylab("Frequency") +
+      theme(axis.text.x.bottom = element_text(angle=90, vjust = 0.001)) +
+      scale_color_manual(name = "Properties",
+                         breaks = c("GO", "Mediterranean", "Community Chest 1", "Baltic ", "Income Tax", "Reading Railroad", "Oriental","Chance 1", "Vermot", "Conecticut", "Jail", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Community Chest 2", "Tennessee", "New York","Free Parking", "Kentucky", "Chance 2", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific", "N. Carolina", "Community Chest 3", "Pennsylvania", "Short Line Railroad", "Chance 3", "Park Place", "Luxury Tax", "Boardwalk"),
+                         values = colors_locations) 
+    
+    print(location_plot)  
+
     
  ########################## location plots ###############################
 
@@ -414,12 +450,14 @@ lets_move2 = function(location) {
 ## lets_play2
 This section contains the function lets_play2 which incorporates lets_move2 and who_goes_first2 to determine which player will start the game and each players location for each of the predetermined number of turns. This is an updated version of lets_play where players are now able to roll doubles and go to jail. While using the lets_play2 function, you can choose how many players you want to be in the game and how many turns you want the players to take. 
 
-After all turns have been completed, lets_play2 will print two data frames showing all of the players locations through the game and the number of times each property was landed on, a frequency plot showing the amount of times each property was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
+After all turns have been completed, lets_play2 will print three data frames showing all of the players locations through the game, the total number of times each property was landed on, and the total number of times each location was landed on. Additionally it will print a frequency plot showing the amount of times each property was landed on, a frequency plot showing the amount of times each location was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
 
 ```{r Double Down}
 #A function to move players around the board while incorporating double rolls and going to jail
+
 #input: "turns"; the amount of turns each player takes (i.e. how many rounds the game is), "players"; a numeric value 1-4 representing the number of players in the game
-#output: "location_data"; a data frame showing each players' location after each of their turns, "properties_landed"; a data frame showing the number of times each property was landed on; a frequency plot properties landed; a density plot showing each players' location data throughout the game; a density plot showing the overall location data throughout the game; a frequency plot for each players' location data
+
+#output: "location_data"; a data frame showing each players' location after each of their turns, "properties_landed"; a data frame showing the number of times each property was landed on; a frequency plot properties landed "locations_landed"; a data frame showing the number of times each location was landed on, a frequency plot showing the total number of times each property was landed on, a frequency plot showing the total number of times each location was landed on, a density plot showing each players' location data throughout the game, a density plot showing the overall location data throughout the game, a frequency plot for each players' location data
 
 lets_play2 = function(turns, players) {
   
@@ -504,6 +542,38 @@ print(properties_landed)
                          values = colors_properties)
     
     print(property_plot)
+
+    
+########################## location frequency plot ###############################
+locations_landed <- as.vector(as.matrix(location_data))
+
+location_names <- c("GO", "Mediterranean", "Community Chest 1", "Baltic ", "Income Tax", "Reading Railroad", "Oriental","Chance 1", "Vermot", "Conecticut", "Jail", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Community Chest 2", "Tennessee", "New York","Free Parking", "Kentucky", "Chance 2", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific", "N. Carolina", "Community Chest 3", "Pennsylvania", "Short Line Railroad", "Chance 3", "Park Place", "Luxury Tax", "Boardwalk")
+
+locations_landed <- as.data.frame(locations_landed) 
+locations_landed <- as.data.frame(locations_landed)
+locations_landed <- locations_landed %>% group_by(locations_landed) %>% summarise(n())
+locations_landed <- as.data.frame(locations_landed)
+locations_landed <- cbind(location_names, locations_landed)
+names(locations_landed) <- c("Name", "Location", "Occurances")
+print(locations_landed)
+
+    colors_locations <- c("white","purple","navy", "purple","white", "black", "lightblue","navy", "lightblue", "lightblue", "white", "violet", "lightgray", "violet", "violet", "black", "orange","navy", "orange", "orange","white", "red","navy", "red", "red", "black", "yellow", "yellow", "lightgray", "yellow","white", "darkgreen", "darkgreen","navy", "darkgreen", "black","navy", "blue","white", "blue")
+    
+    
+  #creates a frequency plot for the number of times each property is landed on 
+    location_plot <- ggplot(locations_landed, aes(x = Name, y = Occurances)) +
+      geom_bar(stat = "identity", fill = colors_locations, color = "black") +
+      scale_x_discrete(limits = locations_landed$Name) +
+      ggtitle("Frequency of Landing on each Location") +
+      xlab("Location") +
+      ylab("Frequency") +
+      theme(axis.text.x.bottom = element_text(angle=90, vjust = 0.001)) +
+      scale_color_manual(name = "Properties",
+                         breaks = c("GO", "Mediterranean", "Community Chest 1", "Baltic ", "Income Tax", "Reading Railroad", "Oriental","Chance 1", "Vermot", "Conecticut", "Jail", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Community Chest 2", "Tennessee", "New York","Free Parking", "Kentucky", "Chance 2", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific", "N. Carolina", "Community Chest 3", "Pennsylvania", "Short Line Railroad", "Chance 3", "Park Place", "Luxury Tax", "Boardwalk"),
+                         values = colors_locations) 
+    
+    print(location_plot)  
+    
     
 ########################## location plots ###############################
 
@@ -522,11 +592,11 @@ print(properties_landed)
   plot(density(all_spaces), xlim = c(0,40), col = "black", xlab="Spaces", main="Density of Landing Locations Overall")
   
   #creates frequency plot for frequency of landing on certain spaces for each player
-  for(k in 1:players){
-  plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
-  }
+ # for(k in 1:players){
+ # plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
+ # }
   
-  plot(all_spaces, xlim = c(0,40), col = "black", type="h", xlab = "Spaces", ylab = "Frequency", main = "Frequency of Landing Locations Overall")
+ # plot(all_spaces, xlim = c(0,40), col = "black", type="h", xlab = "Spaces", ylab = "Frequency", main = "Frequency of Landing Locations Overall")
   
   # second set of frequency plots for individual player locations
   for (k in 1:players) {
@@ -893,12 +963,14 @@ lets_move3 = function(location) {
 ##lets_play3
 This section contains the function lets_play3 which incorporates lets_move3 and who_goes_first2 to determine which player will start the game and each players location for each of the predetermined number of turns. This is an updated version of lets_play3 where players are now able use the Chance and Community Chest spaces. While using the lets_play2 function, you can choose how many players you want to be in the game and how many turns you want the players to take. 
 
-After all turns have been completed, lets_play3 will print two data frames showing all of the players locations through the game and the number of times each property was landed on, a frequency plot showing the amount of times each property was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
+After all turns have been completed, lets_play3 will print three data frames showing all of the players locations through the game, the total number of times each property was landed on, and the total number of times each location was landed on. Additionally, it will print a frequency plot showing the amount of times each property was landed on, a frequency plot showing the amount of times each location was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
 
 ```{r Take a Chance}
 #A function to move players around the board while incorporating chance and community chest cards and their effects
+
 #input: "turns"; the amount of turns each player takes (i.e. how many rounds the game is), "players"; a numeric value 1-4 representing the number of players in the game
-#output: "location_data"; a data frame showing each players' location after each of their turns, "properties_landed"; a data frame showing the number of times each property was landed on; a frequency plot properties landed; a density plot showing each players' location data throughout the game; a density plot showing the overall location data throughout the game; a frequency plot for each players' location data
+
+#output: "location_data"; a data frame showing each players' location after each of their turns, "properties_landed"; a data frame showing the number of times each property was landed on, "locations_landed"; a data frame showing the number of times each location was landed on, a frequency plot showing the total number of times each property was landed on, a frequency plot showing the total number of times each location was landed on, a density plot showing each players' location data throughout the game, a density plot showing the overall location data throughout the game, a frequency plot for each players' location data
 
 lets_play3 = function(turns, players) {
   
@@ -980,8 +1052,41 @@ print(properties_landed)
                          values = colors_properties)
     
     print(property_plot)
+  
+      
+
+########################## location frequency plot ###############################
+locations_landed <- as.vector(as.matrix(location_data))
+
+location_names <- c("GO", "Mediterranean", "Community Chest 1", "Baltic ", "Income Tax", "Reading Railroad", "Oriental","Chance 1", "Vermot", "Conecticut", "Jail", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Community Chest 2", "Tennessee", "New York","Free Parking", "Kentucky", "Chance 2", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific", "N. Carolina", "Community Chest 3", "Pennsylvania", "Short Line Railroad", "Chance 3", "Park Place", "Luxury Tax", "Boardwalk")
+
+locations_landed <- as.data.frame(locations_landed) 
+locations_landed <- as.data.frame(locations_landed)
+locations_landed <- locations_landed %>% group_by(locations_landed) %>% summarise(n())
+locations_landed <- as.data.frame(locations_landed)
+locations_landed <- cbind(location_names, locations_landed)
+names(locations_landed) <- c("Name", "Location", "Occurances")
+print(locations_landed)
+
+    colors_locations <- c("white","purple","navy", "purple","white", "black", "lightblue","navy", "lightblue", "lightblue", "white", "violet", "lightgray", "violet", "violet", "black", "orange","navy", "orange", "orange","white", "red","navy", "red", "red", "black", "yellow", "yellow", "lightgray", "yellow","white", "darkgreen", "darkgreen","navy", "darkgreen", "black","navy", "blue","white", "blue")
     
     
+  #creates a frequency plot for the number of times each property is landed on 
+    location_plot <- ggplot(locations_landed, aes(x = Name, y = Occurances)) +
+      geom_bar(stat = "identity", fill = colors_locations, color = "black") +
+      scale_x_discrete(limits = locations_landed$Name) +
+      ggtitle("Frequency of Landing on each Location") +
+      xlab("Location") +
+      ylab("Frequency") +
+      theme(axis.text.x.bottom = element_text(angle=90, vjust = 0.001)) +
+      scale_color_manual(name = "Properties",
+                         breaks = c("GO", "Mediterranean", "Community Chest 1", "Baltic ", "Income Tax", "Reading Railroad", "Oriental","Chance 1", "Vermot", "Conecticut", "Jail", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Community Chest 2", "Tennessee", "New York","Free Parking", "Kentucky", "Chance 2", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific", "N. Carolina", "Community Chest 3", "Pennsylvania", "Short Line Railroad", "Chance 3", "Park Place", "Luxury Tax", "Boardwalk"),
+                         values = colors_locations) 
+    
+    print(location_plot)  
+    
+    
+        
 ########################## location plots ###############################    
   
   # creates density plot of frequency of landing on each space for each player
@@ -997,9 +1102,9 @@ print(properties_landed)
   all_spaces <- as.vector(as.matrix(location_data))
   plot(density(all_spaces), xlim = c(0,40), col = "black", xlab="Spaces", main="Density of Landing Locations Overall")
   
-  for(k in 1:players){
-  plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
-  }
+ # for(k in 1:players){
+ # plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
+#  }
   
   # second set of frequency plots for individual player locations
   for (k in 1:players) {
@@ -1139,12 +1244,14 @@ This section contains the function lets_play4. This function expands on lets_pla
 
 Within lets_play4, the first step is to create the player banks in a data frame called The_Players and to determine which players own which properties in a data frame called Property_Statuses. Then, as the player's are progressing through their turns, the respective banks of the player who lands on a location and the player who owns the location are updated based on the property's rent. In addition, if the player lands on a Chest or Community Chest space, they may earn money or have to pay depending on what card they drew. 
 
-After all turns have been completed, lets_play4 will print three data frames showing all of the players locations through the game, the player banks, and the number of times each property was landed on. Additionally, the function will print a frequency plot showing the amount of times each property was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
+After all turns have been completed, lets_play4 will print four data frames showing all of the players locations through the game, the player banks, the total number of times each property was landed on, and the total number of times each location was landed on. Additionally, the function will print a frequency plot showing the amount of times each property was landed on, a frequency plot showing the amount of times each location was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
 
 ```{r Play a Game}
 #A function to move players around the board while incorporating player banks
+
 #input: "turns"; the amount of turns each player takes (i.e. how many rounds the game is), "players"; a numeric value 1-4 representing the number of players in the game
-#output: "location_data"; a data frame showing each players' location after each of their turns, "The_Players"; a data frame showing each players' personal bank, "properties_landed"; a data frame showing the number of times each property was landed on; a frequency plot properties landed; a density plot showing each players' location data throughout the game; a density plot showing the overall location data throughout the game; a frequency plot for each players' location data
+
+#output: "location_data"; a data frame showing each players' location after each of their turns, "The_Players"; a data frame showing each players' personal bank, "properties_landed"; a data frame showing the number of times each property was landed on, "locations_landed"; a data frame showing the number of times each location was landed on, a frequency plot showing the total number of times each property was landed on, a frequency plot showing the total number of times each location was landed on, a density plot showing each players' location data throughout the game, a density plot showing the overall location data throughout the game, a frequency plot for each players' location data
 
 lets_play4 = function(turns, players) {
   
@@ -1286,6 +1393,37 @@ print(properties_landed)
     
     print(property_plot) 
     
+
+########################## location frequency plot ###############################
+locations_landed <- as.vector(as.matrix(location_data))
+
+location_names <- c("GO", "Mediterranean", "Community Chest 1", "Baltic ", "Income Tax", "Reading Railroad", "Oriental","Chance 1", "Vermot", "Conecticut", "Jail", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Community Chest 2", "Tennessee", "New York","Free Parking", "Kentucky", "Chance 2", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific", "N. Carolina", "Community Chest 3", "Pennsylvania", "Short Line Railroad", "Chance 3", "Park Place", "Luxury Tax", "Boardwalk")
+
+locations_landed <- as.data.frame(locations_landed) 
+locations_landed <- as.data.frame(locations_landed)
+locations_landed <- locations_landed %>% group_by(locations_landed) %>% summarise(n())
+locations_landed <- as.data.frame(locations_landed)
+locations_landed <- cbind(location_names, locations_landed)
+names(locations_landed) <- c("Name", "Location", "Occurances")
+print(locations_landed)
+
+    colors_locations <- c("white","purple","navy", "purple","white", "black", "lightblue","navy", "lightblue", "lightblue", "white", "violet", "lightgray", "violet", "violet", "black", "orange","navy", "orange", "orange","white", "red","navy", "red", "red", "black", "yellow", "yellow", "lightgray", "yellow","white", "darkgreen", "darkgreen","navy", "darkgreen", "black","navy", "blue","white", "blue")
+    
+    
+  #creates a frequency plot for the number of times each property is landed on 
+    location_plot <- ggplot(locations_landed, aes(x = Name, y = Occurances)) +
+      geom_bar(stat = "identity", fill = colors_locations, color = "black") +
+      scale_x_discrete(limits = locations_landed$Name) +
+      ggtitle("Frequency of Landing on each Location") +
+      xlab("Location") +
+      ylab("Frequency") +
+      theme(axis.text.x.bottom = element_text(angle=90, vjust = 0.001)) +
+      scale_color_manual(name = "Properties",
+                         breaks = c("GO", "Mediterranean", "Community Chest 1", "Baltic ", "Income Tax", "Reading Railroad", "Oriental","Chance 1", "Vermot", "Conecticut", "Jail", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Community Chest 2", "Tennessee", "New York","Free Parking", "Kentucky", "Chance 2", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific", "N. Carolina", "Community Chest 3", "Pennsylvania", "Short Line Railroad", "Chance 3", "Park Place", "Luxury Tax", "Boardwalk"),
+                         values = colors_locations) 
+    
+    print(location_plot)  
+    
     
     
 ########################## location plots ###############################
@@ -1304,9 +1442,9 @@ print(properties_landed)
   all_spaces <- as.vector(as.matrix(location_data))
   plot(density(all_spaces), xlim = c(0,40), col = "black", xlab="Spaces", main="Density of Landing Locations Overall")
   
-  for(k in 1:players){
-  plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
-  }
+  #for(k in 1:players){
+  #plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
+ # }
   
   # second set of frequency plots for individual player locations
   for (k in 1:players) {
@@ -1334,12 +1472,14 @@ This section contains the function lets_play5 which expands on lets_play4 to inc
 
 Every payment that a player makes that would go to the general bank rather than another player is now paid to Free Parking. Then, if a player lands on Free Parking, they receive the amount of money stored in the Free_Parking data frame. Free_Parking is then reset to 0 and can immediately begin accumulating money again. 
 
-After all turns have been completed, lets_play5 will print four data frames showing all of the players locations through the game, the player banks, the money remaining in Free Parking, and the number of times each property was landed on. Additionally, the function will print a frequency plot showing the amount of times each property was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
+After all turns have been completed, lets_play5 will print five data frames showing all of the players locations through the game, the player banks, the money remaining in Free Parking, the total number of times each property was landed on, and the total number of times each location was landed on. Additionally, the function will print a frequency plot showing the amount of times each property was landed on, a frequency plot showing the amount of times each location was landed on, a density plot of each players location data, a density plot showing the overall location data, and frequency plots for all of the players location data through out the game.
 
 ```{r Play a Game}
 #A function to move players around the board while incorporating player banks and the free parking space
+
 #input: "turns"; the amount of turns each player takes (i.e. how many rounds the game is), "players"; a numeric value 1-4 representing the number of players in the game
-#output: "location_data"; a data frame showing each players' location after each of their turns, "The_Players"; a data frame showing each players' personal bank,"Free_Parking"; a data frame showing the amount of money Free Parking (space 21) contains, "properties_landed"; a data frame showing the number of times each property was landed on; a frequency plot properties landed; a density plot showing each players' location data throughout the game; a density plot showing the overall location data throughout the game; a frequency plot for each players' location data
+
+#output: "location_data"; a data frame showing each players' location after each of their turns, "The_Players"; a data frame showing each players' personal bank,"Free_Parking"; a data frame showing the amount of money Free Parking (space 21) contains, "properties_landed"; a data frame showing the number of times each property was landed on, "locations_landed"; a data frame showing the number of times each location was landed on, a frequency plot showing the total number of times each property was landed on, a frequency plot showing the total number of times each location was landed on, a density plot showing each players' location data throughout the game, a density plot showing the overall location data throughout the game, a frequency plot for each players' location data
 
 lets_play5 = function(turns, players) {
   
@@ -1497,6 +1637,37 @@ print(properties_landed)
     
     print(property_plot) 
     
+
+########################## location frequency plot ###############################
+locations_landed <- as.vector(as.matrix(location_data))
+
+location_names <- c("GO", "Mediterranean", "Community Chest 1", "Baltic ", "Income Tax", "Reading Railroad", "Oriental","Chance 1", "Vermot", "Conecticut", "Jail", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Community Chest 2", "Tennessee", "New York","Free Parking", "Kentucky", "Chance 2", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific", "N. Carolina", "Community Chest 3", "Pennsylvania", "Short Line Railroad", "Chance 3", "Park Place", "Luxury Tax", "Boardwalk")
+
+locations_landed <- as.data.frame(locations_landed) 
+locations_landed <- as.data.frame(locations_landed)
+locations_landed <- locations_landed %>% group_by(locations_landed) %>% summarise(n())
+locations_landed <- as.data.frame(locations_landed)
+locations_landed <- cbind(location_names, locations_landed)
+names(locations_landed) <- c("Name", "Location", "Occurances")
+print(locations_landed)
+
+    colors_locations <- c("white","purple","navy", "purple","white", "black", "lightblue","navy", "lightblue", "lightblue", "white", "violet", "lightgray", "violet", "violet", "black", "orange","navy", "orange", "orange","white", "red","navy", "red", "red", "black", "yellow", "yellow", "lightgray", "yellow","white", "darkgreen", "darkgreen","navy", "darkgreen", "black","navy", "blue","white", "blue")
+    
+    
+  #creates a frequency plot for the number of times each property is landed on 
+    location_plot <- ggplot(locations_landed, aes(x = Name, y = Occurances)) +
+      geom_bar(stat = "identity", fill = colors_locations, color = "black") +
+      scale_x_discrete(limits = locations_landed$Name) +
+      ggtitle("Frequency of Landing on each Location") +
+      xlab("Location") +
+      ylab("Frequency") +
+      theme(axis.text.x.bottom = element_text(angle=90, vjust = 0.001)) +
+      scale_color_manual(name = "Properties",
+                         breaks = c("GO", "Mediterranean", "Community Chest 1", "Baltic ", "Income Tax", "Reading Railroad", "Oriental","Chance 1", "Vermot", "Conecticut", "Jail", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Community Chest 2", "Tennessee", "New York","Free Parking", "Kentucky", "Chance 2", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific", "N. Carolina", "Community Chest 3", "Pennsylvania", "Short Line Railroad", "Chance 3", "Park Place", "Luxury Tax", "Boardwalk"),
+                         values = colors_locations) 
+    
+    print(location_plot)  
+    
     
     
 ########################## location plots ###############################
@@ -1515,9 +1686,9 @@ print(properties_landed)
   all_spaces <- as.vector(as.matrix(location_data))
   plot(density(all_spaces), xlim = c(0,40), col = "black", xlab="Spaces", main="Density of Landing Locations Overall")
   
-  for(k in 1:players){
-  plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
-  }
+  #for(k in 1:players){
+  #plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
+#  }
   
   # second set of frequency plots for individual player locations
   for (k in 1:players) {
