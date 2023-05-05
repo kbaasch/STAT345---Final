@@ -1521,7 +1521,7 @@ Every payment that a player makes that would go to the general bank rather than 
 This function prints the phrase, "This game lasted _ turns." Using this output, we created a loop to run 100 games and from this sample we found that the average game length when including free parking is 35.97 or approximately 36 games.
 
 ```{r}
-#A function to move players around the board while incorporating player banks and the free parking function
+#A function to move players around the board while incorporating player banks
 
 #input: "turns"; the amount of turns each player takes (i.e. how many rounds the game is), "players"; a numeric value 1-4 representing the number of players in the game
 
@@ -1667,20 +1667,19 @@ lets_play5 = function(turns, players) {
       The_Players$Player_Bank[j] = 0
     }
   }
-
     # assign the number of zeros in players_with_0 to count_of_0 
-
-  #print(location_data)
-  #print(The_Players)
-  #print(Free_Parking)
-  
-
-  
-  
-
-  
-  #print(location_data)
+    count_of_0 <- length(which(players_with_0 %in% 0))
+    
+    # If only 1 player has a 0 in players_with_0 (indicating that they still have money), print the banks of each player and stop the game
+    if (count_of_0 == 1) {
+      i=i
+      print(paste("The game lasted", i, "turns."))
+      break
     }
+    
+  }
+  
+  #print(location_data)
 }
 
 
@@ -1793,3 +1792,5 @@ lengths_of_games_lets_play5 <- c(17, 29, 18,
 avg_game_lengths_lets_play5 <- sum(lengths_of_games_lets_play5)/100
 avg_game_lengths_lets_play5
 ```
+
+
