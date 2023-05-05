@@ -312,46 +312,24 @@ that space?
 ```{r, echo=FALSE}
 avg_game_lengths_lets_play4
 ```
+```{r, echo=FALSE}
+avg_game_lengths_lets_play5
 
+```
 ## Findings
-
-This section contains the function lets_play4. This function expands on
-lets_play3 by adding players' banks. While using the lets_play4
-function, you can choose how many players you want to be in the game and
-how many turns you want the players to take.
-
-Within lets_play4, the first step is to create the player banks in a
-data frame called The_Players and to determine which players own which
-properties in a data frame called Property_Statuses. Then, as the
-player's are progressing through their turns, the respective banks of
-the player who lands on a location and the player who owns the location
-are updated based on the property's rent. In addition, if the player
-lands on a Chest or Community Chest space, they may earn money or have
-to pay depending on what card they draw.
-
-After all turns have been completed, lets_play4 will print four data
-frames showing all of the players locations through the game, the player
-banks, the total number of times each property was landed on, and the
-total number of times each location was landed on. Additionally, the
-function will print a frequency plot showing the amount of times each
-property was landed on, a frequency plot showing the amount of times
-each location was landed on, and a density plot of each players location
-data.
-
-Since no additions related to the players movement were made in this
-function, the density and frequency plots look very similar as those
-seen in the output of lets_play3.
 
 This section contains the function lets_play4. This function expands on lets_play3 by adding player banks. While using the lets_play4 function, you can choose how many players you want to be in the game and how many turns you want the players to take. 
 
 Within lets_play4, the first step is to create the player banks in a data frame called The_Players and to determine which players own which properties in a data frame called Property_Statuses. Then, as the player's are progressing through their turns, the respective banks of the player who lands on a location and the player who owns the location are updated based on the property's rent. Again, if the player lands on a Chest or Community Chest space, they may earn money or have to pay depending on what card they drew. 
 
-After all turns have been completed, lets_play4 will print four data frames showing all of the players locations through the game, the player banks, the total number of times each property was landed on, and the total number of times each location was landed on. Additionally, the function will print a frequency plot showing the amount of times each property was landed on, a frequency plot showing the amount of times each location was landed on, and a density plot of each players location data.
+After all turns have been completed, lets_play4 will print the phrase "The game lasted _ turns." Using this output, we created a loop to run 100 games and from this sample we found that the average game length is 51.33 or approximately 52 turns.
+
+This section also contains the function lets_play5 which expands on lets_play4 to include the action of potentially modifying a player's bank if they land on Free Parking (space 21). While using the lets_play5 function, you can choose how many players you want to be in the game and how many turns you want the players to take. 
+
+Every payment that a player makes that would go to the general bank rather than another player is now paid to Free Parking. Then, if a player lands on Free Parking, they receive the amount of money stored in the Free_Parking data frame. Free_Parking is then reset to 0 and can immediately begin accumulating money again. 
+
+This function prints the phrase, "This game lasted _ turns." Using this output, we created a loop to run 100 games and from this sample we found that the average game length when including free parking is 35.97 or approximately 36 games.
 
 Since no additions related to the players movement were made in this function, the density and frequency plots look very similar as those seen in the output of lets_play3.
 
-```{r, echo=FALSE}
-avg_game_lengths_lets_play5
-
-```
 
