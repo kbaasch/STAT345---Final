@@ -1223,6 +1223,7 @@ lets_move4 = function(location) {
             double3 = "true"
 
           }
+        
       }
   }  
    
@@ -1261,10 +1262,10 @@ The_Players <- data.frame(Players, Player_Bank)
   Owned_By_Player <- sample(1:4, 28, replace = TRUE)
   Space <- c(2, 4, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 19, 20, 22, 24, 25, 26, 27, 28, 29, 30, 32, 33, 35, 36, 38, 40)
   Property_Statuses <- data.frame(Property, Space, Owned_By_Player)
-
-
+  
   location_data <- as.data.frame(matrix(nrow = turns, ncol = players))
   double3data <- as.data.frame(matrix(nrow = turns, ncol = players))
+  players_with_0 <- vector(length = players) # For later use; stopping function when only 1 player has money
   
     colnames(location_data) <- who_goes_first2(players)[[2]]
   
@@ -1348,26 +1349,32 @@ The_Players <- data.frame(Players, Player_Bank)
       if (5 %in% location_data[i,j] || 39 %in% location_data[i,j]) {
         The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$cost[location_data[i,j]] # subtracting cost of tax from player's bank
       }
-        
-    players_with_0 <- vector(length = players)
-        
-    if (The_Players$Player_Bank[j] <= 0 || "NA" %in% The_Players$Player_Bank[j]) {
-      The_Players$Player_Bank[j] == "NA"
-      players_with_0[j] <- j
-    }  
     
-#    count_of_false <- sum(which("FALSE" %in% players_with_0))
-#    if (count_of_false == 1) {
-#      return(count_of_false)
-#    }
         
+    ##################    
+    # Stopping the game when only 1 player has money left:
+  
+    # If a player has <= $0, make their bank equal to 0 and put their player number in vector players_with_0 
+    if (The_Players$Player_Bank[j] <= 0) {
+      The_Players$Player_Bank[j] = 0
+      players_with_0[j] <- j
     }
-      
-    count_of_false <- sum(which("FALSE" %in% players_with_0))
-    if (count_of_false == 1) {
-      print(The_Players)
+    
+    # If player j is in vectors_with_0 (indicating that they have hit $0), continue to make their bank = 0 each turn
+    if (j %in% players_with_0) {
+      The_Players$Player_Bank[j] = 0
+    }
+  }
+    # assign the number of zeros in players_with_0 to count_of_0 
+    count_of_0 <- length(which(players_with_0 %in% 0))
+    
+    # If only 1 player has a 0 in players_with_0 (indicating that they still have money), print the banks of each player and stop the game
+    if (count_of_0 == 1) {
+      print(i)
       break
     }
+    ################
+    
   }
   
   print(location_data)
@@ -1478,7 +1485,6 @@ print(locations_landed)
 
 
 lets_play4(1000, 4)
-
 
 ```
 
