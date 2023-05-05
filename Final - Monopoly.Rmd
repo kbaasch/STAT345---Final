@@ -151,7 +151,7 @@ _Lets Get Moving _
 This section contains on the function lets_move which determines where a player will move to on the board. It does not incorporate any special movements such as double rolls, jail, or chance/community chest cards.
 
 ```{r Lets Get Moving}
-# Using dice rolls to determine where a player will land on the board
+#A function that uses dice rolls to determine where a player will land on the board
 #input: "location", where the player is on the board
 #output: the players new location on the board after the have rolled
 
