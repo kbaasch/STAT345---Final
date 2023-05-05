@@ -1348,6 +1348,25 @@ The_Players <- data.frame(Players, Player_Bank)
       if (5 %in% location_data[i,j] || 39 %in% location_data[i,j]) {
         The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$cost[location_data[i,j]] # subtracting cost of tax from player's bank
       }
+        
+    players_with_0 <- vector(length = players)
+        
+    if (The_Players$Player_Bank[j] <= 0 || "NA" %in% The_Players$Player_Bank[j]) {
+      The_Players$Player_Bank[j] == "NA"
+      players_with_0[j] <- j
+    }  
+    
+#    count_of_false <- sum(which("FALSE" %in% players_with_0))
+#    if (count_of_false == 1) {
+#      return(count_of_false)
+#    }
+        
+    }
+      
+    count_of_false <- sum(which("FALSE" %in% players_with_0))
+    if (count_of_false == 1) {
+      print(The_Players)
+      break
     }
   }
   
