@@ -10,7 +10,7 @@ editor_options:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
-source("C:/Users/Maddie's Laptop/Documents/STAT 345/Projects/STAT345-SP23/Final Project/STAT345---Final/source_monopoly_code.R")
+source("~/STAT 345/Projects/STAT345-SP23/Final Project/STAT345---Final/source_monopoly_code.R")
 ```
 
 ## 1. Rules!
