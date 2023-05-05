@@ -335,28 +335,27 @@ print(locations_landed)
   }
   
   # creates density plot for total frequency landing on each space (all players spaces included)
- # all_spaces <- as.vector(as.matrix(location_data))
+ all_spaces <- as.vector(as.matrix(location_data))
  # plot(density(all_spaces), xlim = c(0,40), col = "black", xlab="Spaces", main="Density of Landing Locations Overall")
   
   #creates frequency plot for frequency of landing on certain spaces for each player
   #for(k in 1:players){
  # plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
-  }
+ # }
 
- # plot(all_spaces, xlim = c(0,40), col = "black", type="h", xlab = "Spaces", ylab = "Frequency", main = "Frequency of Landing Locations Overall")
+  plot(all_spaces, xlim = c(0,40), col = "blue", type="h", xlab = "Spaces", ylab = "Frequency", main = "Frequency of Landing Locations Overall")
   
   # second set of frequency plots for individual player locations
-    colors2 <- c("coral1", "steelblue1", "palegreen2","plum2")
-    freq_data <- data.frame(space = 1:40, freq = tabulate(location_data[, 1], nbins = 40))
-    density_plot <- ggplot(freq_data, aes(x = space, y = freq)) +
-     geom_bar(stat = "identity", fill = colors2[1], color = "black") +
-     ggtitle(paste0("Player Frequency of Landing on Each Space")) +
-     xlab("Spaces") +
-     ylab("Frequency") +
-     theme_minimal()
+   # colors2 <- c("coral1", "steelblue1", "palegreen2","plum2")
+   # freq_data <- data.frame(space = 1:40, freq = tabulate(location_data[, 1], nbins = 40))
+   # density_plot <- ggplot(freq_data, aes(x = space, y = freq)) +
+   #  geom_bar(stat = "identity", fill = colors2[1], color = "black") +
+   #  ggtitle(paste0("Player Frequency of Landing on Each Space")) +
+   #  xlab("Spaces") +
+   #  ylab("Frequency") +
+   #  theme_minimal()
     
-    print(density_plot)
-  
+   # print(density_plot)
 }
 
 lets_play(1000, 4)
