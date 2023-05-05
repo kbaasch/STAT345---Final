@@ -327,7 +327,7 @@ player's are progressing through their turns, the respective banks of
 the player who lands on a location and the player who owns the location
 are updated based on the property's rent. In addition, if the player
 lands on a Chest or Community Chest space, they may earn money or have
-to pay depending on what card they drew.
+to pay depending on what card they draw.
 
 After all turns have been completed, lets_play4 will print four data
 frames showing all of the players locations through the game, the player
@@ -335,9 +335,8 @@ banks, the total number of times each property was landed on, and the
 total number of times each location was landed on. Additionally, the
 function will print a frequency plot showing the amount of times each
 property was landed on, a frequency plot showing the amount of times
-each location was landed on, a density plot of each players location
-data, a density plot showing the overall location data, and frequency
-plots for all of the players location data through out the game.
+each location was landed on, and a density plot of each players location
+data.
 
 Since no additions related to the players movement were made in this
 function, the density and frequency plots look very similar as those
