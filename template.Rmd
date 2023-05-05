@@ -712,11 +712,26 @@ lets_play_idk = function(turns, players) {
       if (5 %in% location_data[i,j] || 39 %in% location_data[i,j]) {
         The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$cost[location_data[i,j]] # subtracting cost of tax from player's bank
       }
+    
+    players_with_0 <- vector(length = players)
+        
+    if (The_Players$Player_Bank[j] <= 0 || "NA" %in% The_Players$Player_Bank[j]) {
+      The_Players$Player_Bank[j] == "NA"
+      players_with_0[j] <- j
+    }  
+    
+    count_of_false <- sum(which("FALSE" %in% players_with_0))
+    if (count_of_false == 1) {
+      break
     }
+        #length(which())
+  }
+      
   }
   print(location_data)
   print(double3data)
   print(The_Players)
+  
   
   # creates density plot of frequency of landing on each space for each player
   plot(density(location_data[,1]), xlim = c(0,40), col = "black")
@@ -736,7 +751,6 @@ lets_play_idk = function(turns, players) {
 }
 
 lets_play_idk(50, 4)
-
 
 ```
 
