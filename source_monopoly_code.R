@@ -6,10 +6,12 @@ library(tidyverse)
 ##the board
 
 monopolyBoard <- read.csv("MonopolyBoard.csv", header = T)
+monopolyBoard[is.na(monopolyBoard)] <- 0
 monopolyBoard
 
 
-## lets_move
+############################################ lets_move ##############################################
+
 # Using dice rolls to determine where a player will land on the board
 #input: "location", where the player is on the board
 #output: the players new location on the board after the have rolled
@@ -82,7 +84,7 @@ who_goes_first2 <- function(num_players){
 who_goes_first2(4)
 
 
-## lets_play
+############################################### lets_play ##########################################
 
 #A function to play Monopoly!
 #Utilizes lets_move to move the players around the board
@@ -134,6 +136,8 @@ lets_play = function(turns, players) {
 
 ## double_down <- lets_move2
 #Double Down -- addition of jail and double rolls
+
+############################################# lets_move2 ###########################################
 
 #Incorporating double rolls and sending players to jail when the players are rolling and moving
 #input: "location"; a numeric value 1 to 40; where the player in on the board
@@ -207,7 +211,7 @@ lets_move2 = function(location) {
 }
 
 
-## lets_play2
+############################################### lets_play2 ###########################################
 
 
 #A function to move players around the board while incorporating double rolls and going to jail
@@ -309,7 +313,7 @@ Community_Chest <- data.frame(Community_Chest_Cards, Card_Numbers) #a dataframe 
 #input: "location"; a numeric value 1:40 representing the player's location on the board
 #output: the player's new location on the board
 
-Drawing_Chance = function(location) {
+Drawing_Chance_0 = function(location) {
   location = location #the player's current location
   draw_card <- sample(1:16, 1, replace = TRUE) #randomly selecting a card from 1:16
   player_card <- Chance$Chance_Cards[draw_card] #finding the card in the Chance deck
@@ -393,7 +397,7 @@ Drawing_Chance = function(location) {
 #input: "location"; a numeric value 1:40 representing the player's location on the board
 #output: the player's new location on the board
 
-Drawing_Community_Chest = function(location) {
+Drawing_Community_Chest_0 = function(location) {
   location = location #the player's current location
   draw_card_chest <- sample(1:16, 1, replace = TRUE) #randomly selecting a card from 1:16
   player_card_chest <- Community_Chest$Community_Chest_Cards[draw_card_chest] #finding the card in the Community Chest deck
@@ -415,6 +419,7 @@ Drawing_Community_Chest = function(location) {
   return(location)
 }
 
+############################################## lets_move3 ###########################################
 
 #A function that expands on lets_move2 to add the actions of Community Chest and Chance spaces and their respective cards
 #input: "location"; a numeric value 1 to 40; where the player in on the board
@@ -439,11 +444,11 @@ lets_move3 = function(location) {
   
   
   if(location == 8 || location == 23 || location == 27) { #check's if the player's location is a Chance space
-    location = Drawing_Chance(location) #if TRUE, the player draws a Chance card using the Drawing_Chance function which updates their location
+    location = Drawing_Chance_0(location) #if TRUE, the player draws a Chance card using the Drawing_Chance function which updates their location
   }
   
   if(location == 3 || location == 18 || location == 34) { #check's if the player's location is a Community Chest space
-    location = Drawing_Community_Chest(location) #if TRUE, the player draws a Community Chest card using the Drawing_Community_Chest which updates their location
+    location = Drawing_Community_Chest_0(location) #if TRUE, the player draws a Community Chest card using the Drawing_Community_Chest which updates their location
   }
   
   # first double roll -> roll again
@@ -465,11 +470,11 @@ lets_move3 = function(location) {
     
     
     if(location == 8 || location == 23 || location == 27) { #check's if the player's location is a Chance space
-      location = Drawing_Chance(location) #if TRUE, the player draws a Chance card using the Drawing_Chance function which updates their location
+      location = Drawing_Chance_0(location) #if TRUE, the player draws a Chance card using the Drawing_Chance function which updates their location
     }
     
     if(location == 3 || location == 18 || location == 34) { #check's if the player's location is a Community Chest space
-      location = Drawing_Community_Chest(location) #if TRUE, the player draws a Community Chest card using the Drawing_Community_Chest which updates their location
+      location = Drawing_Community_Chest_0(location) #if TRUE, the player draws a Community Chest card using the Drawing_Community_Chest which updates their location
     }
     
     # second double roll -> roll again
@@ -490,11 +495,11 @@ lets_move3 = function(location) {
       }
       
       if(location == 8 || location == 23 || location == 27) { #check's if the player's location is a Chance space
-        location = Drawing_Chance(location) #if TRUE, the player draws a Chance card using the Drawing_Chance function which updates their location
+        location = Drawing_Chance_0(location) #if TRUE, the player draws a Chance card using the Drawing_Chance function which updates their location
       }
       
       if(location == 3 || location == 18 || location == 34) { #check's if the player's location is a Community Chest space
-        location = Drawing_Community_Chest(location) #if TRUE, the player draws a Community Chest card using the Drawing_Community_Chest which updates their location
+        location = Drawing_Community_Chest_0(location) #if TRUE, the player draws a Community Chest card using the Drawing_Community_Chest which updates their location
         
       }
       
@@ -513,6 +518,8 @@ lets_move3 = function(location) {
   return(listdata)
   
 }
+
+############################################ lets_play3 ##############################################
 
 lets_play3 = function(turns, players) {
   
@@ -582,4 +589,5 @@ lets_play3 = function(turns, players) {
   }
   
 }
+
 
