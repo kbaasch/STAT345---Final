@@ -138,6 +138,7 @@ library(tidyverse)
 - The game ends when three of the four players run out of money and the player remaining wins.
 
 ##The Board
+Note that you will need to download MonopolyBoard.csv in order for this code chunk to work.
 ```{r}
 monopolyBoard <- read.csv("MonopolyBoard.csv", header = T)
 monopolyBoard[is.na(monopolyBoard)] <- 0
