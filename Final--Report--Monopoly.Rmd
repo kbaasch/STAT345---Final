@@ -181,7 +181,8 @@ source("source_monopoly_code.R")
 -   The game ends when three of the four players run out of money and
     the player remaining wins.
     
-###Graph explinations 
+### Graph explinations 
+
 In the plots for "Frequency of Landing on each Property" and "Frequency of Landing on each Location" the colors of the bars represent the different colors associated with groups of properties or the type of location on a physical monopoly board. For example, the navy bars represent all Chance and Community Chest spaces on the board, light gray represent the utility properties, black represents all railroads, etc.
 
 The plot, "Density of Landing Locations for All Players", shows the percentage of times each space is landed on for each player. The four colors represent each player.
@@ -196,10 +197,11 @@ additional rules related to rolling doubles, jail, or special cards.
 Which properties are landed on most frequently? Create a visualization
 for this!
 
-```{r}
+```{r, echo=FALSE}
 lets_play(1000,4)
 
 ```
+
 ## Findings
 We started with a simple function, lets_move, which allowed one player
 to "roll" 2 dice, take the sum, and move the corresponding distance. The
@@ -230,12 +232,12 @@ doubles-rolling condition. Which properties are landed on most
 frequently now? Has this changed dramatically from the previous system
 (that didn't account for jail)? Again, visualize this!
 
-```{r}
+```{r, echo= FALSE}
 lets_play2(1000,4)
 
 ```
 
-##Findings 
+## Findings 
 To complete this task we made a new function, lets_move2,
 that had the same components as lets_play but added rules when rolling
 doubles. If a player rolled a double the new location was recorded and
@@ -260,12 +262,12 @@ are landed on most frequently now? Has this changed dramatically from
 the previous system (that didn't account for Chance)? Again, visualize
 this!
 
-```{r}
+```{r, echo=FALSE}
 lets_play3(1000,4)
 
 ```
 
-##Findings 
+## Findings 
 To incorporate the movement cards, chance and community
 chest, we created two functions to be added into the previous lets_move2
 function. The two new functions allow players to "pick" a random card
@@ -295,11 +297,11 @@ starting board and money level? How does this change if money paid to
 the bank is placed in "Free Parking" and awarded to players landing on
 that space?
 
-```{r}
+```{r, echo=FALSE}
 lets_play5(1000,4)
 ```
 
-##Findings
+## Findings
 
 This section contains the function lets_play4. This function expands on lets_play3 by adding players' banks. While using the lets_play4 function, you can choose how many players you want to be in the game and how many turns you want the players to take. 
 
