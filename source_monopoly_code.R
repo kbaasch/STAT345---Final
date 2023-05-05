@@ -1042,15 +1042,11 @@ lets_move4 = function(location) {
 }
 
 ################################################## lets_play4 ##################################################
-
-
-################################################## lets_play5 ##################################################
-
-lets_play5 = function(turns, players) {
+lets_play4 = function(turns, players) {
   
   #creates the player banks
   Players <- c("Player 1", "Player 2", "Player 3", "Player 4")
-  Player_Bank <- c(1250, 1250, 1250, 1250)
+  Player_Bank <- c(1500, 1500, 1500, 1500)
   The_Players <- data.frame(Players, Player_Bank)
   
   #determines which players own which properties
@@ -1059,13 +1055,24 @@ lets_play5 = function(turns, players) {
   Space <- c(2, 4, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 19, 20, 22, 24, 25, 26, 27, 28, 29, 30, 32, 33, 35, 36, 38, 40)
   Property_Statuses <- data.frame(Property, Space, Owned_By_Player)
   
-  #creates the free parking bank
-  free_parking <- c("Free Parking")
-  bank <- c(0)
-  Free_Parking <- data.frame(free_parking, bank)
+  setting_player_banks = function(players) {
+    for(m in 1:players) {
+      for (n in 1:28) {
+        owned <- Property_Statuses$Owned_By_Player[n]
+        spot <- Property_Statuses$Space[n]
+        payment <- monopolyBoard$cost[spot]
+        The_Players$Player_Bank[owned] = The_Players$Player_Bank[owned] - payment
+        The_Players = The_Players
+      }
+      The_Players = The_Players
+      return(The_Players)
+    }
+  }
+  
   
   location_data <- as.data.frame(matrix(nrow = turns, ncol = players))
   double3data <- as.data.frame(matrix(nrow = turns, ncol = players))
+  players_with_0 <- vector(length = players) # For later use; stopping function when only 1 player has money
   
   colnames(location_data) <- who_goes_first2(players)[[2]]
   
@@ -1115,7 +1122,7 @@ lets_play5 = function(turns, players) {
         owned_by_player <- Property_Statuses$Owned_By_Player[spot]
         
         The_Players$Player_Bank[owned_by_player] <- The_Players$Player_Bank[owned_by_player] + monopolyBoard$rent_3[cost]
-        The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$rent_3[cost]
+        The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$rent_4[cost]
       }
       
       #updating banks if players land on others' railroads
@@ -1130,16 +1137,14 @@ lets_play5 = function(turns, players) {
         The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - 200
       }
       
-      # Updating player bank and free parking if they gained or lost money from a Chance card
+      # Updating player bank if they gained or lost money from a Chance card
       if (Drawing_Chance(location_data[i,j])[[2]] != 0) {
         The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] + Drawing_Chance(location_data[i,j])[[2]]  
-        Free_Parking$bank <- Free_Parking$bank + Drawing_Chance(location_data[i,j])[[3]]
       }
       
       # Updating player bank if they gained or lost money from a Community Chest card 
       if (Drawing_Community_Chest(location_data[i,j])[[2]] != 0) {
         The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] + Drawing_Community_Chest(location_data[i,j])[[2]]  
-        Free_Parking$bank <- Free_Parking$bank + Drawing_Community_Chest(location_data[i,j])[[3]]
       }
       
       # Player gets $200 if they pass go
@@ -1150,7 +1155,261 @@ lets_play5 = function(turns, players) {
       # Paying when player lands on a tax space
       if (5 %in% location_data[i,j] || 39 %in% location_data[i,j]) {
         The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$cost[location_data[i,j]] # subtracting cost of tax from player's bank
-        Free_Parking$bank <- Free_Parking$bank + monopolyBoard$cost[location_data[i,j]]
+      }
+      
+      
+      ##################    
+      # Stopping the game when only 1 player has money left:
+      
+      # If a player has <= $0, make their bank equal to 0 and put their player number in vector players_with_0 
+      if (The_Players$Player_Bank[j] <= 0) {
+        The_Players$Player_Bank[j] = 0
+        players_with_0[j] <- j
+      }
+      
+      # If player j is in vectors_with_0 (indicating that they have hit $0), continue to make their bank = 0 each turn
+      if (j %in% players_with_0) {
+        The_Players$Player_Bank[j] = 0
+      }
+    }
+    # assign the number of zeros in players_with_0 to count_of_0 
+    count_of_0 <- length(which(players_with_0 %in% 0))
+    
+    # If only 1 player has a 0 in players_with_0 (indicating that they still have money), print the banks of each player and stop the game
+    if (count_of_0 == 1) {
+      i=i
+      print(paste("The game lasted", i, "turns."))
+      break
+    }
+    
+  }
+  
+  #print(location_data)
+}
+
+
+lets_play4(1000, 4)
+
+game_lengths <- numeric()
+
+for(m in 1:100) {
+  lengths <- lets_play4(1000, 4)[m]
+  game_lengths <- c(game_lengths, lengths)
+}
+
+############################################### average game length -- 4 ###########################################
+
+lengths_of_games_lets_play4<-c(11,
+                               46,
+                               8,
+                               9,
+                               103,
+                               8,
+                               12,
+                               79,
+                               32,
+                               7,
+                               22,
+                               22,
+                               104,
+                               29,
+                               25,
+                               62,
+                               17,
+                               104,
+                               18,
+                               20,
+                               18,
+                               75,
+                               40,
+                               20,
+                               21,
+                               92,
+                               27,
+                               15,
+                               89,
+                               10,
+                               24,
+                               91,
+                               12,
+                               28,
+                               775,
+                               9,
+                               13,
+                               29,
+                               28,
+                               72,
+                               44,
+                               12,
+                               13,
+                               12,
+                               12,
+                               13,
+                               12,
+                               10,
+                               34,
+                               9,
+                               22,
+                               11,
+                               28,
+                               11,
+                               36,
+                               47,
+                               36,
+                               41,
+                               12,
+                               13,
+                               25,
+                               152,
+                               120,
+                               61,
+                               14,
+                               39,
+                               31,
+                               9,
+                               33,
+                               42,
+                               28,
+                               36,
+                               28,
+                               17,
+                               103,
+                               16,
+                               13,
+                               95,
+                               12,
+                               393,
+                               38,
+                               60,
+                               15,
+                               877,
+                               56,
+                               18,
+                               58,
+                               18,
+                               72)
+
+avg_game_lengths_lets_play4 <- sum(lengths_of_games_lets_play4)/100
+
+################################################## lets_play5 ##################################################
+
+lets_play5 = function(turns, players) {
+  
+  #creates the player banks
+  Players <- c("Player 1", "Player 2", "Player 3", "Player 4")
+  Player_Bank <- c(1500, 1500, 1500, 1500)
+  The_Players <- data.frame(Players, Player_Bank)
+  
+  #determines which players own which properties
+  Property <- c("Mediterranean", "Baltic", "Reading Railroad", "Oriental", "Vermot", "Connecticut", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Tennessee", "New York", "Kentucky", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Pacific", "N. Carolina", "Pennsylvania", "Short Line Railroad", "Park Place", "Boardwalk")
+  Owned_By_Player <- sample(1:4, 28, replace = TRUE)
+  Space <- c(2, 4, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 19, 20, 22, 24, 25, 26, 27, 28, 29, 30, 32, 33, 35, 36, 38, 40)
+  Property_Statuses <- data.frame(Property, Space, Owned_By_Player)
+  
+  setting_player_banks = function(players) {
+    for(m in 1:players) {
+      for (n in 1:28) {
+        owned <- Property_Statuses$Owned_By_Player[n]
+        spot <- Property_Statuses$Space[n]
+        payment <- monopolyBoard$cost[spot]
+        The_Players$Player_Bank[owned] = The_Players$Player_Bank[owned] - payment
+        The_Players = The_Players
+      }
+      The_Players = The_Players
+      return(The_Players)
+    }
+  }
+  
+  #creates the free parking bank
+  free_parking <- c("Free Parking")
+  bank <- c(0)
+  Free_Parking <- data.frame(free_parking, bank)
+  
+  location_data <- as.data.frame(matrix(nrow = turns, ncol = players))
+  double3data <- as.data.frame(matrix(nrow = turns, ncol = players))
+  players_with_0 <- vector(length = players) # For later use; stopping function when only 1 player has money
+  
+  colnames(location_data) <- who_goes_first2(players)[[2]]
+  
+  location = 1
+  location_data[1,] <- location
+  double3 = 0
+  
+  for (i in 2:turns) {
+    
+    for (j in 1:players) {
+      
+      location = lets_move4(location_data[i-1,j])[[1]]
+      location_data[i,j] <- as.integer(location)
+      double3data[i,j] <- lets_move4(location)[[2]]
+      
+      # deals with landing in jail from "go to jail" space and staying there for next 3 turns
+      if (31 %in% location_data[i-1,j]) { # if you land on 31 (go to jail), next location is in jail (space 11)
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      } else if (11 %in% location_data[i-1,j] & 31 %in% location_data[i-2,j]) {
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      } else if (11 %in% location_data[i-2,j] & 31 %in% location_data[i-3,j]) {
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      }
+      
+      # landing in jail from 3x double roll and staying there for next 3 turns
+      if (11 %in% location_data[i,j] & "true" %in% double3data[i-1,j]) { # "true" means player double rolled 3x -> jail
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      } else if (11 %in% location_data[i-1,j] & "true" %in% double3data[i-2,j]) { # 
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      } else if (11 %in% location_data[i-2,j] & "true" %in% double3data[i-3,j]) {
+        location <- 11
+        location_data[i,j] <- as.integer(location)
+      }
+      
+      
+      # updating banks if players land on each others' properties
+      if(location %in% c(2, 4, 7, 9, 10, 12, 13, 14, 15, 17, 19, 20, 22, 24, 25, 27, 28, 29, 30, 32, 33, 35, 38, 40)) {
+        
+        location = location
+        spot <- which(Property_Statuses$Space == location)
+        cost <- which(monopolyBoard$spaces == location)
+        owned_by_player <- Property_Statuses$Owned_By_Player[spot]
+        
+        The_Players$Player_Bank[owned_by_player] <- The_Players$Player_Bank[owned_by_player] + monopolyBoard$rent_3[cost]
+        The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$rent_4[cost]
+      }
+      
+      #updating banks if players land on others' railroads
+      if(location %in% c(6, 16, 26, 36)){
+        
+        location = location
+        spot <- which(Property_Statuses$Space == location)
+        cost <- which(monopolyBoard$spaces == location)
+        owned_by_player <- Property_Statuses$Owned_By_Player[spot]
+        
+        The_Players$Player_Bank[owned_by_player] <- The_Players$Player_Bank[owned_by_player] + 200
+        The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - 200
+      }
+      
+      # Updating player bank if they gained or lost money from a Chance card
+      if (Drawing_Chance(location_data[i,j])[[2]] != 0) {
+        The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] + Drawing_Chance(location_data[i,j])[[2]]  
+      }
+      
+      # Updating player bank if they gained or lost money from a Community Chest card 
+      if (Drawing_Community_Chest(location_data[i,j])[[2]] != 0) {
+        The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] + Drawing_Community_Chest(location_data[i,j])[[2]]  
+      }
+      
+      # Player gets $200 if they pass go
+      if (lets_move3(location_data[i,j])[[3]] != 0) {
+        The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] + lets_move3(location_data[i,j])[[3]]  
+      }
+      
+      # Paying when player lands on a tax space
+      if (5 %in% location_data[i,j] || 39 %in% location_data[i,j]) {
+        The_Players$Player_Bank[j] <- The_Players$Player_Bank[j] - monopolyBoard$cost[location_data[i,j]] # subtracting cost of tax from player's bank
       }
       
       #Free Parking payments
@@ -1159,112 +1418,139 @@ lets_play5 = function(turns, players) {
         Free_Parking$bank <- 0
       }
       
+      
+      ##################    
+      # Stopping the game when only 1 player has money left:
+      
+      # If a player has <= $0, make their bank equal to 0 and put their player number in vector players_with_0 
+      if (The_Players$Player_Bank[j] <= 0) {
+        The_Players$Player_Bank[j] = 0
+        players_with_0[j] <- j
+      }
+      
+      # If player j is in vectors_with_0 (indicating that they have hit $0), continue to make their bank = 0 each turn
+      if (j %in% players_with_0) {
+        The_Players$Player_Bank[j] = 0
+      }
     }
+    
+    # assign the number of zeros in players_with_0 to count_of_0 
+    
+    #print(location_data)
+    #print(The_Players)
+    #print(Free_Parking)
+    
+    
+    
+    
+    
+    
+    #print(location_data)
   }
-  
-  #print(location_data)
-  #print(The_Players)
-  #print(Free_Parking)
-  
-  
-  
-  
-  ########################## property plot ###############################
-  
-  properties_landed <- as.vector(as.matrix(location_data))
-  
-  properties_landed <- properties_landed[properties_landed == 2 | properties_landed == 4 | properties_landed == 6 | properties_landed == 7 | properties_landed == 9 | properties_landed == 10 | properties_landed == 12 | properties_landed == 13 | properties_landed == 14 | properties_landed == 15 | properties_landed == 16 | properties_landed == 17 | properties_landed == 19 | properties_landed == 20 | properties_landed == 22 | properties_landed == 24 | properties_landed == 25 | properties_landed == 26 | properties_landed == 27 | properties_landed == 28 | properties_landed == 29 | properties_landed == 30 | properties_landed == 32 | properties_landed == 33 | properties_landed == 35 | properties_landed == 36 | properties_landed == 38 | properties_landed == 40]
-  
-  property_names <- c("Mediterranean", "Baltic", "Reading Railroad", "Oriental", "Vermot", "Conecticut", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Tennessee", "New York", "Kentucky", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Pacific", "N. Carolina", "Pennsylvania", "Short Line Railroad", "Park Place", "Boardwalk")
-  
-  properties_landed <- as.data.frame(properties_landed) 
-  properties_landed <- as.data.frame(properties_landed)
-  properties_landed <- properties_landed %>% group_by(properties_landed) %>% summarise(n())
-  properties_landed <- as.data.frame(properties_landed)
-  properties_landed <- cbind(property_names, properties_landed)
-  names(properties_landed) <- c("Property", "Location", "Occurances")
-  #print(properties_landed)
-  
-  colors_properties <- c("purple", "purple", "black", "lightblue", "lightblue", "lightblue", "violet", "lightgray", "violet", "violet", "black", "orange", "orange", "orange", "red", "red", "red", "black", "yellow", "yellow", "lightgray", "yellow", "darkgreen", "darkgreen", "darkgreen", "black", "blue", "blue")
-  
-  #creates a frequency plot for the number of times each property is landed on 
-  property_plot <- ggplot(properties_landed, aes(x = Property, y = Occurances)) +
-    geom_bar(stat = "identity", fill = colors_properties, color = "black") +
-    scale_x_discrete(limits = properties_landed$Property) +
-    ggtitle("Frequency of Landing on each Property") +
-    xlab("Property") +
-    ylab("Frequency") +
-    theme(axis.text.x.bottom = element_text(angle=90))
-  scale_color_manual(name = "Properties",
-                     breaks = c("Mediterranean", "Baltic", "Reading Railroad", "Oriental", "Vermot", "Conecticut", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Tennessee", "New York", "Kentucky", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Pacific", "N. Carolina", "Pennsylvania", "Short Line Railroad", "Park Place", "Boardwalk"),
-                     values = colors_properties)
-  
-  print(property_plot) 
-  
-  
-  ########################## location frequency plot ###############################
-  locations_landed <- as.vector(as.matrix(location_data))
-  
-  location_names <- c("GO", "Mediterranean", "Community Chest 1", "Baltic ", "Income Tax", "Reading Railroad", "Oriental","Chance 1", "Vermot", "Conecticut", "Jail", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Community Chest 2", "Tennessee", "New York","Free Parking", "Kentucky", "Chance 2", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific", "N. Carolina", "Community Chest 3", "Pennsylvania", "Short Line Railroad", "Chance 3", "Park Place", "Luxury Tax", "Boardwalk")
-  
-  locations_landed <- as.data.frame(locations_landed) 
-  locations_landed <- as.data.frame(locations_landed)
-  locations_landed <- locations_landed %>% group_by(locations_landed) %>% summarise(n())
-  locations_landed <- as.data.frame(locations_landed)
-  locations_landed <- cbind(location_names, locations_landed)
-  names(locations_landed) <- c("Name", "Location", "Occurances")
-  #print(locations_landed)
-  
-  colors_locations <- c("white","purple","navy", "purple","white", "black", "lightblue","navy", "lightblue", "lightblue", "white", "violet", "lightgray", "violet", "violet", "black", "orange","navy", "orange", "orange","white", "red","navy", "red", "red", "black", "yellow", "yellow", "lightgray", "yellow","white", "darkgreen", "darkgreen","navy", "darkgreen", "black","navy", "blue","white", "blue")
-  
-  
-  #creates a frequency plot for the number of times each property is landed on 
-  location_plot <- ggplot(locations_landed, aes(x = Name, y = Occurances)) +
-    geom_bar(stat = "identity", fill = colors_locations, color = "black") +
-    scale_x_discrete(limits = locations_landed$Name) +
-    ggtitle("Frequency of Landing on each Location") +
-    xlab("Location") +
-    ylab("Frequency") +
-    theme(axis.text.x.bottom = element_text(angle=90, vjust = 0.001)) +
-    scale_color_manual(name = "Properties",
-                       breaks = c("GO", "Mediterranean", "Community Chest 1", "Baltic ", "Income Tax", "Reading Railroad", "Oriental","Chance 1", "Vermot", "Conecticut", "Jail", "St. Charles", "Electric Company", "States", "Virginia", "Pennsylvania Railroad", "St. James", "Community Chest 2", "Tennessee", "New York","Free Parking", "Kentucky", "Chance 2", "Indiana", "Illinios", "B&O Railroad", "Atlantic", "Ventnor", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific", "N. Carolina", "Community Chest 3", "Pennsylvania", "Short Line Railroad", "Chance 3", "Park Place", "Luxury Tax", "Boardwalk"),
-                       values = colors_locations) 
-  
-  print(location_plot)  
-  
-  
-  
-  ########################## location plots ###############################
-  
-  # creates density plot of frequency of landing on each space for each player
-  colors <- c("red", "blue", "green","purple")
-  
-  plot(density(location_data[,1]), xlim = c(0,40), col = "black", xlab="Spaces", main= "Density of Landing Locations for All Players")
-  
-  for (k in 2:players) {
-    lines(density(location_data[,k]), col = colors[k-1]) # adds a density line for each player after the first
-  }
-  
-  
-  # creates density plot for total frequency landing on each space (all players spaces included)
-  all_spaces <- as.vector(as.matrix(location_data))
-  #plot(density(all_spaces), xlim = c(0,40), col = "black", xlab="Spaces", main="Density of Landing Locations Overall")
-  
-  #for(k in 1:players){
-  plot(location_data[,1], xlim= c(0,40), col=colors[1], type="h", xlab="Spaces", ylab="Frequency", main="Player Frequency of Landing on Each Space")
-  #  }
-  
-  # second set of frequency plots for individual player locations
-  #for (k in 1:players) {
-  #  colors <- c("coral1", "steelblue1", "palegreen2","plum2")
-  #  freq_data <- data.frame(space = 1:40, freq = tabulate(location_data[, k], nbins = 40))
-  #  density_plot <- ggplot(freq_data, aes(x = space, y = freq)) +
-  #   geom_bar(stat = "identity", fill = colors[k], color = "black") +
-  #   ggtitle(paste0("Player ", k, ": Frequency of Landing on Each Space")) +
-  #   xlab("Spaces") +
-  #   ylab("Frequency") +
-  #   theme_minimal()
-  
-  #  print(density_plot)
-  #}
 }
+
+
+lets_play5(1000, 4)
+
+game_lengths <- numeric()
+
+for(m in 1:100) {
+  lengths <- lets_play5(1000, 4)[m]
+  game_lengths <- c(game_lengths, lengths)
+  game_lengths <- as.data.frame(game_lengths)
+}
+
+########################################### average game length -- 5 ##########################################
+
+lengths_of_games_lets_play5 <- c(17, 29, 18,
+                                 19,
+                                 15,
+                                 36,
+                                 14,
+                                 12,
+                                 20,
+                                 31,
+                                 114,
+                                 11,
+                                 37,
+                                 23,
+                                 12,
+                                 18,
+                                 21,
+                                 13,
+                                 54,
+                                 13,
+                                 8,
+                                 36,
+                                 134,
+                                 30,
+                                 79,
+                                 10,
+                                 18,
+                                 41,
+                                 16,
+                                 61,
+                                 10,
+                                 12,
+                                 26,
+                                 48,
+                                 27,
+                                 15,
+                                 180,
+                                 311,
+                                 9,
+                                 14,
+                                 28,
+                                 61,
+                                 32,
+                                 23,
+                                 14,
+                                 107,
+                                 14,
+                                 122,
+                                 76,
+                                 13,
+                                 15,
+                                 83,
+                                 67,
+                                 29,
+                                 101,
+                                 18,
+                                 10,
+                                 30,
+                                 45,
+                                 20,
+                                 15,
+                                 94,
+                                 16,
+                                 30,
+                                 57,
+                                 11,
+                                 26,
+                                 13,
+                                 49,
+                                 11,
+                                 22,
+                                 16,
+                                 23,
+                                 64,
+                                 32,
+                                 35,
+                                 35,
+                                 10,
+                                 32,
+                                 94,
+                                 16,
+                                 18,
+                                 29,
+                                 17,
+                                 21,
+                                 18,
+                                 122,
+                                 24,
+                                 29,
+                                 44,
+                                 21,
+                                 33)
+
+avg_game_lengths_lets_play5 <- sum(lengths_of_games_lets_play5)/100
