@@ -287,7 +287,7 @@ the bank is placed in "Free Parking" and awarded to players landing on
 that space?
 
 ```{r}
-
+lets_play5(1000,4)
 ```
 
 ##Findings
