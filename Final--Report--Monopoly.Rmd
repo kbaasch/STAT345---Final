@@ -300,7 +300,7 @@ the bank is placed in "Free Parking" and awarded to players landing on
 that space?
 
 ```{r, echo=FALSE}
-lets_play5(1000,4)
+avg_game_lengths_lets_play4
 ```
 
 ## Findings
@@ -313,3 +313,7 @@ After all turns have been completed, lets_play4 will print four data frames show
 
 Since no additions related to the players movement were made in this function, the density and frequency plots look very similar as those seen in the output of lets_play3.
 
+```{r, echo=FALSE}
+avg_game_lengths_lets_play5
+
+```
