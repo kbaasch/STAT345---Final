@@ -251,7 +251,7 @@ lets_play = function(turns, players) {
   
 print(location_data) 
 
-### All Properties Landed On ###
+########################## property plot ###############################
 properties_landed <- as.vector(as.matrix(location_data))
 
 properties_landed <- properties_landed[properties_landed == 2 | properties_landed == 4 | properties_landed == 6 | properties_landed == 7 | properties_landed == 9 | properties_landed == 10 | properties_landed == 12 | properties_landed == 13 | properties_landed == 14 | properties_landed == 15 | properties_landed == 16 | properties_landed == 17 | properties_landed == 19 | properties_landed == 20 | properties_landed == 22 | properties_landed == 24 | properties_landed == 25 | properties_landed == 26 | properties_landed == 27 | properties_landed == 28 | properties_landed == 29 | properties_landed == 30 | properties_landed == 32 | properties_landed == 33 | properties_landed == 35 | properties_landed == 36 | properties_landed == 38 | properties_landed == 40]
@@ -267,7 +267,9 @@ names(properties_landed) <- c("Property", "Location", "Occurances")
 print(properties_landed)
 
     colors_properties <- c("purple", "purple", "black", "lightblue", "lightblue", "lightblue", "violet", "lightgray", "violet", "violet", "black", "orange", "orange", "orange", "red", "red", "red", "black", "yellow", "yellow", "lightgray", "yellow", "darkgreen", "darkgreen", "darkgreen", "black", "blue", "blue")
-    #freq_data <- data.frame(space = properties_landed$Property, freq = properties_landed$Occurances)
+    
+    
+  #creates a frequency plot for the number of times each property is landed on 
     property_plot <- ggplot(properties_landed, aes(x = Property, y = Occurances)) +
       geom_bar(stat = "identity", fill = colors_properties, color = "black") +
       scale_x_discrete(limits = properties_landed$Property) +
@@ -279,7 +281,7 @@ print(properties_landed)
     
     print(property_plot)
     
- ########################## plots ###############################
+ ########################## location plots ###############################
 
  #vector of colors
   colors <- c("red", "blue", "green","purple")
@@ -302,7 +304,19 @@ print(properties_landed)
 
   plot(all_spaces, xlim = c(0,40), col = "black", type="h", xlab = "Spaces", ylab = "Frequency", main = "Frequency of Landing Locations Overall")
   
-  
+  # second set of frequency plots for individual player locations
+  for (k in 1:players) {
+    colors <- c("coral1", "steelblue1", "palegreen2","plum2")
+    freq_data <- data.frame(space = 1:40, freq = tabulate(location_data[, k], nbins = 40))
+    density_plot <- ggplot(freq_data, aes(x = space, y = freq)) +
+     geom_bar(stat = "identity", fill = colors[k], color = "black") +
+     ggtitle(paste0("Player ", k, ": Frequency of Landing on Each Space")) +
+     xlab("Spaces") +
+     ylab("Frequency") +
+     theme_minimal()
+    
+    print(density_plot)
+  }
 }
 
 lets_play(1000, 4)
@@ -448,7 +462,8 @@ lets_play2 = function(turns, players) {
   print(double3)
   
   
-  ### All Properties Landed On ###
+########################## property plot ###############################
+  
 properties_landed <- as.vector(as.matrix(location_data))
 
 properties_landed <- properties_landed[properties_landed == 2 | properties_landed == 4 | properties_landed == 6 | properties_landed == 7 | properties_landed == 9 | properties_landed == 10 | properties_landed == 12 | properties_landed == 13 | properties_landed == 14 | properties_landed == 15 | properties_landed == 16 | properties_landed == 17 | properties_landed == 19 | properties_landed == 20 | properties_landed == 22 | properties_landed == 24 | properties_landed == 25 | properties_landed == 26 | properties_landed == 27 | properties_landed == 28 | properties_landed == 29 | properties_landed == 30 | properties_landed == 32 | properties_landed == 33 | properties_landed == 35 | properties_landed == 36 | properties_landed == 38 | properties_landed == 40]
@@ -464,7 +479,9 @@ names(properties_landed) <- c("Property", "Location", "Occurances")
 print(properties_landed)
 
     colors_properties <- c("purple", "purple", "black", "lightblue", "lightblue", "lightblue", "violet", "lightgray", "violet", "violet", "black", "orange", "orange", "orange", "red", "red", "red", "black", "yellow", "yellow", "lightgray", "yellow", "darkgreen", "darkgreen", "darkgreen", "black", "blue", "blue")
-    #freq_data <- data.frame(space = properties_landed$Property, freq = properties_landed$Occurances)
+    
+    
+  #creates a frequency plot for the number of times each property is landed on 
     property_plot <- ggplot(properties_landed, aes(x = Property, y = Occurances)) +
       geom_bar(stat = "identity", fill = colors_properties, color = "black") +
       scale_x_discrete(limits = properties_landed$Property) +
@@ -476,7 +493,7 @@ print(properties_landed)
     
     print(property_plot)
     
-  ########################## plots ###############################
+########################## location plots ###############################
 
  #vector of colors
   colors <- c("red", "blue", "green","purple")
@@ -498,6 +515,20 @@ print(properties_landed)
   }
   
   plot(all_spaces, xlim = c(0,40), col = "black", type="h", xlab = "Spaces", ylab = "Frequency", main = "Frequency of Landing Locations Overall")
+  
+  # second set of frequency plots for individual player locations
+  for (k in 1:players) {
+    colors <- c("coral1", "steelblue1", "palegreen2","plum2")
+    freq_data <- data.frame(space = 1:40, freq = tabulate(location_data[, k], nbins = 40))
+    density_plot <- ggplot(freq_data, aes(x = space, y = freq)) +
+     geom_bar(stat = "identity", fill = colors[k], color = "black") +
+     ggtitle(paste0("Player ", k, ": Frequency of Landing on Each Space")) +
+     xlab("Spaces") +
+     ylab("Frequency") +
+     theme_minimal()
+    
+    print(density_plot)
+  }
  
 }
  
@@ -876,7 +907,7 @@ lets_play3 = function(turns, players) {
 
   
   
-### All Properties Landed On ###
+########################## property plot ###############################
 properties_landed <- as.vector(as.matrix(location_data))
 
 properties_landed <- properties_landed[properties_landed == 2 | properties_landed == 4 | properties_landed == 6 | properties_landed == 7 | properties_landed == 9 | properties_landed == 10 | properties_landed == 12 | properties_landed == 13 | properties_landed == 14 | properties_landed == 15 | properties_landed == 16 | properties_landed == 17 | properties_landed == 19 | properties_landed == 20 | properties_landed == 22 | properties_landed == 24 | properties_landed == 25 | properties_landed == 26 | properties_landed == 27 | properties_landed == 28 | properties_landed == 29 | properties_landed == 30 | properties_landed == 32 | properties_landed == 33 | properties_landed == 35 | properties_landed == 36 | properties_landed == 38 | properties_landed == 40]
@@ -892,7 +923,8 @@ names(properties_landed) <- c("Property", "Location", "Occurances")
 print(properties_landed)
 
     colors_properties <- c("purple", "purple", "black", "lightblue", "lightblue", "lightblue", "violet", "lightgray", "violet", "violet", "black", "orange", "orange", "orange", "red", "red", "red", "black", "yellow", "yellow", "lightgray", "yellow", "darkgreen", "darkgreen", "darkgreen", "black", "blue", "blue")
-    #freq_data <- data.frame(space = properties_landed$Property, freq = properties_landed$Occurances)
+    
+    #creates a frequency plot for the number of times each property is landed on 
     property_plot <- ggplot(properties_landed, aes(x = Property, y = Occurances)) +
       geom_bar(stat = "identity", fill = colors_properties, color = "black") +
       scale_x_discrete(limits = properties_landed$Property) +
@@ -905,6 +937,7 @@ print(properties_landed)
     print(property_plot)
     
     
+########################## location plots ###############################    
   
   # creates density plot of frequency of landing on each space for each player
   colors <- c("red", "blue", "green","purple")
@@ -923,7 +956,7 @@ print(properties_landed)
   plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
   }
   
-  # second set of frequency plots
+  # second set of frequency plots for individual player locations
   for (k in 1:players) {
     colors <- c("coral1", "steelblue1", "palegreen2","plum2")
     freq_data <- data.frame(space = 1:40, freq = tabulate(location_data[, k], nbins = 40))
@@ -1154,7 +1187,8 @@ lets_play4 = function(turns, players) {
 
   
   
-  ### All Properties Landed On ###
+########################## property plot ###############################
+  
 properties_landed <- as.vector(as.matrix(location_data))
 
 properties_landed <- properties_landed[properties_landed == 2 | properties_landed == 4 | properties_landed == 6 | properties_landed == 7 | properties_landed == 9 | properties_landed == 10 | properties_landed == 12 | properties_landed == 13 | properties_landed == 14 | properties_landed == 15 | properties_landed == 16 | properties_landed == 17 | properties_landed == 19 | properties_landed == 20 | properties_landed == 22 | properties_landed == 24 | properties_landed == 25 | properties_landed == 26 | properties_landed == 27 | properties_landed == 28 | properties_landed == 29 | properties_landed == 30 | properties_landed == 32 | properties_landed == 33 | properties_landed == 35 | properties_landed == 36 | properties_landed == 38 | properties_landed == 40]
@@ -1170,7 +1204,8 @@ names(properties_landed) <- c("Property", "Location", "Occurances")
 print(properties_landed)
 
     colors_properties <- c("purple", "purple", "black", "lightblue", "lightblue", "lightblue", "violet", "lightgray", "violet", "violet", "black", "orange", "orange", "orange", "red", "red", "red", "black", "yellow", "yellow", "lightgray", "yellow", "darkgreen", "darkgreen", "darkgreen", "black", "blue", "blue")
-    #freq_data <- data.frame(space = properties_landed$Property, freq = properties_landed$Occurances)
+    
+    #creates a frequency plot for the number of times each property is landed on 
     property_plot <- ggplot(properties_landed, aes(x = Property, y = Occurances)) +
       geom_bar(stat = "identity", fill = colors_properties, color = "black") +
       scale_x_discrete(limits = properties_landed$Property) +
@@ -1180,7 +1215,12 @@ print(properties_landed)
       theme(axis.text.x.bottom = element_text(angle=90)) +
       theme_minimal()
     
-    print(property_plot)  
+    print(property_plot) 
+    
+    
+    
+########################## location plots ###############################
+    
     # creates density plot of frequency of landing on each space for each player
   colors <- c("red", "blue", "green","purple")
   
@@ -1189,9 +1229,7 @@ print(properties_landed)
   for (k in 2:players) {
     lines(density(location_data[,k]), col = colors[k-1]) # adds a density line for each player after the first
   }
-  
-  
-  
+
   
   # creates density plot for total frequency landing on each space (all players spaces included)
   all_spaces <- as.vector(as.matrix(location_data))
@@ -1201,6 +1239,19 @@ print(properties_landed)
   plot(location_data[,k], xlim= c(0,40), col=colors[k], type="h", xlab="Spaces", ylab="Frequency", main="Frequency of Landing on Each Space for Each Player")
   }
   
+  # second set of frequency plots for individual player locations
+  for (k in 1:players) {
+    colors <- c("coral1", "steelblue1", "palegreen2","plum2")
+    freq_data <- data.frame(space = 1:40, freq = tabulate(location_data[, k], nbins = 40))
+    density_plot <- ggplot(freq_data, aes(x = space, y = freq)) +
+     geom_bar(stat = "identity", fill = colors[k], color = "black") +
+     ggtitle(paste0("Player ", k, ": Frequency of Landing on Each Space")) +
+     xlab("Spaces") +
+     ylab("Frequency") +
+     theme_minimal()
+    
+    print(density_plot)
+  }
 }
 
 
