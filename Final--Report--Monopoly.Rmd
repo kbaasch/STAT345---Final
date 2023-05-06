@@ -226,6 +226,8 @@ at the frequency plot, space 7 and spaces which are multiples of 7 tend
 to be landed on more frequently. This is the be expected due to the fact
 that a total of 7 has the highest probability when rolling 2 die.
 
+In the plots "Frequency of Landing on each Property" and "Frequency of Landing on each Location" we see little variation between how often each location or property is landed on.
+
 Within this section, we also wrote the function, who_goes_first, in
 order to determine the starting player order of the game. This function
 simulates an initial dice roll for however many players are going to
@@ -264,6 +266,9 @@ surprise. By adding rules about going to jail when landing on the "Go to
 Jail" and when rolling 3 doubles in a row, the jail location is landed
 on more frequently.
 
+In the plot "Frequency of Landing on each Property" we start to see a bit more variation in which properties are landed on most frequently, with Pennsylvania Railroad being landed on most often (approximately 110 times
+ in 1000 turns). Additionally, we can in "Frequency of Landing on each Location" that if we exclude Jail (space 11), there is little variation in how many times each location is landed on. 
+
 ## 4. Take a Chance!
 
 Incorporate the movement cards into your system. You can ignore the
@@ -295,6 +300,10 @@ as the movement cards allow players to travel around the board without
 relying on the sum of two die. The density plot looks very similar to
 the previous plot because space 11 or "Jail" is still the most
 frequented space.
+
+In the plot "Frequency of Landing on each Property" we can see more variation in the amount of times each property is landed on with the addition of the Chance and Community Chest Cards. Illinios Avenue and Water Works are now the most landed on properties at approximately 125 visits each. 
+
+In the plot "Frequency of Landing on each Location" when excluding Jail, we can see that there is more variation in how many times each of the locations are landed on.
 
 ## 5. Play a Game!
 
